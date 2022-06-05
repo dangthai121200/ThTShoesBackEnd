@@ -1,0 +1,93 @@
+package com.herokuapp.security;
+
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.herokuapp.dao.JdbcUserDetailsManager;
+import com.herokuapp.filter.ConfigureAuthenticationFilter;
+import com.herokuapp.filter.ConfigureAuthorizationFilter;
+import com.herokuapp.jwt.JwtTokenProvider;
+import com.herokuapp.jwt.JwtTokenProviderImpl;
+import com.herokuapp.util.URL;
+
+@EnableWebSecurity
+public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
+
+	@Autowired
+	private DataSource dataSource;
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+
+		ConfigureAuthorizationFilter authorizationFilter = new ConfigureAuthorizationFilter();
+		authorizationFilter.setJwtTokenProvider(jwtTokenProvider());
+		ConfigureAuthenticationFilter authenticationFilter = new ConfigureAuthenticationFilter(
+				authenticationManagerBean());
+		authenticationFilter.setJwtTokenProvider(jwtTokenProvider());
+		authorizationFilter.setJwtTokenProvider(jwtTokenProvider());
+		authorizationFilter.setUserDetailsService(TaiKhoanServiceImpl());
+
+		http.csrf().disable();
+		http.cors().disable();
+		//
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.authorizeRequests().antMatchers("/").permitAll();
+
+		http.authorizeRequests().antMatchers(URL.LOGIN + "/**").permitAll();
+		http.authorizeRequests().antMatchers(URL.DANG_KY + URL.KHACH_HANG + "/**").permitAll();
+
+		http.authorizeRequests().antMatchers("/home/**").permitAll();
+		http.authorizeRequests().antMatchers("/nhanvien/**").hasAnyAuthority("NHANVIEN");
+		http.authorizeRequests().antMatchers("/admin/**").hasAnyAuthority("ADMIN");
+		http.authorizeRequests().antMatchers("/khachhang/**").hasAnyAuthority("KHACHHANG");
+		http.authorizeRequests().anyRequest().authenticated();
+		// http.formLogin().and().httpBasic();
+
+		http.addFilter(authenticationFilter);
+		http.addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class);
+
+	}
+
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(TaiKhoanServiceImpl()).passwordEncoder(noOpPasswordEncoder());
+	}
+
+	@Bean
+	public UserDetailsService jdbcuserDetailsServiceManager() {
+		return new JdbcUserDetailsManager(dataSource);
+	}
+
+	@Bean
+	public UserDetailsService TaiKhoanServiceImpl() {
+		return new com.herokuapp.service.TaiKhoanServiceImpl();
+	}
+
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
+
+	@Bean
+	public PasswordEncoder noOpPasswordEncoder() {
+		return NoOpPasswordEncoder.getInstance();
+	}
+
+	@Bean
+	public JwtTokenProvider jwtTokenProvider() {
+		return new JwtTokenProviderImpl();
+	}
+}

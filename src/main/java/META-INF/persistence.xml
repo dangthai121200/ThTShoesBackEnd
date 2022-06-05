@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+	<persistence-unit name="ThTShoesBackEnd">
+		<class>com.herokuapp.entity.Binhluan</class>
+		<class>com.herokuapp.entity.Binhluanseq</class>
+		<class>com.herokuapp.entity.Danhmuc</class>
+		<class>com.herokuapp.entity.Danhmucseq</class>
+		<class>com.herokuapp.entity.Donhang</class>
+		<class>com.herokuapp.entity.Donhangseq</class>
+		<class>com.herokuapp.entity.Dskhuyenmai</class>
+		<class>com.herokuapp.entity.Giay</class>
+		<class>com.herokuapp.entity.GiayDonhang</class>
+		<class>com.herokuapp.entity.GiayDonhangPK</class>
+		<class>com.herokuapp.entity.Giayseq</class>
+		<class>com.herokuapp.entity.Hang</class>
+		<class>com.herokuapp.entity.Hangseq</class>
+		<class>com.herokuapp.entity.Hinh</class>
+		<class>com.herokuapp.entity.Hinhseq</class>
+		<class>com.herokuapp.entity.Khachhang</class>
+		<class>com.herokuapp.entity.Khuyenmaiseq</class>
+		<class>com.herokuapp.entity.Loaigiay</class>
+		<class>com.herokuapp.entity.Loaigiayseq</class>
+		<class>com.herokuapp.entity.Loaiphukien</class>
+		<class>com.herokuapp.entity.Loaiphukienseq</class>
+		<class>com.herokuapp.entity.Mausac</class>
+		<class>com.herokuapp.entity.Mausacseq</class>
+		<class>com.herokuapp.entity.Nhanvien</class>
+		<class>com.herokuapp.entity.Phukien</class>
+		<class>com.herokuapp.entity.PhukienDonhang</class>
+		<class>com.herokuapp.entity.PhukienDonhangPK</class>
+		<class>com.herokuapp.entity.Phukienseq</class>
+		<class>com.herokuapp.entity.Size</class>
+		<class>com.herokuapp.entity.Sizeseq</class>
+		<class>com.herokuapp.entity.Taikhoan</class>
+		<class>com.herokuapp.entity.Taikhoanseq</class>
+	</persistence-unit>
+</persistence>
