@@ -6,6 +6,6 @@ public interface DangKyService {
 	void dangKyKhachHang(InfoKhachHangDangKy infoDangKy);
 
 	void dangKyNhanVien(InfoKhachHangDangKy infoDangKy);
-	
+
 	void authencationTaiKhoan(String manguoidung);
 }

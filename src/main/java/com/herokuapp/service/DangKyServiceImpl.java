@@ -60,8 +60,8 @@ public class DangKyServiceImpl implements DangKyService {
 
 	@Override
 	public void authencationTaiKhoan(String manguoidung) {
-		Taikhoan taikhoan = taiKhoanReponsitory.findById(manguoidung).orElseThrow();
-		if (taikhoan.getTinhtrang() == 0) {
+		Taikhoan taikhoan = taiKhoanReponsitory.findById(manguoidung).get();
+		if (taikhoan != null && taikhoan.getTinhtrang() == 0) {
 			taikhoan.setTinhtrang((byte) 1);
 			taiKhoanReponsitory.save(taikhoan);
 		} else {

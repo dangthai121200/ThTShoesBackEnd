@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.herokuapp.enums.Quyen;
 
@@ -17,6 +18,7 @@ import com.herokuapp.enums.Quyen;
  * 
  */
 @Entity
+//@Table(name = "taikhoan")
 public class Taikhoan implements Serializable {
 	private static final long serialVersionUID = 1L;
 
