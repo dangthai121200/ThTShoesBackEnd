@@ -35,9 +35,6 @@ public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
 		authorizationFilter.setJwtTokenProvider(jwtTokenProvider());
 		authorizationFilter.setUserDetailsService(TaiKhoanServiceImpl());
 		authorizationFilter.addListUrlNotFilter(URL.LOGIN);
-		authorizationFilter.addListUrlNotFilter(URL.KHACH_HANG + URL.DANG_KY);
-		authorizationFilter.addListUrlNotFilter(URL.KHACH_HANG + URL.TRANG_CHU);
-		authorizationFilter.addListUrlNotFilter(URL.KHACH_HANG + URL.GIAY);
 
 		ConfigureAuthenticationFilter authenticationFilter = new ConfigureAuthenticationFilter(
 				authenticationManagerBean());

@@ -10,6 +10,8 @@ public class URL {
 	
 	public static final String GIAY = "/giay";
 	
+	public static final String UPDATE = "/capnhat";
+	
 	
 
 	public static final String LOGIN = "/login";

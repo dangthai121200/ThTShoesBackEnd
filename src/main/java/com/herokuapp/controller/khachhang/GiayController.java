@@ -1,4 +1,4 @@
-package com.herokuapp.controller.client;
+package com.herokuapp.controller.khachhang;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

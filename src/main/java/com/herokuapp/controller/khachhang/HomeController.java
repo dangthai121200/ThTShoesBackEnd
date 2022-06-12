@@ -1,4 +1,4 @@
-package com.herokuapp.controller.client;
+package com.herokuapp.controller.khachhang;
 
 import java.util.List;
 
