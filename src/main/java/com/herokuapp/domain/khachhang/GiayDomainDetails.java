@@ -1,12 +1,12 @@
 package com.herokuapp.domain.khachhang;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.herokuapp.abstracts.Convert;
+import com.herokuapp.abstracts.AbstractsDomain;
 import com.herokuapp.entity.Giay;
-import com.herokuapp.entity.Taikhoan;
 
-public class GiayDomain extends Convert<Giay> {
+public class GiayDomainDetails extends AbstractsDomain<Giay> {
 
 	private String magiay;
 	private String chatlieu;
@@ -15,11 +15,12 @@ public class GiayDomain extends Convert<Giay> {
 	private String mota;
 	private String tengiay;
 	private int trongluong;
-	private LoaiGiayDomain loaigiay;
-	private List<BinhLuanDomain> binhluans;
-	private List<SizeDomain> sizes;
-	private List<HinhDomain> hinhs;
-	private List<MauSacDomain> mausacs;
+	private String urlanh;
+	private LoaiGiayDomain loaigiay = new LoaiGiayDomain();
+	private List<BinhLuanDomain> binhluans = new ArrayList<>();
+	private List<SizeDomain> sizes = new ArrayList<>();
+	private List<HinhDomain> hinhs = new ArrayList<>();;
+	private List<MauSacDomain> mausacs = new ArrayList<>();
 
 	public String getMagiay() {
 		return magiay;
@@ -35,6 +36,14 @@ public class GiayDomain extends Convert<Giay> {
 
 	public void setChatlieu(String chatlieu) {
 		this.chatlieu = chatlieu;
+	}
+
+	public String getUrlanh() {
+		return urlanh;
+	}
+
+	public void setUrlanh(String urlanh) {
+		this.urlanh = urlanh;
 	}
 
 	public int getGia() {
@@ -126,6 +135,32 @@ public class GiayDomain extends Convert<Giay> {
 		this.mota = giay.getMota();
 		this.tengiay = giay.getTengiay();
 		this.trongluong = giay.getTrongluong();
+		this.urlanh = giay.getUrlanh();
+		this.loaigiay.converToDomain(giay.getLoaigiay());
+
+		giay.getBinhluans().forEach(binhluan -> {
+			BinhLuanDomain binhLuanDomain = new BinhLuanDomain();
+			binhLuanDomain.converToDomain(binhluan);
+			this.binhluans.add(binhLuanDomain);
+		});
+
+		giay.getSizes().forEach(size -> {
+			SizeDomain sizeDomain = new SizeDomain();
+			sizeDomain.converToDomain(size);
+			this.sizes.add(sizeDomain);
+		});
+
+		giay.getMausacs().forEach(mausac -> {
+			MauSacDomain mauSacDomain = new MauSacDomain();
+			mauSacDomain.converToDomain(mausac);
+			this.mausacs.add(mauSacDomain);
+		});
+
+		giay.getHinhs().forEach(hinh -> {
+			HinhDomain hinhDomain = new HinhDomain();
+			hinhDomain.converToDomain(hinh);
+			this.hinhs.add(hinhDomain);
+		});
 	}
 
 	@Override
@@ -133,7 +168,5 @@ public class GiayDomain extends Convert<Giay> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 
 }

@@ -1,10 +1,10 @@
 package com.herokuapp.domain.khachhang;
 
-import com.herokuapp.abstracts.Convert;
+import com.herokuapp.abstracts.AbstractsDomain;
 import com.herokuapp.entity.Taikhoan;
 import com.herokuapp.enums.Quyen;
 
-public class TaiKhoanDomain extends Convert<Taikhoan> {
+public class TaiKhoanDomain extends AbstractsDomain<Taikhoan> {
 
 	private String manguoidung;
 	private String email;

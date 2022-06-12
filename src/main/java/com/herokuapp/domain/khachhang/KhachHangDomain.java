@@ -1,9 +1,9 @@
 package com.herokuapp.domain.khachhang;
 
-import com.herokuapp.abstracts.Convert;
+import com.herokuapp.abstracts.AbstractsDomain;
 import com.herokuapp.entity.Khachhang;
 
-public class KhachHangDomain extends Convert<Khachhang> {
+public class KhachHangDomain extends AbstractsDomain<Khachhang> {
 	private String makh;
 	private String diachi;
 	private String ho;

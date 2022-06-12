@@ -20,16 +20,7 @@ public class Mausac implements Serializable {
 	private String tenmau;
 
 	//bi-directional many-to-many association to Giay
-	@ManyToMany
-	@JoinTable(
-		name="giay_mau"
-		, joinColumns={
-			@JoinColumn(name="mamau")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="magiay")
-			}
-		)
+	@ManyToMany(mappedBy = "mausacs")
 	private List<Giay> giays;
 
 	public Mausac() {

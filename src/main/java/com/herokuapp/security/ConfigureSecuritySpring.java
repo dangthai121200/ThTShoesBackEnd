@@ -33,11 +33,15 @@ public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
 
 		ConfigureAuthorizationFilter authorizationFilter = new ConfigureAuthorizationFilter();
 		authorizationFilter.setJwtTokenProvider(jwtTokenProvider());
+		authorizationFilter.setUserDetailsService(TaiKhoanServiceImpl());
+		authorizationFilter.addListUrlNotFilter(URL.LOGIN);
+		authorizationFilter.addListUrlNotFilter(URL.KHACH_HANG + URL.DANG_KY);
+		authorizationFilter.addListUrlNotFilter(URL.KHACH_HANG + URL.TRANG_CHU);
+		authorizationFilter.addListUrlNotFilter(URL.KHACH_HANG + URL.GIAY);
+
 		ConfigureAuthenticationFilter authenticationFilter = new ConfigureAuthenticationFilter(
 				authenticationManagerBean());
 		authenticationFilter.setJwtTokenProvider(jwtTokenProvider());
-		authorizationFilter.setJwtTokenProvider(jwtTokenProvider());
-		authorizationFilter.setUserDetailsService(TaiKhoanServiceImpl());
 
 		http.csrf().disable();
 		http.cors().disable();
@@ -46,13 +50,10 @@ public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/").permitAll();
 
 		http.authorizeRequests().antMatchers(URL.LOGIN + "/**").permitAll();
-		http.authorizeRequests().antMatchers(URL.DANG_KY + URL.KHACH_HANG + "/**").permitAll();
-		http.authorizeRequests().antMatchers(URL.TRANG_CHU + "/**").permitAll();
-		
-		
-		http.authorizeRequests().antMatchers("/nhanvien/**").hasAnyAuthority("NHANVIEN");
-		http.authorizeRequests().antMatchers("/admin/**").hasAnyAuthority("ADMIN");
-		http.authorizeRequests().antMatchers("/khachhang/**").hasAnyAuthority("KHACHHANG");
+		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.DANG_KY + "/**").permitAll();
+		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.TRANG_CHU + "/**").permitAll();
+		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.GIAY + "/**").permitAll();
+
 		http.authorizeRequests().anyRequest().authenticated();
 		// http.formLogin().and().httpBasic();
 

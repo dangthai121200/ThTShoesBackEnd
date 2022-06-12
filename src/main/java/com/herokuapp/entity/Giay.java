@@ -1,16 +1,25 @@
 package com.herokuapp.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 /**
  * The persistent class for the giay database table.
  * 
  */
 @Entity
-@NamedQuery(name="Giay.findAll", query="SELECT g FROM Giay g")
+@NamedQuery(name = "Giay.findAll", query = "SELECT g FROM Giay g")
 public class Giay implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -23,6 +32,8 @@ public class Giay implements Serializable {
 
 	private String kieudang;
 
+	private String ngaythem;
+
 	@Lob
 	private String mota;
 
@@ -30,41 +41,46 @@ public class Giay implements Serializable {
 
 	private int trongluong;
 
-	//bi-directional many-to-one association to Binhluan
-	@OneToMany(mappedBy="giay")
+	private String urlanh;
+
+	// bi-directional many-to-one association to Binhluan
+	@OneToMany(mappedBy = "giay", fetch = FetchType.LAZY)
 	private List<Binhluan> binhluans;
 
-	//bi-directional many-to-one association to Loaigiay
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="maloaigiay")
+	// bi-directional many-to-one association to Loaigiay
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "maloaigiay")
 	private Loaigiay loaigiay;
 
-	//bi-directional many-to-many association to Size
-	@ManyToMany
-	@JoinTable(
-		name="giay_size"
-		, joinColumns={
-			@JoinColumn(name="magiay")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="masize")
-			}
-		)
+	// bi-directional many-to-many association to Size
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "giay_size", joinColumns = { @JoinColumn(name = "magiay") }, inverseJoinColumns = {
+			@JoinColumn(name = "masize") })
 	private List<Size> sizes;
 
-	//bi-directional many-to-one association to GiayDonhang
-	@OneToMany(mappedBy="giay")
+	// bi-directional many-to-one association to GiayDonhang
+	@OneToMany(mappedBy = "giay", fetch = FetchType.LAZY)
 	private List<GiayDonhang> giayDonhangs;
 
-	//bi-directional many-to-one association to Hinh
-	@OneToMany(mappedBy="giay")
+	// bi-directional many-to-one association to Hinh
+	@OneToMany(mappedBy = "giay", fetch = FetchType.LAZY)
 	private List<Hinh> hinhs;
 
-	//bi-directional many-to-many association to Mausac
-	@ManyToMany(mappedBy="giays")
+	// bi-directional many-to-many association to Mausac
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "giay_mau", joinColumns = { @JoinColumn(name = "magiay") }, inverseJoinColumns = {
+			@JoinColumn(name = "mamau") })
 	private List<Mausac> mausacs;
 
 	public Giay() {
+	}
+
+	public String getUrlanh() {
+		return urlanh;
+	}
+
+	public void setUrlanh(String urlanh) {
+		this.urlanh = urlanh;
 	}
 
 	public String getMagiay() {
@@ -81,6 +97,14 @@ public class Giay implements Serializable {
 
 	public void setChatlieu(String chatlieu) {
 		this.chatlieu = chatlieu;
+	}
+
+	public String getNgaythem() {
+		return ngaythem;
+	}
+
+	public void setNgaythem(String ngaythem) {
+		this.ngaythem = ngaythem;
 	}
 
 	public int getGia() {

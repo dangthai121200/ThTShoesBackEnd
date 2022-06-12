@@ -1,5 +1,44 @@
 package com.herokuapp.domain.khachhang;
 
-public class MauSacDomain {
+import com.herokuapp.abstracts.AbstractsDomain;
+import com.herokuapp.entity.Mausac;
+
+public class MauSacDomain extends AbstractsDomain<Mausac> {
+
+	private String mamau;
+
+	private String tenmau;
+
+	public MauSacDomain() {
+	}
+
+	public String getMamau() {
+		return mamau;
+	}
+
+	public void setMamau(String mamau) {
+		this.mamau = mamau;
+	}
+
+	public String getTenmau() {
+		return tenmau;
+	}
+
+	public void setTenmau(String tenmau) {
+		this.tenmau = tenmau;
+	}
+
+	@Override
+	public void converToDomain(Mausac mausac) {
+		this.mamau = mausac.getMamau();
+		this.tenmau = mausac.getTenmau();
+
+	}
+
+	@Override
+	public Mausac converToEntity() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

@@ -1,27 +1,27 @@
 package com.herokuapp.domain.khachhang;
 
 public class InfoKhachHangDangKy {
-	
-	private KhachHangDomain khachHangDomain;
-	private TaiKhoanDomain taiKhoanDomain;
+
+	private KhachHangDomain khachHang;
+	private TaiKhoanDomain taiKhoan;
 
 	public InfoKhachHangDangKy() {
 	}
 
-	public KhachHangDomain getKhachHangDomain() {
-		return khachHangDomain;
+	public KhachHangDomain getKhachHang() {
+		return khachHang;
 	}
 
-	public void setKhachHangDomain(KhachHangDomain khachHangDomain) {
-		this.khachHangDomain = khachHangDomain;
+	public void setKhachHang(KhachHangDomain khachHang) {
+		this.khachHang = khachHang;
 	}
 
-	public TaiKhoanDomain getTaiKhoanDomain() {
-		return taiKhoanDomain;
+	public TaiKhoanDomain getTaiKhoan() {
+		return taiKhoan;
 	}
 
-	public void setTaiKhoanDomain(TaiKhoanDomain taiKhoanDomain) {
-		this.taiKhoanDomain = taiKhoanDomain;
+	public void setTaiKhoan(TaiKhoanDomain taiKhoan) {
+		this.taiKhoan = taiKhoan;
 	}
 
 }

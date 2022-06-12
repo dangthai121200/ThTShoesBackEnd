@@ -1,4 +1,4 @@
-package com.herokuapp.controller;
+package com.herokuapp.controller.client;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,13 +13,13 @@ import com.herokuapp.service.DangKyService;
 import com.herokuapp.util.URL;
 
 @RestController
-@RequestMapping(URL.DANG_KY)
+@RequestMapping(URL.KHACH_HANG)
 public class DangKyController {
 
 	@Autowired
 	private DangKyService dangKyService;
 
-	@RequestMapping(value = URL.KHACH_HANG, method = RequestMethod.POST)
+	@RequestMapping(value = URL.DANG_KY, method = RequestMethod.POST)
 	public ResponseEntity<String> dangKyKhachHang(@RequestBody InfoKhachHangDangKy infoKhachHangDangKy) {
 		try {
 			dangKyService.dangKyKhachHang(infoKhachHangDangKy);
@@ -30,7 +30,7 @@ public class DangKyController {
 		}
 	}
 
-	@RequestMapping(value = URL.KHACH_HANG + "/{manguoidung}", method = RequestMethod.GET)
+	@RequestMapping(value = URL.DANG_KY + "/{manguoidung}", method = RequestMethod.GET)
 	public ResponseEntity<String> authencationTaiKhoan(@PathVariable(name = "manguoidung") String manguoidung) {
 		try {
 			dangKyService.authencationTaiKhoan(manguoidung);

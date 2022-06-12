@@ -1,7 +1,9 @@
 package com.herokuapp.filter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.FilterChain;
@@ -21,7 +23,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.herokuapp.jwt.JwtTokenProvider;
 import com.herokuapp.security.UserDetailsConfigure;
-import com.herokuapp.util.URL;
 
 public class ConfigureAuthorizationFilter extends OncePerRequestFilter {
 
@@ -29,10 +30,12 @@ public class ConfigureAuthorizationFilter extends OncePerRequestFilter {
 
 	private UserDetailsService userDetailsService;
 
+	private List<String> listUrlNotFilter = new ArrayList<>();
+
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		if (request.getServletPath().equals(URL.LOGIN)) {
+		if (listUrlNotFilter.contains(request.getServletPath())) {
 			filterChain.doFilter(request, response);
 		} else {
 			String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
@@ -73,5 +76,9 @@ public class ConfigureAuthorizationFilter extends OncePerRequestFilter {
 
 	public void setUserDetailsService(UserDetailsService userDetailsService) {
 		this.userDetailsService = userDetailsService;
+	}
+
+	public void addListUrlNotFilter(String url) {
+		this.listUrlNotFilter.add(url);
 	}
 }

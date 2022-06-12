@@ -12,8 +12,8 @@ import com.herokuapp.entity.Giay;
 @Repository
 public interface GiayReponsitory extends CrudRepository<Giay, String> {
 
-	//public List<Giay> getListBestSell(int sum);
+	// public List<Giay> getListBestSell(int sum);
 
-	@Query(value = "Select g.* from Giay g ORDER BY g.magiay DESC LIMIT :amount", nativeQuery = true)
+	@Query(value = "Select g.* from Giay g ORDER BY g.ngaythem DESC LIMIT :amount", nativeQuery = true)
 	public List<Giay> getListLatest(@Param("amount") int amount);
 }

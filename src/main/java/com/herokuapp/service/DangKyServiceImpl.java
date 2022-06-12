@@ -34,17 +34,17 @@ public class DangKyServiceImpl implements DangKyService {
 
 		String maNguoiDung = PrefixId.KHACHHANG + getTaiKhoanIdSeq();
 
-		Taikhoan taiKhoan = infoDangKy.getTaiKhoanDomain().converToEntity();
+		Taikhoan taiKhoan = infoDangKy.getTaiKhoan().converToEntity();
 		taiKhoan.setManguoidung(maNguoiDung);
 		taiKhoanReponsitory.save(taiKhoan);
 
-		Khachhang khachHang = infoDangKy.getKhachHangDomain().converToEntity();
+		Khachhang khachHang = infoDangKy.getKhachHang().converToEntity();
 		khachHang.setMakh(maNguoiDung);
 		khachHangReponsitory.save(khachHang);
 
 		String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
-		String url = baseUrl + URL.DANG_KY + URL.KHACH_HANG + "/" + maNguoiDung;
-		emailService.sendSimpleMessage(infoDangKy.getTaiKhoanDomain().getEmail(), "Thông Báo Xác Thực Tài Khoản", url);
+		String url = baseUrl + URL.KHACH_HANG + URL.DANG_KY + "/" + maNguoiDung;
+		emailService.sendSimpleMessage(infoDangKy.getTaiKhoan().getEmail(), "Thông Báo Xác Thực Tài Khoản", url);
 	}
 
 	private int getTaiKhoanIdSeq() {

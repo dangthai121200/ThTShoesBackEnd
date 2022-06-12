@@ -1,16 +1,23 @@
 package com.herokuapp.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 /**
  * The persistent class for the phukien database table.
  * 
  */
 @Entity
-@NamedQuery(name="Phukien.findAll", query="SELECT p FROM Phukien p")
+@NamedQuery(name = "Phukien.findAll", query = "SELECT p FROM Phukien p")
 public class Phukien implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -22,24 +29,36 @@ public class Phukien implements Serializable {
 	@Lob
 	private String mota;
 
+	private String ngaythem;
+
 	private int soluong;
 
 	private String tenpk;
 
-	//bi-directional many-to-one association to Binhluan
-	@OneToMany(mappedBy="phukien")
+	private String urlanh;
+
+	// bi-directional many-to-one association to Binhluan
+	@OneToMany(mappedBy = "phukien")
 	private List<Binhluan> binhluans;
 
-	//bi-directional many-to-one association to Hinh
-	@OneToMany(mappedBy="phukien")
+	// bi-directional many-to-one association to Hinh
+	@OneToMany(mappedBy = "phukien")
 	private List<Hinh> hinhs;
 
-	//bi-directional many-to-one association to Loaiphukien
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="maloaipk")
+	// bi-directional many-to-one association to Loaiphukien
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "maloaipk")
 	private Loaiphukien loaiphukien;
 
 	public Phukien() {
+	}
+
+	public String getUrlanh() {
+		return urlanh;
+	}
+
+	public void setUrlanh(String urlanh) {
+		this.urlanh = urlanh;
 	}
 
 	public String getMapk() {
@@ -72,6 +91,14 @@ public class Phukien implements Serializable {
 
 	public void setSoluong(int soluong) {
 		this.soluong = soluong;
+	}
+
+	public String getNgaythem() {
+		return ngaythem;
+	}
+
+	public void setNgaythem(String ngaythem) {
+		this.ngaythem = ngaythem;
 	}
 
 	public String getTenpk() {
