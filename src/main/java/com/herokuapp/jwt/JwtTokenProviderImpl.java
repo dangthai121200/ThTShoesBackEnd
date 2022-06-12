@@ -1,6 +1,8 @@
 package com.herokuapp.jwt;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -29,7 +31,9 @@ public class JwtTokenProviderImpl implements JwtTokenProvider {
 		Date now = new Date();
 		Date expiryDate = new Date(now.getTime() + JWT_EXPIRATION);
 		UserDetailsConfigure userDetailsConfigure = (UserDetailsConfigure) user;
-		return BEARER + Jwts.builder().setSubject(userDetailsConfigure.getUsername()).setIssuedAt(now)
+		Map<String, Object> claims = new HashMap<>();
+		claims.put("manguoidung", userDetailsConfigure.getManguoidung());
+		return BEARER + Jwts.builder().setSubject(userDetailsConfigure.getUsername()).addClaims(claims).setIssuedAt(now)
 				.setExpiration(expiryDate).signWith(SignatureAlgorithm.HS512, JWT_SECRET).compact();
 	}
 

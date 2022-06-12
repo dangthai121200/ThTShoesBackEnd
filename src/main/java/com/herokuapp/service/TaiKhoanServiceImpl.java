@@ -32,6 +32,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService, UserDetailsService 
 		authorities.add(new SimpleGrantedAuthority(taikhoan.getQuyen().getName()));
 		UserDetailsConfigure userDetailsConfigure = new UserDetailsConfigure(taikhoan.getUsername(),
 				taikhoan.getPassword(), taikhoan.getTinhtrang() != 0, authorities);
+		userDetailsConfigure.setManguoidung(taikhoan.getManguoidung());
 		return userDetailsConfigure;
 	}
 

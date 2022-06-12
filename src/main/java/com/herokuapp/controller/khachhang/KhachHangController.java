@@ -3,6 +3,8 @@ package com.herokuapp.controller.khachhang;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +22,11 @@ public class KhachHangController {
 	@GetMapping(value = "/{idKH}")
 	public KhachHangDomain getInfoKhachHangById(@PathVariable(name = "idKH") String idKh) {
 		return khachHangService.getInfoKhachHangById(idKh);
+	}
+
+	@PutMapping()
+	public KhachHangDomain updateInfoKhachHang(@RequestBody KhachHangDomain khachHangDomain) {
+		return khachHangService.updateInfoKhachHang(khachHangDomain);
 	}
 
 }

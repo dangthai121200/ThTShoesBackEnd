@@ -4,4 +4,6 @@ import com.herokuapp.domain.khachhang.KhachHangDomain;
 
 public interface KhachHangService {
 	KhachHangDomain getInfoKhachHangById(String idKh);
+
+	KhachHangDomain updateInfoKhachHang(KhachHangDomain khachHangDomain);
 }

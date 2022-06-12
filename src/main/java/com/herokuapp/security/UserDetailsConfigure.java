@@ -12,6 +12,7 @@ public class UserDetailsConfigure implements UserDetails {
 	private String password;
 	private boolean tinhtrang;
 	private Set<GrantedAuthority> authorties;
+	private String manguoidung;
 
 	public UserDetailsConfigure(String username, String password, boolean tinhtrang, Set<GrantedAuthority> authorties) {
 		this.username = username;
@@ -56,6 +57,14 @@ public class UserDetailsConfigure implements UserDetails {
 	public boolean isEnabled() {
 
 		return tinhtrang;
+	}
+
+	public String getManguoidung() {
+		return manguoidung;
+	}
+
+	public void setManguoidung(String manguoidung) {
+		this.manguoidung = manguoidung;
 	}
 
 }
