@@ -2,6 +2,7 @@ package com.herokuapp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.herokuapp.domain.khachhang.InfoKhachHangDangKy;
@@ -29,6 +30,7 @@ public class DangKyServiceImpl implements DangKyService {
 	@Autowired
 	public EmailService emailService;
 
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void dangKyKhachHang(InfoKhachHangDangKy infoDangKy) {
 
@@ -47,6 +49,7 @@ public class DangKyServiceImpl implements DangKyService {
 		emailService.sendSimpleMessage(infoDangKy.getTaiKhoan().getEmail(), "Thông Báo Xác Thực Tài Khoản", url);
 	}
 
+	@Transactional(rollbackFor = Exception.class)
 	private int getTaiKhoanIdSeq() {
 		int id = taiKhoanSeqReponsitory.save(new Taikhoanseq()).getId();
 		return id;
@@ -59,6 +62,7 @@ public class DangKyServiceImpl implements DangKyService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void authencationTaiKhoan(String manguoidung) {
 		Taikhoan taikhoan = taiKhoanReponsitory.findById(manguoidung).get();
 		if (taikhoan != null && taikhoan.getTinhtrang() == 0) {

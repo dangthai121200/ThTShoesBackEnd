@@ -6,10 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.herokuapp.entity.Phukien;
 
 @Repository
+@Transactional
 public interface PhuKienReponsitory extends CrudRepository<Phukien, String> {
 
 	@Query(value = "Select pk.* from Phukien pk ORDER BY pk.mapk DESC LIMIT :amount", nativeQuery = true)

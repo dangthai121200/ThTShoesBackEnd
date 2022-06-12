@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.herokuapp.domain.khachhang.KhachHangDomain;
@@ -35,6 +36,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public KhachHangDomain updateInfoKhachHang(KhachHangDomain khachHangDomain) {
 		UserDetailsConfigure userDetailsConfigure = (UserDetailsConfigure) SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();

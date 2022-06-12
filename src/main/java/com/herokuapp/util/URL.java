@@ -15,5 +15,6 @@ public class URL {
 	
 
 	public static final String LOGIN = "/login";
+	public static final String CHANGE_PASSWORD = "/doimatkhau";
 
 }

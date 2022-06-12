@@ -4,14 +4,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.herokuapp.domain.common.ChangePasswordDomain;
 import com.herokuapp.entity.Taikhoan;
 import com.herokuapp.reponsitory.TaiKhoanReponsitory;
 import com.herokuapp.security.UserDetailsConfigure;
@@ -34,6 +39,21 @@ public class TaiKhoanServiceImpl implements TaiKhoanService, UserDetailsService 
 				taikhoan.getPassword(), taikhoan.getTinhtrang() != 0, authorities);
 		userDetailsConfigure.setManguoidung(taikhoan.getManguoidung());
 		return userDetailsConfigure;
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void changePassword(ChangePasswordDomain changePasswordDomain) {
+		UserDetailsConfigure userDetailsConfigure = (UserDetailsConfigure) SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		if (changePasswordDomain.getOldPassowrd().equals(userDetailsConfigure.getPassword())
+				&& changePasswordDomain.getManguoidung().equals(userDetailsConfigure.getManguoidung())) {
+			taiKhoanReponsitory.changePassword(changePasswordDomain.getNewPassword(),
+					changePasswordDomain.getManguoidung());
+		}
+		else {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Bạn không có quyền truy cập"); 
+		}
 	}
 
 }
