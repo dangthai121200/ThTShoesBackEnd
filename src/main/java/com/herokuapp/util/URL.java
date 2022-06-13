@@ -12,6 +12,7 @@ public class URL {
 	
 	public static final String UPDATE = "/capnhat";
 	
+	public static final String KHUYEN_MAI = "/khuyenmai";
 	
 
 	public static final String LOGIN = "/login";
