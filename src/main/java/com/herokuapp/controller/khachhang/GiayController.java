@@ -21,7 +21,7 @@ public class GiayController {
 	@GetMapping(value = URL.GIAY)
 	public ListGiay getAllGiay() {
 		ListGiay listGiay = new ListGiay();
-		listGiay.setGiayDomains(giayService.getAllGiay());
+		listGiay.setGiays(giayService.getAllGiay());
 		return listGiay;
 	}
 	

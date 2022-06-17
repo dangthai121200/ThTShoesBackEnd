@@ -31,4 +31,12 @@ public class KhuyenMaiServiceImpl implements KhuyenMaiService {
 		return listKhuyenMai;
 	}
 
+	@Override
+	public KhuyenMaiDomain getKhuyenMaiById(String idKm) {
+		Dskhuyenmai dskhuyenmai = khuyenMaiReponsitory.findById(idKm).get();
+		KhuyenMaiDomain khuyenMaiDomain = new KhuyenMaiDomain();
+		khuyenMaiDomain.converToDomain(dskhuyenmai);
+		return khuyenMaiDomain;
+	}
+
 }

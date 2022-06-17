@@ -5,17 +5,19 @@ import java.util.List;
 
 public class ListGiay {
 
-	private List<GiayDomainGeneral> giayDomains = new ArrayList<>();
+	private List<GiayDomainGeneral> giays = new ArrayList<>();
 
 	public ListGiay() {
 	}
 
-	public List<GiayDomainGeneral> getGiayDomains() {
-		return giayDomains;
+	public List<GiayDomainGeneral> getGiays() {
+		return giays;
 	}
 
-	public void setGiayDomains(List<GiayDomainGeneral> giayDomains) {
-		this.giayDomains = giayDomains;
+	public void setGiays(List<GiayDomainGeneral> giays) {
+		this.giays = giays;
 	}
+
+	
 
 }

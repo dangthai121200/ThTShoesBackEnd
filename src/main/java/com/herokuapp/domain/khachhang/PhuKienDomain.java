@@ -9,8 +9,8 @@ public class PhuKienDomain extends AbstractsDomain<Phukien> {
 	private String mota;
 	private int soluong;
 	private String tenpk;
-	private HinhDomain hinhDomain;
-	private LoaiPhuKienDomain loaiPhuKienDomain;
+	private HinhDomain hinh;
+	private LoaiPhuKienDomain loaiPhuKien;
 
 	public PhuKienDomain() {
 
@@ -56,20 +56,20 @@ public class PhuKienDomain extends AbstractsDomain<Phukien> {
 		this.tenpk = tenpk;
 	}
 
-	public HinhDomain getHinhDomain() {
-		return hinhDomain;
+	public HinhDomain getHinh() {
+		return hinh;
 	}
 
-	public void setHinhDomain(HinhDomain hinhDomain) {
-		this.hinhDomain = hinhDomain;
+	public void setHinh(HinhDomain hinh) {
+		this.hinh = hinh;
 	}
 
-	public LoaiPhuKienDomain getLoaiPhuKienDomain() {
-		return loaiPhuKienDomain;
+	public LoaiPhuKienDomain getLoaiPhuKien() {
+		return loaiPhuKien;
 	}
 
-	public void setLoaiPhuKienDomain(LoaiPhuKienDomain loaiPhuKienDomain) {
-		this.loaiPhuKienDomain = loaiPhuKienDomain;
+	public void setLoaiPhuKien(LoaiPhuKienDomain loaiPhuKien) {
+		this.loaiPhuKien = loaiPhuKien;
 	}
 
 	@Override

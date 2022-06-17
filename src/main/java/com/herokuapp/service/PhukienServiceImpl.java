@@ -30,4 +30,24 @@ public class PhukienServiceImpl implements PhukienService {
 		return phuKienDomains;
 	}
 
+	@Override
+	public List<PhuKienDomain> getAllPhukien() {
+		List<Phukien> phukiens = (List<Phukien>) phuKienReponsitory.findAll();
+		List<PhuKienDomain> phuKienDomains = new ArrayList<>();
+		phukiens.forEach(phukien -> {
+			PhuKienDomain phuKienDomain = new PhuKienDomain();
+			phuKienDomain.converToDomain(phukien);
+			phuKienDomains.add(phuKienDomain);
+		});
+		return phuKienDomains;
+	}
+
+	@Override
+	public PhuKienDomain getPhukienById(String idPk) {
+		Phukien phukien = phuKienReponsitory.findById(idPk).get();
+		PhuKienDomain phuKienDomain = new PhuKienDomain();
+		phuKienDomain.converToDomain(phukien);
+		return phuKienDomain;
+	}
+
 }

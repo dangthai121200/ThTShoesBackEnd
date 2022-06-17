@@ -2,9 +2,11 @@ package com.herokuapp.controller.khachhang;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.herokuapp.domain.khachhang.KhuyenMaiDomain;
 import com.herokuapp.domain.khachhang.ListKhuyenMai;
 import com.herokuapp.service.KhuyenMaiService;
 import com.herokuapp.util.URL;
@@ -20,5 +22,10 @@ public class KhuyenMaiController {
 	public ListKhuyenMai getAllKhuyenMai() {
 		return khuyenMaiService.getAllKhuyenMai();
 
+	}
+
+	@GetMapping(value = URL.KHUYEN_MAI + "/{idKm}")
+	public KhuyenMaiDomain getKhuyenMaiById(@PathVariable("idKm") String idKm) {
+		return khuyenMaiService.getKhuyenMaiById(idKm);
 	}
 }
