@@ -5,18 +5,18 @@ import java.util.List;
 
 public class PageHomeDomain {
 
-	List<GiayDomainGeneral> giayLatest = new ArrayList<>();
-	List<GiayDomainGeneral> giayBestSells = new ArrayList<>();
+	List<GiayDomain> giayLatest = new ArrayList<>();
+	List<GiayDomain> giayBestSells = new ArrayList<>();
 	List<PhuKienDomain> phuKienLatest = new ArrayList<>();
 
 	public PageHomeDomain() {
 	}
 
-	public List<GiayDomainGeneral> getGiayLatest() {
+	public List<GiayDomain> getGiayLatest() {
 		return giayLatest;
 	}
 
-	public void setGiayLatest(List<GiayDomainGeneral> giayLatest) {
+	public void setGiayLatest(List<GiayDomain> giayLatest) {
 		this.giayLatest = giayLatest;
 	}
 
@@ -28,11 +28,11 @@ public class PageHomeDomain {
 		this.phuKienLatest = phuKienLatest;
 	}
 
-	public List<GiayDomainGeneral> getGiayBestSells() {
+	public List<GiayDomain> getGiayBestSells() {
 		return giayBestSells;
 	}
 
-	public void setGiayBestSells(List<GiayDomainGeneral> giayBestSells) {
+	public void setGiayBestSells(List<GiayDomain> giayBestSells) {
 		this.giayBestSells = giayBestSells;
 	}
 

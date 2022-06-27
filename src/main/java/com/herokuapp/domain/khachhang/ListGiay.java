@@ -5,16 +5,16 @@ import java.util.List;
 
 public class ListGiay {
 
-	private List<GiayDomainGeneral> giays = new ArrayList<>();
+	private List<GiayDomain> giays = new ArrayList<>();
 
 	public ListGiay() {
 	}
 
-	public List<GiayDomainGeneral> getGiays() {
+	public List<GiayDomain> getGiays() {
 		return giays;
 	}
 
-	public void setGiays(List<GiayDomainGeneral> giays) {
+	public void setGiays(List<GiayDomain> giays) {
 		this.giays = giays;
 	}
 

@@ -2,14 +2,13 @@ package com.herokuapp.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
-import com.herokuapp.domain.khachhang.GiayDomainDetails;
-import com.herokuapp.domain.khachhang.GiayDomainGeneral;
+import com.herokuapp.domain.khachhang.GiayDomain;
 
 public interface GiayService {
-	
-	public List<GiayDomainGeneral> getListLatest(int amount);
-	public List<GiayDomainGeneral> getAllGiay();
-	public GiayDomainDetails getGiayById(String idGiay);
+
+	public List<GiayDomain> getListLatest(int amount);
+
+	public List<GiayDomain> getAllGiay();
+
+	public GiayDomain getGiayById(String idGiay);
 }

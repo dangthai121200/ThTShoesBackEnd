@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.herokuapp.domain.khachhang.GiayDomainDetails;
+import com.herokuapp.domain.khachhang.GiayDomain;
 import com.herokuapp.domain.khachhang.ListGiay;
 import com.herokuapp.service.GiayService;
 import com.herokuapp.util.URL;
@@ -26,7 +26,7 @@ public class GiayController {
 	}
 	
 	@GetMapping(value = URL.GIAY + "/{idGiay}")
-	public GiayDomainDetails getGiayById(@PathVariable(name = "idGiay") String idGiay) {
+	public GiayDomain getGiayById(@PathVariable(name = "idGiay") String idGiay) {
 		return giayService.getGiayById(idGiay);
 	}
 }

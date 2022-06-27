@@ -6,8 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.herokuapp.domain.khachhang.GiayDomainDetails;
-import com.herokuapp.domain.khachhang.GiayDomainGeneral;
+import com.herokuapp.domain.khachhang.GiayDomain;
 import com.herokuapp.entity.Giay;
 import com.herokuapp.reponsitory.GiayReponsitory;
 
@@ -18,12 +17,12 @@ public class GiayServiceImpl implements GiayService {
 	public GiayReponsitory giayReponsitory;
 
 	@Override
-	public List<GiayDomainGeneral> getListLatest(int amount) {
+	public List<GiayDomain> getListLatest(int amount) {
 		List<Giay> listGiayEntity = giayReponsitory.getListLatest(amount);
-		List<GiayDomainGeneral> giayDomains = new ArrayList<>();
+		List<GiayDomain> giayDomains = new ArrayList<>();
 		if (listGiayEntity.size() > 0) {
 			listGiayEntity.forEach(giay -> {
-				GiayDomainGeneral giayDomain = new GiayDomainGeneral();
+				GiayDomain giayDomain = new GiayDomain();
 				giayDomain.converToDomain(giay);
 				giayDomains.add(giayDomain);
 			});
@@ -32,11 +31,11 @@ public class GiayServiceImpl implements GiayService {
 	}
 
 	@Override
-	public List<GiayDomainGeneral> getAllGiay() {
+	public List<GiayDomain> getAllGiay() {
 		List<Giay> giayEntites = (List<Giay>) giayReponsitory.findAll();
-		List<GiayDomainGeneral> giayDomains = new ArrayList<>();
+		List<GiayDomain> giayDomains = new ArrayList<>();
 		giayEntites.forEach(giay -> {
-			GiayDomainGeneral giayDomain = new GiayDomainGeneral();
+			GiayDomain giayDomain = new GiayDomain();
 			giayDomain.converToDomain(giay);
 			giayDomains.add(giayDomain);
 		});
@@ -45,9 +44,9 @@ public class GiayServiceImpl implements GiayService {
 	}
 
 	@Override
-	public GiayDomainDetails getGiayById(String idGiay) {
+	public GiayDomain getGiayById(String idGiay) {
 		Giay giay = giayReponsitory.findById(idGiay).get();
-		GiayDomainDetails giayDomainDetails = new GiayDomainDetails();
+		GiayDomain giayDomainDetails = new GiayDomain();
 		giayDomainDetails.converToDomain(giay);
 		return giayDomainDetails;
 	}

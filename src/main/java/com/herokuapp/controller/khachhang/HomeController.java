@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.herokuapp.domain.khachhang.GiayDomainGeneral;
+import com.herokuapp.domain.khachhang.GiayDomain;
 import com.herokuapp.domain.khachhang.PageHomeDomain;
 import com.herokuapp.domain.khachhang.PhuKienDomain;
 import com.herokuapp.service.GiayService;
@@ -30,7 +30,7 @@ public class HomeController {
 	@GetMapping(URL.TRANG_CHU)
 	public PageHomeDomain home() {
 		PageHomeDomain pageHomeDomain = new PageHomeDomain();
-		List<GiayDomainGeneral> giayLatest = giayService.getListLatest(AMOUNT_GIAY_LASTEST);
+		List<GiayDomain> giayLatest = giayService.getListLatest(AMOUNT_GIAY_LASTEST);
 		List<PhuKienDomain> phuKienLatest = phukienService.getListLatest(AMOUNT_PHUKIEN_LASTEST);
 		pageHomeDomain.setGiayLatest(giayLatest);
 		pageHomeDomain.setPhuKienLatest(phuKienLatest);

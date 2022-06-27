@@ -21,7 +21,7 @@ public class Danhmuc implements Serializable {
 	private String tendanhmuc;
 
 	//bi-directional many-to-one association to Loaigiay
-	@OneToMany(mappedBy="danhmuc")
+	@OneToMany(mappedBy="danhmuc", fetch = FetchType.LAZY)
 	private List<Loaigiay> loaigiays;
 
 	public Danhmuc() {

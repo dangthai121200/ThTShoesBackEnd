@@ -6,7 +6,7 @@ import java.util.List;
 import com.herokuapp.abstracts.AbstractsDomain;
 import com.herokuapp.entity.Giay;
 
-public class GiayDomainDetails extends AbstractsDomain<Giay> {
+public class GiayDomain extends AbstractsDomain<Giay> {
 
 	private String magiay;
 	private String chatlieu;
