@@ -33,5 +33,7 @@
 		<class>com.herokuapp.entity.Sizeseq</class>
 		<class>com.herokuapp.entity.Taikhoan</class>
 		<class>com.herokuapp.entity.Taikhoanseq</class>
+		<class>com.herokuapp.entity.Khachvanglai</class>
+		<class>com.herokuapp.entity.Khachvanglaiseq</class>
 	</persistence-unit>
 </persistence>
