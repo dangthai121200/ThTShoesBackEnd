@@ -50,10 +50,34 @@ public class TaiKhoanServiceImpl implements TaiKhoanService, UserDetailsService 
 				&& changePasswordDomain.getManguoidung().equals(userDetailsConfigure.getManguoidung())) {
 			taiKhoanReponsitory.changePassword(changePasswordDomain.getNewPassword(),
 					changePasswordDomain.getManguoidung());
-		}
-		else {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Bạn không có quyền truy cập"); 
+		} else {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Bạn không có quyền truy cập");
 		}
 	}
 
+	@Override
+	public Boolean checkUsername(String username) {
+		try {
+			Taikhoan taikhoan = taiKhoanReponsitory.getTaiKhoanByUsername(username);
+			if (taikhoan != null) {
+				return true;
+			}
+			return false;
+		} catch (Exception ex) {
+			return false;
+		}
+	}
+
+	@Override
+	public Boolean checkEmail(String email) {
+		try {
+			Taikhoan taikhoan = taiKhoanReponsitory.getTaiKhoanByEmail(email);
+			if (taikhoan != null) {
+				return true;
+			}
+			return false;
+		} catch (Exception ex) {
+			return false;
+		}
+	}
 }

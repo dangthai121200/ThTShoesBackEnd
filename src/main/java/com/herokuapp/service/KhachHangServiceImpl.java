@@ -31,7 +31,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 			khachHangDomain.converToDomain(khachhang);
 			return khachHangDomain;
 		}
-		throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Bạn không có quyền truy cập"); 
+		throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Bạn không có quyền truy cập");
 
 	}
 
@@ -46,7 +46,20 @@ public class KhachHangServiceImpl implements KhachHangService {
 			khachHangDomainUpdate.converToDomain(khachhang);
 			return khachHangDomainUpdate;
 		}
-		throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Bạn không có quyền truy cập"); 
+		throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Bạn không có quyền truy cập");
+	}
+
+	@Override
+	public Boolean checkSdt(int sdt) {
+		try {
+			Khachhang khachhang = khachHangReponsitory.getKhachHangBySdt(sdt);
+			if (khachhang != null) {
+				return true;
+			}
+			return false;
+		} catch (Exception ex) {
+			return false;
+		}
 	}
 
 }
