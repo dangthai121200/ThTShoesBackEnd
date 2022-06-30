@@ -12,9 +12,10 @@ public class PhukienDonhangPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
+	@Column(insertable=false, updatable=false, unique=true, nullable=false, length=10)
 	private String mapk;
 
-	@Column(insertable=false, updatable=false)
+	@Column(insertable=false, updatable=false, unique=true, nullable=false, length=10)
 	private String madon;
 
 	public PhukienDonhangPK() {

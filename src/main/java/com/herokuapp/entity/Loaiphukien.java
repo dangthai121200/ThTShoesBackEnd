@@ -10,13 +10,17 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="loaiphukien")
 @NamedQuery(name="Loaiphukien.findAll", query="SELECT l FROM Loaiphukien l")
 public class Loaiphukien implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false, length=10)
 	private String maloaipk;
 
+	@Column(nullable=false, length=30)
 	private String tenloai;
 
 	//bi-directional many-to-one association to Phukien

@@ -3,31 +3,34 @@ package com.herokuapp.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 
+
 /**
  * The persistent class for the giay_donhang database table.
  * 
  */
 @Entity
-@Table(name = "giay_donhang")
-@NamedQuery(name = "GiayDonhang.findAll", query = "SELECT g FROM GiayDonhang g")
+@Table(name="giay_donhang")
+@NamedQuery(name="GiayDonhang.findAll", query="SELECT g FROM GiayDonhang g")
 public class GiayDonhang implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
 	private GiayDonhangPK id;
 
+	@Column(nullable=false)
 	private int soluong;
 
+	@Column(nullable=false)
 	private int tonggia;
 
-	// bi-directional many-to-one association to Donhang
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "madon", insertable = false, updatable = false)
+	//bi-directional many-to-one association to Donhang
+	@ManyToOne
+	@JoinColumn(name="madon", nullable=false, insertable=false, updatable=false)
 	private Donhang donhang;
 
-	// bi-directional many-to-one association to Giay
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "magiay", insertable = false, updatable = false)
+	//bi-directional many-to-one association to Giay
+	@ManyToOne
+	@JoinColumn(name="magiay", nullable=false, insertable=false, updatable=false)
 	private Giay giay;
 
 	public GiayDonhang() {

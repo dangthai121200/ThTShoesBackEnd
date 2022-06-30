@@ -3,6 +3,7 @@ package com.herokuapp.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -10,9 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the giay database table.
@@ -20,6 +21,7 @@ import javax.persistence.OneToMany;
  */
 @Entity
 @NamedQuery(name = "Giay.findAll", query = "SELECT g FROM Giay g")
+@Table(name = "giay")
 public class Giay implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -43,14 +45,12 @@ public class Giay implements Serializable {
 
 	private String urlanh;
 
+	@Column(name = "ma_lgiay_hang")
+	private int maLgiayHang;
+
 	// bi-directional many-to-one association to Binhluan
 	@OneToMany(mappedBy = "giay", fetch = FetchType.LAZY)
 	private List<Binhluan> binhluans;
-
-	// bi-directional many-to-one association to Loaigiay
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "maloaigiay")
-	private Loaigiay loaigiay;
 
 	// bi-directional many-to-many association to Size
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -169,14 +169,6 @@ public class Giay implements Serializable {
 		return binhluan;
 	}
 
-	public Loaigiay getLoaigiay() {
-		return this.loaigiay;
-	}
-
-	public void setLoaigiay(Loaigiay loaigiay) {
-		this.loaigiay = loaigiay;
-	}
-
 	public List<Size> getSizes() {
 		return this.sizes;
 	}
@@ -235,6 +227,14 @@ public class Giay implements Serializable {
 
 	public void setMausacs(List<Mausac> mausacs) {
 		this.mausacs = mausacs;
+	}
+
+	public int getMaLgiayHang() {
+		return maLgiayHang;
+	}
+
+	public void setMaLgiayHang(int maLgiayHang) {
+		this.maLgiayHang = maLgiayHang;
 	}
 
 }

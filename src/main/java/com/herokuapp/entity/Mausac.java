@@ -10,17 +10,29 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="mausac")
 @NamedQuery(name="Mausac.findAll", query="SELECT m FROM Mausac m")
 public class Mausac implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(unique=true, nullable=false, length=10)
 	private String mamau;
 
+	@Column(nullable=false, length=10)
 	private String tenmau;
 
 	//bi-directional many-to-many association to Giay
-	@ManyToMany(mappedBy = "mausacs")
+	@ManyToMany
+	@JoinTable(
+		name="giay_mau"
+		, joinColumns={
+			@JoinColumn(name="mamau", nullable=false)
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="magiay", nullable=false)
+			}
+		)
 	private List<Giay> giays;
 
 	public Mausac() {

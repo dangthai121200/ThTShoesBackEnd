@@ -16,6 +16,9 @@ public class GiayServiceImpl implements GiayService {
 	@Autowired
 	public GiayReponsitory giayReponsitory;
 
+	@Autowired
+	public LoaigiayHangDanhmucService loaigiayHangDanhmucService;
+
 	@Override
 	public List<GiayDomain> getListLatest(int amount) {
 		List<Giay> listGiayEntity = giayReponsitory.getListLatest(amount);
@@ -37,6 +40,8 @@ public class GiayServiceImpl implements GiayService {
 		giayEntites.forEach(giay -> {
 			GiayDomain giayDomain = new GiayDomain();
 			giayDomain.converToDomain(giay);
+			giayDomain.setLoaigiayHangDanhmuc(
+					loaigiayHangDanhmucService.findByMaLgiayHang(giay.getMaLgiayHang()));
 			giayDomains.add(giayDomain);
 		});
 

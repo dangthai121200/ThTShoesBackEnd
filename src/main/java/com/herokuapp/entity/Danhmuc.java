@@ -10,29 +10,31 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="danhmuc")
 @NamedQuery(name="Danhmuc.findAll", query="SELECT d FROM Danhmuc d")
 public class Danhmuc implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private String madm;
+	@Column(unique=true, nullable=false, length=10)
+	private String madanhmuc;
 
+	@Column(length=45)
 	private String tendanhmuc;
 
-	//bi-directional many-to-one association to Loaigiay
-	@OneToMany(mappedBy="danhmuc", fetch = FetchType.LAZY)
-	private List<Loaigiay> loaigiays;
+	//bi-directional many-to-one association to LoaigiayHangDanhmuc
+	@OneToMany(mappedBy="danhmuc")
+	private List<LoaigiayHangDanhmuc> loaigiayHangDanhmucs;
 
 	public Danhmuc() {
 	}
 
-	public String getMadm() {
-		return this.madm;
+	public String getMadanhmuc() {
+		return this.madanhmuc;
 	}
 
-	public void setMadm(String madm) {
-		this.madm = madm;
+	public void setMadanhmuc(String madanhmuc) {
+		this.madanhmuc = madanhmuc;
 	}
 
 	public String getTendanhmuc() {
@@ -43,26 +45,26 @@ public class Danhmuc implements Serializable {
 		this.tendanhmuc = tendanhmuc;
 	}
 
-	public List<Loaigiay> getLoaigiays() {
-		return this.loaigiays;
+	public List<LoaigiayHangDanhmuc> getLoaigiayHangDanhmucs() {
+		return this.loaigiayHangDanhmucs;
 	}
 
-	public void setLoaigiays(List<Loaigiay> loaigiays) {
-		this.loaigiays = loaigiays;
+	public void setLoaigiayHangDanhmucs(List<LoaigiayHangDanhmuc> loaigiayHangDanhmucs) {
+		this.loaigiayHangDanhmucs = loaigiayHangDanhmucs;
 	}
 
-	public Loaigiay addLoaigiay(Loaigiay loaigiay) {
-		getLoaigiays().add(loaigiay);
-		loaigiay.setDanhmuc(this);
+	public LoaigiayHangDanhmuc addLoaigiayHangDanhmuc(LoaigiayHangDanhmuc loaigiayHangDanhmuc) {
+		getLoaigiayHangDanhmucs().add(loaigiayHangDanhmuc);
+		loaigiayHangDanhmuc.setDanhmuc(this);
 
-		return loaigiay;
+		return loaigiayHangDanhmuc;
 	}
 
-	public Loaigiay removeLoaigiay(Loaigiay loaigiay) {
-		getLoaigiays().remove(loaigiay);
-		loaigiay.setDanhmuc(null);
+	public LoaigiayHangDanhmuc removeLoaigiayHangDanhmuc(LoaigiayHangDanhmuc loaigiayHangDanhmuc) {
+		getLoaigiayHangDanhmucs().remove(loaigiayHangDanhmuc);
+		loaigiayHangDanhmuc.setDanhmuc(null);
 
-		return loaigiay;
+		return loaigiayHangDanhmuc;
 	}
 
 }

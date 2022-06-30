@@ -2,6 +2,7 @@ package com.herokuapp.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -9,25 +10,35 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(name="khachvanglai")
 @NamedQuery(name="Khachvanglai.findAll", query="SELECT k FROM Khachvanglai k")
 public class Khachvanglai implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(unique=true, nullable=false, length=10)
 	private String makh;
 
+	@Column(nullable=false)
 	private String diachi;
 
+	@Column(length=30)
 	private String email;
 
-	@Lob
 	private String ghichu;
 
+	@Column(nullable=false, length=10)
 	private String ho;
 
+	@Column(nullable=false)
 	private int sdt;
 
+	@Column(nullable=false, length=30)
 	private String ten;
+
+	//bi-directional many-to-one association to Donhang
+	@OneToMany(mappedBy="khachvanglai")
+	private List<Donhang> donhangs;
 
 	public Khachvanglai() {
 	}
@@ -86,6 +97,28 @@ public class Khachvanglai implements Serializable {
 
 	public void setTen(String ten) {
 		this.ten = ten;
+	}
+
+	public List<Donhang> getDonhangs() {
+		return this.donhangs;
+	}
+
+	public void setDonhangs(List<Donhang> donhangs) {
+		this.donhangs = donhangs;
+	}
+
+	public Donhang addDonhang(Donhang donhang) {
+		getDonhangs().add(donhang);
+		donhang.setKhachvanglai(this);
+
+		return donhang;
+	}
+
+	public Donhang removeDonhang(Donhang donhang) {
+		getDonhangs().remove(donhang);
+		donhang.setKhachvanglai(null);
+
+		return donhang;
 	}
 
 }

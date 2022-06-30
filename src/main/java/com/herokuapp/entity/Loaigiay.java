@@ -10,36 +10,21 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="loaigiay")
 @NamedQuery(name="Loaigiay.findAll", query="SELECT l FROM Loaigiay l")
 public class Loaigiay implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(unique=true, nullable=false, length=10)
 	private String maloaigiay;
 
+	@Column(nullable=false, length=50)
 	private String tenloai;
 
-	//bi-directional many-to-one association to Giay
+	//bi-directional many-to-one association to LoaigiayHangDanhmuc
 	@OneToMany(mappedBy="loaigiay")
-	private List<Giay> giays;
-
-	//bi-directional many-to-one association to Danhmuc
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="madm")
-	private Danhmuc danhmuc;
-
-	//bi-directional many-to-many association to Hang
-	@ManyToMany
-	@JoinTable(
-		name="loaigiay_hang"
-		, joinColumns={
-			@JoinColumn(name="maloaigiay")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="mahang")
-			}
-		)
-	private List<Hang> hangs;
+	private List<LoaigiayHangDanhmuc> loaigiayHangDanhmucs;
 
 	public Loaigiay() {
 	}
@@ -60,42 +45,26 @@ public class Loaigiay implements Serializable {
 		this.tenloai = tenloai;
 	}
 
-	public List<Giay> getGiays() {
-		return this.giays;
+	public List<LoaigiayHangDanhmuc> getLoaigiayHangDanhmucs() {
+		return this.loaigiayHangDanhmucs;
 	}
 
-	public void setGiays(List<Giay> giays) {
-		this.giays = giays;
+	public void setLoaigiayHangDanhmucs(List<LoaigiayHangDanhmuc> loaigiayHangDanhmucs) {
+		this.loaigiayHangDanhmucs = loaigiayHangDanhmucs;
 	}
 
-	public Giay addGiay(Giay giay) {
-		getGiays().add(giay);
-		giay.setLoaigiay(this);
+	public LoaigiayHangDanhmuc addLoaigiayHangDanhmuc(LoaigiayHangDanhmuc loaigiayHangDanhmuc) {
+		getLoaigiayHangDanhmucs().add(loaigiayHangDanhmuc);
+		loaigiayHangDanhmuc.setLoaigiay(this);
 
-		return giay;
+		return loaigiayHangDanhmuc;
 	}
 
-	public Giay removeGiay(Giay giay) {
-		getGiays().remove(giay);
-		giay.setLoaigiay(null);
+	public LoaigiayHangDanhmuc removeLoaigiayHangDanhmuc(LoaigiayHangDanhmuc loaigiayHangDanhmuc) {
+		getLoaigiayHangDanhmucs().remove(loaigiayHangDanhmuc);
+		loaigiayHangDanhmuc.setLoaigiay(null);
 
-		return giay;
-	}
-
-	public Danhmuc getDanhmuc() {
-		return this.danhmuc;
-	}
-
-	public void setDanhmuc(Danhmuc danhmuc) {
-		this.danhmuc = danhmuc;
-	}
-
-	public List<Hang> getHangs() {
-		return this.hangs;
-	}
-
-	public void setHangs(List<Hang> hangs) {
-		this.hangs = hangs;
+		return loaigiayHangDanhmuc;
 	}
 
 }

@@ -1,9 +1,20 @@
 package com.herokuapp.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -11,13 +22,16 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="dskhuyenmai")
 @NamedQuery(name="Dskhuyenmai.findAll", query="SELECT d FROM Dskhuyenmai d")
 public class Dskhuyenmai implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(unique=true, nullable=false, length=10)
 	private String makm;
 
+	@Column(nullable=false)
 	private int giatrigiam;
 
 	@Lob
@@ -27,8 +41,10 @@ public class Dskhuyenmai implements Serializable {
 	private Date ngaybd;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	private Date ngaykt;
 
+	@Column(nullable=false)
 	private int soluong;
 
 	//bi-directional many-to-one association to Donhang
@@ -36,8 +52,8 @@ public class Dskhuyenmai implements Serializable {
 	private List<Donhang> donhangs;
 
 	//bi-directional many-to-one association to Nhanvien
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="manv")
+	@ManyToOne
+	@JoinColumn(name="manv", nullable=false)
 	private Nhanvien nhanvien;
 
 	public Dskhuyenmai() {

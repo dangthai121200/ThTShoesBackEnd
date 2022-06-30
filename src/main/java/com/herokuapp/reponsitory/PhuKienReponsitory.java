@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.herokuapp.entity.Phukien;
 
 @Repository
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public interface PhuKienReponsitory extends CrudRepository<Phukien, String> {
 
 	@Query(value = "Select pk.* from Phukien pk ORDER BY pk.mapk DESC LIMIT :amount", nativeQuery = true)

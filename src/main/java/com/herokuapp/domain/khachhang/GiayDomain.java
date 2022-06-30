@@ -16,11 +16,10 @@ public class GiayDomain extends AbstractsDomain<Giay> {
 	private String tengiay;
 	private int trongluong;
 	private String urlanh;
-	private LoaiGiayDomain loaigiay = new LoaiGiayDomain();
-	private List<BinhLuanDomain> binhluans = new ArrayList<>();
 	private List<SizeDomain> sizes = new ArrayList<>();
 	private List<HinhDomain> hinhs = new ArrayList<>();;
 	private List<MauSacDomain> mausacs = new ArrayList<>();
+	private LoaigiayHangDanhmucDomain loaigiayHangDanhmuc = new LoaigiayHangDanhmucDomain();
 
 	public String getMagiay() {
 		return magiay;
@@ -86,22 +85,6 @@ public class GiayDomain extends AbstractsDomain<Giay> {
 		this.trongluong = trongluong;
 	}
 
-	public LoaiGiayDomain getLoaigiay() {
-		return loaigiay;
-	}
-
-	public void setLoaigiay(LoaiGiayDomain loaigiay) {
-		this.loaigiay = loaigiay;
-	}
-
-	public List<BinhLuanDomain> getBinhluans() {
-		return binhluans;
-	}
-
-	public void setBinhluans(List<BinhLuanDomain> binhluans) {
-		this.binhluans = binhluans;
-	}
-
 	public List<SizeDomain> getSizes() {
 		return sizes;
 	}
@@ -126,6 +109,14 @@ public class GiayDomain extends AbstractsDomain<Giay> {
 		this.mausacs = mausacs;
 	}
 
+	public LoaigiayHangDanhmucDomain getLoaigiayHangDanhmuc() {
+		return loaigiayHangDanhmuc;
+	}
+
+	public void setLoaigiayHangDanhmuc(LoaigiayHangDanhmucDomain loaigiayHangDanhmuc) {
+		this.loaigiayHangDanhmuc = loaigiayHangDanhmuc;
+	}
+
 	@Override
 	public void converToDomain(Giay giay) {
 		this.magiay = giay.getMagiay();
@@ -136,13 +127,6 @@ public class GiayDomain extends AbstractsDomain<Giay> {
 		this.tengiay = giay.getTengiay();
 		this.trongluong = giay.getTrongluong();
 		this.urlanh = giay.getUrlanh();
-		this.loaigiay.converToDomain(giay.getLoaigiay());
-
-		giay.getBinhluans().forEach(binhluan -> {
-			BinhLuanDomain binhLuanDomain = new BinhLuanDomain();
-			binhLuanDomain.converToDomain(binhluan);
-			this.binhluans.add(binhLuanDomain);
-		});
 
 		giay.getSizes().forEach(size -> {
 			SizeDomain sizeDomain = new SizeDomain();

@@ -10,20 +10,25 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="khachhang")
 @NamedQuery(name="Khachhang.findAll", query="SELECT k FROM Khachhang k")
 public class Khachhang implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(unique=true, nullable=false, length=10)
 	private String makh;
 
-	@Lob
+	@Column(nullable=false)
 	private String diachi;
 
+	@Column(nullable=false, length=10)
 	private String ho;
 
+	@Column(nullable=false)
 	private int sdt;
 
+	@Column(nullable=false, length=30)
 	private String ten;
 
 	//bi-directional many-to-one association to Binhluan
@@ -35,10 +40,9 @@ public class Khachhang implements Serializable {
 	private List<Donhang> donhangs;
 
 	//bi-directional one-to-one association to Taikhoan
-	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="makh", referencedColumnName = "manguoidung")
+	@OneToOne
+	@JoinColumn(name="makh", nullable=false, insertable=false, updatable=false)
 	private Taikhoan taikhoan;
-	
 
 	public Khachhang() {
 	}
@@ -134,6 +138,5 @@ public class Khachhang implements Serializable {
 	public void setTaikhoan(Taikhoan taikhoan) {
 		this.taikhoan = taikhoan;
 	}
-
 
 }

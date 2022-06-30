@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.herokuapp.entity.Taikhoan;
 
 @Repository
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public interface TaiKhoanReponsitory extends CrudRepository<Taikhoan, String> {
 
 	@Query("Select tk from Taikhoan tk where tk.username = :username")

@@ -11,33 +11,44 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="donhang")
 @NamedQuery(name="Donhang.findAll", query="SELECT d FROM Donhang d")
 public class Donhang implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(unique=true, nullable=false, length=10)
 	private String madon;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date ngaytao;
 
+	@Column(nullable=false, length=50)
 	private String nguoinhan;
 
+	@Column(nullable=false)
 	private int soluong;
 
+	@Column(nullable=false, length=1)
 	private String tinhtrang;
 
+	@Column(nullable=false)
 	private int tonggia;
 
 	//bi-directional many-to-one association to Dskhuyenmai
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="makm")
 	private Dskhuyenmai dskhuyenmai;
 
 	//bi-directional many-to-one association to Khachhang
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="makh")
 	private Khachhang khachhang;
+
+	//bi-directional many-to-one association to Khachvanglai
+	@ManyToOne
+	@JoinColumn(name="makhvl")
+	private Khachvanglai khachvanglai;
 
 	//bi-directional many-to-one association to GiayDonhang
 	@OneToMany(mappedBy="donhang")
@@ -116,6 +127,14 @@ public class Donhang implements Serializable {
 
 	public void setKhachhang(Khachhang khachhang) {
 		this.khachhang = khachhang;
+	}
+
+	public Khachvanglai getKhachvanglai() {
+		return this.khachvanglai;
+	}
+
+	public void setKhachvanglai(Khachvanglai khachvanglai) {
+		this.khachvanglai = khachvanglai;
 	}
 
 	public List<GiayDonhang> getGiayDonhangs() {

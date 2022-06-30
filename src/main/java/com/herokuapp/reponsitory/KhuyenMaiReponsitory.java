@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.herokuapp.entity.Dskhuyenmai;
 
 @Repository
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public interface KhuyenMaiReponsitory extends CrudRepository<Dskhuyenmai, String> {
 
 }

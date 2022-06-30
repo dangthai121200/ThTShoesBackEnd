@@ -26,7 +26,7 @@ public class DanhmucDomain extends AbstractsDomain<Danhmuc> {
 
 	@Override
 	public void converToDomain(Danhmuc danhMuc) {
-		this.madm = danhMuc.getMadm();
+		this.madm = danhMuc.getMadanhmuc();
 		this.tendanhmuc = danhMuc.getTendanhmuc();
 	}
 

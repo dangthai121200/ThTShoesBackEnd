@@ -8,7 +8,7 @@ import com.herokuapp.entity.Khachhang;
 
 
 @Repository
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public interface KhachHangReponsitory extends CrudRepository<Khachhang, String> {
 
 }

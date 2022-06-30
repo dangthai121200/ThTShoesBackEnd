@@ -1,48 +1,47 @@
 package com.herokuapp.entity;
 
 import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.herokuapp.enums.Quyen;
+
 
 /**
  * The persistent class for the taikhoan database table.
  * 
  */
 @Entity
-//@Table(name = "taikhoan")
+@Table(name="taikhoan")
+@NamedQuery(name="Taikhoan.findAll", query="SELECT t FROM Taikhoan t")
 public class Taikhoan implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(unique=true, nullable=false, length=10)
 	private String manguoidung;
 
+	@Column(nullable=false, length=30)
 	private String email;
 
-	@Lob
+	@Column(nullable=false)
 	private String password;
 
+	@Column(nullable=false, length=1)
 	@Enumerated(EnumType.STRING)
 	private Quyen quyen;
 
-	private byte tinhtrang;
+	@Column(nullable=false)
+	private Byte tinhtrang;
 
+	@Column(nullable=false, length=20)
 	private String username;
 
-	// bi-directional one-to-one association to Khachhang
-	@OneToOne(mappedBy = "taikhoan", fetch = FetchType.LAZY)
+	//bi-directional one-to-one association to Khachhang
+	@OneToOne(mappedBy="taikhoan")
 	private Khachhang khachhang;
 
-	// bi-directional one-to-one association to Nhanvien
-	@OneToOne(mappedBy = "taikhoan", fetch = FetchType.LAZY)
+	//bi-directional one-to-one association to Nhanvien
+	@OneToOne(mappedBy="taikhoan")
 	private Nhanvien nhanvien;
 
 	public Taikhoan() {
@@ -111,4 +110,5 @@ public class Taikhoan implements Serializable {
 	public void setNhanvien(Nhanvien nhanvien) {
 		this.nhanvien = nhanvien;
 	}
+
 }

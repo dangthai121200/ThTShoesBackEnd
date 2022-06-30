@@ -10,31 +10,33 @@ import java.util.Date;
  * 
  */
 @Entity
+@Table(name="binhluan")
 @NamedQuery(name="Binhluan.findAll", query="SELECT b FROM Binhluan b")
 public class Binhluan implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(unique=true, nullable=false, length=10)
 	private String mabl;
 
-	@Lob
+	@Column(nullable=false, length=10)
 	private String mota;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date thoigian;
 
 	//bi-directional many-to-one association to Giay
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="magiay")
 	private Giay giay;
 
 	//bi-directional many-to-one association to Khachhang
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="makh")
+	@ManyToOne
+	@JoinColumn(name="makh", nullable=false)
 	private Khachhang khachhang;
 
 	//bi-directional many-to-one association to Phukien
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="mapk")
 	private Phukien phukien;
 

@@ -9,24 +9,26 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(name="hinh")
 @NamedQuery(name="Hinh.findAll", query="SELECT h FROM Hinh h")
 public class Hinh implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(unique=true, nullable=false, length=10)
 	private String mahinh;
 
-	@Lob
+	@Column(nullable=false)
 	private String duongdan;
 
 	//bi-directional many-to-one association to Giay
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="magiay")
+	@ManyToOne
+	@JoinColumn(name="magiay", nullable=false)
 	private Giay giay;
 
 	//bi-directional many-to-one association to Phukien
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="mapk")
+	@ManyToOne
+	@JoinColumn(name="mapk", nullable=false)
 	private Phukien phukien;
 
 	public Hinh() {

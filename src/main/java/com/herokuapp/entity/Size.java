@@ -10,13 +10,16 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="size")
 @NamedQuery(name="Size.findAll", query="SELECT s FROM Size s")
 public class Size implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(unique=true, nullable=false, length=10)
 	private String masize;
 
+	@Column(nullable=false, length=10)
 	private String tensize;
 
 	//bi-directional many-to-many association to Giay

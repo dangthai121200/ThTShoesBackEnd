@@ -10,18 +10,21 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="hang")
 @NamedQuery(name="Hang.findAll", query="SELECT h FROM Hang h")
 public class Hang implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(unique=true, nullable=false, length=10)
 	private String mahang;
 
+	@Column(nullable=false, length=50)
 	private String tenhang;
 
-	//bi-directional many-to-many association to Loaigiay
-	@ManyToMany(mappedBy="hangs")
-	private List<Loaigiay> loaigiays;
+	//bi-directional many-to-one association to LoaigiayHangDanhmuc
+	@OneToMany(mappedBy="hang")
+	private List<LoaigiayHangDanhmuc> loaigiayHangDanhmucs;
 
 	public Hang() {
 	}
@@ -42,12 +45,26 @@ public class Hang implements Serializable {
 		this.tenhang = tenhang;
 	}
 
-	public List<Loaigiay> getLoaigiays() {
-		return this.loaigiays;
+	public List<LoaigiayHangDanhmuc> getLoaigiayHangDanhmucs() {
+		return this.loaigiayHangDanhmucs;
 	}
 
-	public void setLoaigiays(List<Loaigiay> loaigiays) {
-		this.loaigiays = loaigiays;
+	public void setLoaigiayHangDanhmucs(List<LoaigiayHangDanhmuc> loaigiayHangDanhmucs) {
+		this.loaigiayHangDanhmucs = loaigiayHangDanhmucs;
+	}
+
+	public LoaigiayHangDanhmuc addLoaigiayHangDanhmuc(LoaigiayHangDanhmuc loaigiayHangDanhmuc) {
+		getLoaigiayHangDanhmucs().add(loaigiayHangDanhmuc);
+		loaigiayHangDanhmuc.setHang(this);
+
+		return loaigiayHangDanhmuc;
+	}
+
+	public LoaigiayHangDanhmuc removeLoaigiayHangDanhmuc(LoaigiayHangDanhmuc loaigiayHangDanhmuc) {
+		getLoaigiayHangDanhmucs().remove(loaigiayHangDanhmuc);
+		loaigiayHangDanhmuc.setHang(null);
+
+		return loaigiayHangDanhmuc;
 	}
 
 }

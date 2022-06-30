@@ -2,8 +2,8 @@ package com.herokuapp.reponsitory;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.herokuapp.entity.Giay;
 
 @Repository
-@Transactional
-public interface GiayReponsitory extends CrudRepository<Giay, String> {
+@Transactional(rollbackFor = Exception.class)
+public interface GiayReponsitory extends JpaRepository<Giay, String> {
 
 	// public List<Giay> getListBestSell(int sum);
 

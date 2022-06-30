@@ -1,64 +1,72 @@
 package com.herokuapp.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 
 /**
  * The persistent class for the phukien database table.
  * 
  */
 @Entity
-@NamedQuery(name = "Phukien.findAll", query = "SELECT p FROM Phukien p")
+@Table(name="phukien")
+@NamedQuery(name="Phukien.findAll", query="SELECT p FROM Phukien p")
 public class Phukien implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(unique=true, nullable=false, length=10)
 	private String mapk;
 
+	@Column(nullable=false)
 	private int gia;
 
 	@Lob
 	private String mota;
 
-	private String ngaythem;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date ngaythem;
 
+	@Column(nullable=false)
 	private int soluong;
 
+	@Column(nullable=false, length=30)
 	private String tenpk;
 
-	private String urlanh;
+	@Lob
+	private String urlAnh;
 
-	// bi-directional many-to-one association to Binhluan
-	@OneToMany(mappedBy = "phukien")
+	//bi-directional many-to-one association to Binhluan
+	@OneToMany(mappedBy="phukien")
 	private List<Binhluan> binhluans;
 
-	// bi-directional many-to-one association to Hinh
-	@OneToMany(mappedBy = "phukien")
+	//bi-directional many-to-one association to Hinh
+	@OneToMany(mappedBy="phukien")
 	private List<Hinh> hinhs;
 
-	// bi-directional many-to-one association to Loaiphukien
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "maloaipk")
+	//bi-directional many-to-one association to Loaiphukien
+	@ManyToOne
+	@JoinColumn(name="maloaipk", nullable=false)
 	private Loaiphukien loaiphukien;
 
+	//bi-directional many-to-one association to PhukienDonhang
+	@OneToMany(mappedBy="phukien")
+	private List<PhukienDonhang> phukienDonhangs;
+
 	public Phukien() {
-	}
-
-	public String getUrlanh() {
-		return urlanh;
-	}
-
-	public void setUrlanh(String urlanh) {
-		this.urlanh = urlanh;
 	}
 
 	public String getMapk() {
@@ -85,6 +93,14 @@ public class Phukien implements Serializable {
 		this.mota = mota;
 	}
 
+	public Date getNgaythem() {
+		return this.ngaythem;
+	}
+
+	public void setNgaythem(Date ngaythem) {
+		this.ngaythem = ngaythem;
+	}
+
 	public int getSoluong() {
 		return this.soluong;
 	}
@@ -93,20 +109,20 @@ public class Phukien implements Serializable {
 		this.soluong = soluong;
 	}
 
-	public String getNgaythem() {
-		return ngaythem;
-	}
-
-	public void setNgaythem(String ngaythem) {
-		this.ngaythem = ngaythem;
-	}
-
 	public String getTenpk() {
 		return this.tenpk;
 	}
 
 	public void setTenpk(String tenpk) {
 		this.tenpk = tenpk;
+	}
+
+	public String getUrlAnh() {
+		return this.urlAnh;
+	}
+
+	public void setUrlAnh(String urlAnh) {
+		this.urlAnh = urlAnh;
 	}
 
 	public List<Binhluan> getBinhluans() {
@@ -159,6 +175,28 @@ public class Phukien implements Serializable {
 
 	public void setLoaiphukien(Loaiphukien loaiphukien) {
 		this.loaiphukien = loaiphukien;
+	}
+
+	public List<PhukienDonhang> getPhukienDonhangs() {
+		return this.phukienDonhangs;
+	}
+
+	public void setPhukienDonhangs(List<PhukienDonhang> phukienDonhangs) {
+		this.phukienDonhangs = phukienDonhangs;
+	}
+
+	public PhukienDonhang addPhukienDonhang(PhukienDonhang phukienDonhang) {
+		getPhukienDonhangs().add(phukienDonhang);
+		phukienDonhang.setPhukien(this);
+
+		return phukienDonhang;
+	}
+
+	public PhukienDonhang removePhukienDonhang(PhukienDonhang phukienDonhang) {
+		getPhukienDonhangs().remove(phukienDonhang);
+		phukienDonhang.setPhukien(null);
+
+		return phukienDonhang;
 	}
 
 }
