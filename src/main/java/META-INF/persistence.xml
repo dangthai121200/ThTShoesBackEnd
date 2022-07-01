@@ -24,5 +24,6 @@
 		<class>com.herokuapp.entity.Size</class>
 		<class>com.herokuapp.entity.Taikhoan</class>
 		<class>com.herokuapp.entity.Taikhoanseq</class>
+		<class>com.herokuapp.entity.Donhangseq</class>
 	</persistence-unit>
 </persistence>

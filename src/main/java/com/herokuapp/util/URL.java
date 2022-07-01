@@ -16,6 +16,8 @@ public class URL {
 	
 	public static final String PHU_KIEN = "/phukien";
 	
+	public static final String DAT_HANG = "/dathang";
+	
 
 	public static final String LOGIN = "/login";
 	public static final String CHANGE_PASSWORD = "/doimatkhau";

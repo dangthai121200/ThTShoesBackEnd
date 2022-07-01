@@ -15,6 +15,7 @@ public class GiayDomain extends AbstractsDomain<Giay> {
 	private String mota;
 	private String tengiay;
 	private int trongluong;
+	private int soluong;
 	private String urlanh;
 	private List<SizeDomain> sizes = new ArrayList<>();
 	private List<HinhDomain> hinhs = new ArrayList<>();;
@@ -77,6 +78,14 @@ public class GiayDomain extends AbstractsDomain<Giay> {
 		this.tengiay = tengiay;
 	}
 
+	public int getSoluong() {
+		return soluong;
+	}
+
+	public void setSoluong(int soluong) {
+		this.soluong = soluong;
+	}
+
 	public int getTrongluong() {
 		return trongluong;
 	}
@@ -126,6 +135,7 @@ public class GiayDomain extends AbstractsDomain<Giay> {
 		this.mota = giay.getMota();
 		this.tengiay = giay.getTengiay();
 		this.trongluong = giay.getTrongluong();
+		this.soluong = giay.getSoluong();
 		this.urlanh = giay.getUrlanh();
 
 		giay.getSizes().forEach(size -> {

@@ -16,8 +16,8 @@ public class Khachvanglai implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique=true, nullable=false, length=10)
-	private String makh;
+	@Column(unique=true, length=10)
+	private String makh; // this is id default if no has khachangvanglai for dathang
 
 	@Column(nullable=false)
 	private String diachi;

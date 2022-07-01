@@ -1,68 +1,86 @@
 package com.herokuapp.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.herokuapp.enums.TinhTrang;
 
 /**
  * The persistent class for the donhang database table.
  * 
  */
 @Entity
-@Table(name="donhang")
-@NamedQuery(name="Donhang.findAll", query="SELECT d FROM Donhang d")
+@Table(name = "donhang")
+@NamedQuery(name = "Donhang.findAll", query = "SELECT d FROM Donhang d")
 public class Donhang implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique=true, nullable=false, length=10)
 	private String madon;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date ngaytao;
 
-	@Column(nullable=false, length=50)
+	@Column(nullable = false, length = 50)
 	private String nguoinhan;
 
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private int soluong;
 
-	@Column(nullable=false, length=1)
-	private String tinhtrang;
+	@Column(length = 1)
+	@Enumerated(EnumType.STRING)
+	private TinhTrang tinhtrang;
 
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private int tonggia;
 
-	//bi-directional many-to-one association to Dskhuyenmai
+	// bi-directional many-to-one association to Dskhuyenmai
 	@ManyToOne
-	@JoinColumn(name="makm")
+	@JoinColumn(name = "makm")
 	private Dskhuyenmai dskhuyenmai;
 
-	//bi-directional many-to-one association to Khachhang
+	// bi-directional many-to-one association to Khachhang
 	@ManyToOne
-	@JoinColumn(name="makh")
+	@JoinColumn(name = "makh")
 	private Khachhang khachhang;
 
-	//bi-directional many-to-one association to Khachvanglai
+	// bi-directional many-to-one association to Khachvanglai
 	@ManyToOne
-	@JoinColumn(name="makhvl")
+	@JoinColumn(name = "makhvl")
 	private Khachvanglai khachvanglai;
 
-	//bi-directional many-to-one association to GiayDonhang
-	@OneToMany(mappedBy="donhang")
+	// bi-directional many-to-one association to GiayDonhang
+	@OneToMany(mappedBy = "donhang")
 	private List<GiayDonhang> giayDonhangs;
 
-	//bi-directional many-to-many association to Nhanvien
-	@ManyToMany(mappedBy="donhangs")
+	// bi-directional many-to-many association to Nhanvien
+	@ManyToMany(mappedBy = "donhangs")
 	private List<Nhanvien> nhanviens;
 
-	//bi-directional many-to-one association to PhukienDonhang
-	@OneToMany(mappedBy="donhang")
-	private List<PhukienDonhang> phukienDonhangs;
+	// bi-directional many-to-one association to PhukienDonhang
+	@OneToMany(mappedBy = "donhang")
+	private List<PhukienDonhang> phukienDonhangs = new ArrayList<>();
 
 	public Donhang() {
+		this.madon = "";
+		this.ngaytao = new Date();
+		this.tinhtrang = TinhTrang.CHODUYET;
 	}
 
 	public String getMadon() {
@@ -97,11 +115,11 @@ public class Donhang implements Serializable {
 		this.soluong = soluong;
 	}
 
-	public String getTinhtrang() {
+	public TinhTrang getTinhtrang() {
 		return this.tinhtrang;
 	}
 
-	public void setTinhtrang(String tinhtrang) {
+	public void setTinhtrang(TinhTrang tinhtrang) {
 		this.tinhtrang = tinhtrang;
 	}
 
@@ -114,6 +132,9 @@ public class Donhang implements Serializable {
 	}
 
 	public Dskhuyenmai getDskhuyenmai() {
+		if (this.dskhuyenmai == null) {
+			this.dskhuyenmai = new Dskhuyenmai();
+		}
 		return this.dskhuyenmai;
 	}
 
@@ -122,6 +143,9 @@ public class Donhang implements Serializable {
 	}
 
 	public Khachhang getKhachhang() {
+		if (this.khachhang == null) {
+			this.khachhang = new Khachhang();
+		}
 		return this.khachhang;
 	}
 

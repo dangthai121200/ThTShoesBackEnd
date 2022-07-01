@@ -43,7 +43,6 @@ public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
 				authenticationManagerBean());
 		authenticationFilter.setJwtTokenProvider(jwtTokenProvider());
 
-		
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.authorizeRequests().antMatchers("/").permitAll();
 
@@ -53,16 +52,17 @@ public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.GIAY + "/**").permitAll();
 		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.KHUYEN_MAI + "/**").permitAll();
 		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.PHU_KIEN + "/**").permitAll();
+		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.DAT_HANG + "/**").permitAll();
 
 		http.authorizeRequests().anyRequest().authenticated();
 		// http.formLogin().and().httpBasic();
 
 		http.addFilter(authenticationFilter);
 		http.addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class);
-		
+
 		http.csrf().disable();
 		http.cors().configurationSource(corsConfigurationSource());
-		
+
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
 	public JwtTokenProvider jwtTokenProvider() {
 		return new JwtTokenProviderImpl();
 	}
-	
+
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
