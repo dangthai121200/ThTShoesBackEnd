@@ -10,6 +10,8 @@ public class URL {
 	
 	public static final String GIAY = "/giay";
 	
+	public static final String LOAI_GIAY = "/loaigiay";
+	
 	public static final String UPDATE = "/capnhat";
 	
 	public static final String KHUYEN_MAI = "/khuyenmai";
@@ -17,6 +19,8 @@ public class URL {
 	public static final String PHU_KIEN = "/phukien";
 	
 	public static final String DAT_HANG = "/dathang";
+	
+	public static final String LICH_SU_DAT_HANG = "/lichsudathang";
 	
 
 	public static final String LOGIN = "/login";

@@ -53,6 +53,7 @@ public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.KHUYEN_MAI + "/**").permitAll();
 		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.PHU_KIEN + "/**").permitAll();
 		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.DAT_HANG + "/**").permitAll();
+		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.LOAI_GIAY + "/**").permitAll();
 
 		http.authorizeRequests().anyRequest().authenticated();
 		// http.formLogin().and().httpBasic();
