@@ -55,15 +55,4 @@ public class DangKyController {
 		}
 	}
 
-	@RequestMapping(value = URL.DANG_KY + "/{manguoidung}", method = RequestMethod.GET)
-	public ResponseEntity<String> authencationTaiKhoan(@PathVariable(name = "manguoidung") String manguoidung) {
-		try {
-			dangKyService.authencationTaiKhoan(manguoidung);
-			return ResponseEntity.ok(manguoidung);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			return ResponseEntity.badRequest().body(manguoidung);
-		}
-
-	}
 }
