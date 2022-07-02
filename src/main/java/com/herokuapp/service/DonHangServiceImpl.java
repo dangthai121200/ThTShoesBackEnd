@@ -8,10 +8,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.herokuapp.domain.khachhang.AddDonHang;
+import com.herokuapp.domain.khachhang.DonHangDomain;
+import com.herokuapp.domain.khachhang.list.ListDonHang;
 import com.herokuapp.entity.Donhang;
 import com.herokuapp.entity.Giay;
 import com.herokuapp.entity.GiayDonhang;
 import com.herokuapp.entity.GiayDonhangPK;
+import com.herokuapp.entity.Khachhang;
 import com.herokuapp.entity.Phukien;
 import com.herokuapp.entity.PhukienDonhang;
 import com.herokuapp.entity.PhukienDonhangPK;
@@ -19,6 +22,7 @@ import com.herokuapp.reponsitory.DonHangReponsitory;
 import com.herokuapp.reponsitory.DonHangSeqReponsitory;
 import com.herokuapp.reponsitory.GiayDonHangReponsitory;
 import com.herokuapp.reponsitory.GiayReponsitory;
+import com.herokuapp.reponsitory.KhachHangReponsitory;
 import com.herokuapp.reponsitory.PhuKienReponsitory;
 import com.herokuapp.reponsitory.PhukienDonhangReponsitory;
 import com.herokuapp.util.PrefixId;
@@ -43,6 +47,9 @@ public class DonHangServiceImpl implements DonHangService {
 
 	@Autowired
 	public PhukienDonhangReponsitory phukienDonhangReponsitory;
+
+	@Autowired
+	public KhachHangReponsitory khachHangReponsitory;
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -83,6 +90,21 @@ public class DonHangServiceImpl implements DonHangService {
 			phukienDonhangs.add(phukienDonhang);
 		});
 		phukienDonhangReponsitory.saveAll(phukienDonhangs);
+	}
+
+	@Override
+	public ListDonHang getLichSuDonHangByKhachHangId(String makh) {
+		ListDonHang listDonHang = new ListDonHang();
+		List<DonHangDomain> donHangDomains = new ArrayList<>();
+		Khachhang khachhang = khachHangReponsitory.findById(makh).get();
+		List<Donhang> donhangs = khachhang.getDonhangs();
+		donhangs.forEach(donhang -> {
+			DonHangDomain donHangDomain = new DonHangDomain();
+			donHangDomain.converToDomain(donhang);
+			donHangDomains.add(donHangDomain);
+		});
+		listDonHang.setDonHangs(donHangDomains);
+		return listDonHang;
 	}
 
 }

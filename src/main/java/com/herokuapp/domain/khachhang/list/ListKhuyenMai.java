@@ -1,7 +1,9 @@
-package com.herokuapp.domain.khachhang;
+package com.herokuapp.domain.khachhang.list;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.herokuapp.domain.khachhang.KhuyenMaiDomain;
 
 public class ListKhuyenMai {
 	

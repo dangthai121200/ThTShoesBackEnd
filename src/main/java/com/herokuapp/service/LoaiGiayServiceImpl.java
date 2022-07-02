@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.herokuapp.domain.khachhang.ListLoaiGiay;
 import com.herokuapp.domain.khachhang.LoaiGiayDomain;
+import com.herokuapp.domain.khachhang.list.ListLoaiGiay;
 import com.herokuapp.entity.Loaigiay;
 import com.herokuapp.reponsitory.LoaiGiayReponsitory;
 

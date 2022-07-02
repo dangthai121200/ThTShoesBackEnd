@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.herokuapp.entity.Donhang;
 
-
 @Repository
 @Transactional(rollbackFor = Exception.class)
 public interface DonHangReponsitory extends JpaRepository<Donhang, String> {

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.herokuapp.domain.khachhang.KhuyenMaiDomain;
-import com.herokuapp.domain.khachhang.ListKhuyenMai;
+import com.herokuapp.domain.khachhang.list.ListKhuyenMai;
 import com.herokuapp.entity.Dskhuyenmai;
 import com.herokuapp.reponsitory.KhuyenMaiReponsitory;
 

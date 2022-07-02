@@ -2,12 +2,15 @@ package com.herokuapp.controller.khachhang;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.herokuapp.domain.khachhang.AddDonHang;
+import com.herokuapp.domain.khachhang.list.ListDonHang;
+import com.herokuapp.security.UserDetailsConfigure;
 import com.herokuapp.service.DonHangService;
 import com.herokuapp.util.URL;
 
@@ -27,7 +30,21 @@ public class DonHangController {
 			ex.printStackTrace();
 			return ResponseEntity.badRequest().body("Có lỗi xảy ra vùi lòng thử lại");
 		}
-		
+
 	}
-	
+
+	@RequestMapping(value = URL.DAT_HANG + URL.LICH_SU_DAT_HANG, method = RequestMethod.GET)
+	public ListDonHang getLichSuDonHangByKhachHangId() {
+		String makh = ((UserDetailsConfigure) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+				.getManguoidung();
+		try {
+			ListDonHang listDonHang = donHangService.getLichSuDonHangByKhachHangId(makh);
+			return listDonHang;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+
+	}
+
 }

@@ -4,6 +4,7 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -52,8 +53,9 @@ public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.GIAY + "/**").permitAll();
 		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.KHUYEN_MAI + "/**").permitAll();
 		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.PHU_KIEN + "/**").permitAll();
-		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.DAT_HANG + "/**").permitAll();
 		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.LOAI_GIAY + "/**").permitAll();
+
+		http.authorizeRequests().antMatchers(HttpMethod.POST, URL.KHACH_HANG + URL.DAT_HANG).permitAll();
 
 		http.authorizeRequests().anyRequest().authenticated();
 		// http.formLogin().and().httpBasic();

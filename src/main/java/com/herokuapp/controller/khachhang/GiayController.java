@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.herokuapp.domain.khachhang.GiayDomain;
-import com.herokuapp.domain.khachhang.ListGiay;
+import com.herokuapp.domain.khachhang.list.ListGiay;
 import com.herokuapp.service.GiayService;
 import com.herokuapp.util.URL;
 

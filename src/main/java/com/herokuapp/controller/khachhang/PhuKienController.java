@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.herokuapp.domain.khachhang.ListPhukien;
 import com.herokuapp.domain.khachhang.PhuKienDomain;
+import com.herokuapp.domain.khachhang.list.ListPhukien;
 import com.herokuapp.service.PhukienService;
 import com.herokuapp.util.URL;
 
