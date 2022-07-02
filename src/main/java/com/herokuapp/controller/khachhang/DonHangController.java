@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.herokuapp.domain.khachhang.AddDonHang;
+import com.herokuapp.domain.khachhang.AddDonHangVangLai;
 import com.herokuapp.domain.khachhang.list.ListDonHang;
 import com.herokuapp.security.UserDetailsConfigure;
 import com.herokuapp.service.DonHangService;
@@ -43,6 +44,18 @@ public class DonHangController {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return null;
+		}
+
+	}
+	
+	@RequestMapping(value = URL.DAT_HANG + URL.KHACH_VANG_LAI, method = RequestMethod.POST)
+	public ResponseEntity<String> addDonHangKhachVanglai(@RequestBody AddDonHangVangLai donHangVangLai) {
+		try {
+			donHangService.addDonHangKhachVangLai(donHangVangLai);
+			return ResponseEntity.ok("Thêm thành công");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ResponseEntity.badRequest().body("Có lỗi xảy ra vùi lòng thử lại");
 		}
 
 	}

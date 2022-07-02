@@ -154,6 +154,9 @@ public class Donhang implements Serializable {
 	}
 
 	public Khachvanglai getKhachvanglai() {
+		if(this.khachvanglai == null) {
+			this.khachvanglai = new Khachvanglai();
+		}
 		return this.khachvanglai;
 	}
 

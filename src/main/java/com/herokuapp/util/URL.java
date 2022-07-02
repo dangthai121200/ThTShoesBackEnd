@@ -20,6 +20,8 @@ public class URL {
 	
 	public static final String DAT_HANG = "/dathang";
 	
+	public static final String KHACH_VANG_LAI = "/khachvanglai";
+	
 	public static final String LICH_SU_DAT_HANG = "/lichsudathang";
 	
 

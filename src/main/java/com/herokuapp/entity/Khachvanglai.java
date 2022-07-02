@@ -41,6 +41,7 @@ public class Khachvanglai implements Serializable {
 	private List<Donhang> donhangs;
 
 	public Khachvanglai() {
+		this.makh = "";
 	}
 
 	public String getMakh() {
