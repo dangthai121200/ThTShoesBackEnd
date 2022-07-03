@@ -1,4 +1,4 @@
-package com.herokuapp.service;
+package com.herokuapp.service.khachhang;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

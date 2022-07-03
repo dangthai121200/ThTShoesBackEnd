@@ -1,4 +1,4 @@
-package com.herokuapp.service;
+package com.herokuapp.service.khachhang;
 
 import com.herokuapp.domain.khachhang.KhuyenMaiDomain;
 import com.herokuapp.domain.khachhang.list.ListKhuyenMai;

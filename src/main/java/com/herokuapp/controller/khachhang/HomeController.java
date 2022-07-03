@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.herokuapp.domain.khachhang.GiayDomain;
 import com.herokuapp.domain.khachhang.PageHomeDomain;
 import com.herokuapp.domain.khachhang.PhuKienDomain;
-import com.herokuapp.service.GiayService;
-import com.herokuapp.service.PhukienService;
+import com.herokuapp.service.khachhang.GiayService;
+import com.herokuapp.service.khachhang.PhukienService;
 import com.herokuapp.util.URL;
 
 @RestController

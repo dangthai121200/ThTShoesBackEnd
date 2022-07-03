@@ -12,7 +12,7 @@ import com.herokuapp.domain.khachhang.AddDonHang;
 import com.herokuapp.domain.khachhang.AddDonHangVangLai;
 import com.herokuapp.domain.khachhang.list.ListDonHang;
 import com.herokuapp.security.UserDetailsConfigure;
-import com.herokuapp.service.DonHangService;
+import com.herokuapp.service.khachhang.DonHangService;
 import com.herokuapp.util.URL;
 
 @RestController

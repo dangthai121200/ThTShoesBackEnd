@@ -2,20 +2,19 @@ package com.herokuapp.controller.khachhang;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.herokuapp.domain.khachhang.InfoKhachHangDangKy;
-import com.herokuapp.service.DangKyService;
-import com.herokuapp.service.KhachHangService;
-import com.herokuapp.service.TaiKhoanService;
+import com.herokuapp.service.common.TaiKhoanService;
+import com.herokuapp.service.khachhang.DangKyService;
+import com.herokuapp.service.khachhang.KhachHangService;
 import com.herokuapp.util.URL;
 
 @RestController
-@RequestMapping(URL.KHACH_HANG)
+@RequestMapping(URL.NHAN_VIEN)
 public class DangKyController {
 
 	@Autowired
@@ -23,7 +22,7 @@ public class DangKyController {
 
 	@Autowired
 	private TaiKhoanService taiKhoanService;
-	
+
 	@Autowired
 	private KhachHangService khachHangService;
 
@@ -39,7 +38,7 @@ public class DangKyController {
 		if (checkEmail) {
 			messError.append("Email đã tồn tại, ");
 		}
-		if(checkSdt) {
+		if (checkSdt) {
 			messError.append("Số điện thoại đã tồn tại, ");
 		}
 		try {

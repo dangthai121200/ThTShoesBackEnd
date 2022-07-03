@@ -1,4 +1,4 @@
-package com.herokuapp.service;
+package com.herokuapp.service.common;
 
 import com.herokuapp.domain.common.ChangePasswordDomain;
 

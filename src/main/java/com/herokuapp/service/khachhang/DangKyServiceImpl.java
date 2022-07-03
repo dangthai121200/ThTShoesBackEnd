@@ -1,4 +1,4 @@
-package com.herokuapp.service;
+package com.herokuapp.service.khachhang;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,9 +9,11 @@ import com.herokuapp.domain.khachhang.InfoKhachHangDangKy;
 import com.herokuapp.entity.Khachhang;
 import com.herokuapp.entity.Taikhoan;
 import com.herokuapp.entity.Taikhoanseq;
+import com.herokuapp.enums.Quyen;
 import com.herokuapp.reponsitory.KhachHangReponsitory;
 import com.herokuapp.reponsitory.TaiKhoanReponsitory;
 import com.herokuapp.reponsitory.TaiKhoanSeqReponsitory;
+import com.herokuapp.service.common.EmailService;
 import com.herokuapp.util.PrefixId;
 import com.herokuapp.util.URL;
 
@@ -37,6 +39,7 @@ public class DangKyServiceImpl implements DangKyService {
 		String maNguoiDung = PrefixId.KHACHHANG + getTaiKhoanIdSeq();
 
 		Taikhoan taiKhoan = infoDangKy.getTaiKhoan().converToEntity();
+		taiKhoan.setQuyen(Quyen.KHACHHANG);
 		taiKhoan.setManguoidung(maNguoiDung);
 		taiKhoanReponsitory.save(taiKhoan);
 
@@ -44,21 +47,17 @@ public class DangKyServiceImpl implements DangKyService {
 		khachHang.setMakh(maNguoiDung);
 		khachHangReponsitory.save(khachHang);
 
-		String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
-		String url = baseUrl + URL.KHACH_HANG + URL.DANG_KY + "/" + maNguoiDung;
-		emailService.sendSimpleMessage(infoDangKy.getTaiKhoan().getEmail(), "Thông Báo Xác Thực Tài Khoản", url);
+		if (infoDangKy.getTaiKhoan().getEmail() != null) {
+			String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
+			String url = baseUrl + URL.KHACH_HANG + URL.DANG_KY + "/" + maNguoiDung;
+			emailService.sendSimpleMessage(infoDangKy.getTaiKhoan().getEmail(), "Thông Báo Xác Thực Tài Khoản", url);
+		}
 	}
 
 	@Transactional(rollbackFor = Exception.class)
 	private int getTaiKhoanIdSeq() {
 		int id = taiKhoanSeqReponsitory.save(new Taikhoanseq()).getId();
 		return id;
-	}
-
-	@Override
-	public void dangKyNhanVien(InfoKhachHangDangKy infoDangKy) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override

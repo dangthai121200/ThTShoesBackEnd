@@ -1,5 +1,7 @@
 package com.herokuapp.domain.khachhang;
 
+import com.herokuapp.domain.common.TaiKhoanDomain;
+
 public class InfoKhachHangDangKy {
 
 	private KhachHangDomain khachHang;

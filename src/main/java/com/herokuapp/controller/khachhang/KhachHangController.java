@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.herokuapp.domain.khachhang.KhachHangDomain;
-import com.herokuapp.service.KhachHangService;
+import com.herokuapp.service.khachhang.KhachHangService;
 import com.herokuapp.util.URL;
 
 @RequestMapping(value = URL.KHACH_HANG)

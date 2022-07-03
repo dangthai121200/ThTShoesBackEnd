@@ -1,4 +1,4 @@
-package com.herokuapp.domain.khachhang;
+package com.herokuapp.domain.common;
 
 import com.herokuapp.abstracts.AbstractsDomain;
 import com.herokuapp.entity.Taikhoan;
@@ -11,8 +11,7 @@ public class TaiKhoanDomain extends AbstractsDomain<Taikhoan> {
 	private String username;
 	private String password;
 
-	// default values of TaiKhoan when register
-	private Quyen quyen = Quyen.KHACHHANG;
+	private Quyen quyen;
 	private byte tinhtrang = 0;
 
 	public TaiKhoanDomain() {

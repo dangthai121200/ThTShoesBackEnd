@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.herokuapp.domain.common.ChangePasswordDomain;
-import com.herokuapp.service.TaiKhoanService;
+import com.herokuapp.service.common.TaiKhoanService;
 import com.herokuapp.util.URL;
 
 @RestController

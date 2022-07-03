@@ -1,4 +1,4 @@
-package com.herokuapp.service;
+package com.herokuapp.service.khachhang;
 
 import java.util.ArrayList;
 import java.util.List;

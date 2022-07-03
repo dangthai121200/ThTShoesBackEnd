@@ -24,6 +24,8 @@ public class URL {
 	
 	public static final String LICH_SU_DAT_HANG = "/lichsudathang";
 	
+	public static final String NHAN_VIEN = "/nhanvien";
+	
 
 	public static final String LOGIN = "/login";
 	public static final String CHANGE_PASSWORD = "/doimatkhau";
