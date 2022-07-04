@@ -48,9 +48,8 @@ public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.authorizeRequests().antMatchers("/").permitAll();
 
-		
 		// URL KHACH HANG
-		
+
 		http.authorizeRequests().antMatchers(URL.LOGIN + "/**").permitAll();
 		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.DANG_KY + "/**").permitAll();
 		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.TRANG_CHU + "/**").permitAll();
@@ -59,12 +58,13 @@ public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.PHU_KIEN + "/**").permitAll();
 		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.LOAI_GIAY + "/**").permitAll();
 
-		http.authorizeRequests().antMatchers(HttpMethod.POST, URL.KHACH_HANG + URL.DAT_HANG).permitAll();
+		http.authorizeRequests().antMatchers(HttpMethod.POST, URL.KHACH_HANG + URL.DAT_HANG)
+				.hasAuthority(Quyen.KHACHHANG.getName());
 		http.authorizeRequests().antMatchers(HttpMethod.POST, URL.KHACH_HANG + URL.DAT_HANG + URL.KHACH_VANG_LAI)
 				.permitAll();
 
 		// URL NHAN VIEN
-		
+
 		http.authorizeRequests().antMatchers(HttpMethod.POST, URL.NHAN_VIEN).hasAuthority(Quyen.ADMIN.getName());
 
 		http.authorizeRequests().antMatchers("/css/**", "/asssets/**").permitAll();

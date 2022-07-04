@@ -6,8 +6,10 @@ import java.util.Map;
 public class AddDonHang {
 
 	private String nguoinhan;
+	private String diachi;
+	private String ghichu;
+	private String maloaithanhtoan;
 	private String maKhuyenMai;
-	private String maKhachHang;
 	private Map<String, Integer> giays = new HashMap<String, Integer>();
 	private Map<String, Integer> phukiens = new HashMap<String, Integer>();
 
@@ -27,14 +29,6 @@ public class AddDonHang {
 		this.maKhuyenMai = maKhuyenMai;
 	}
 
-	public String getMaKhachHang() {
-		return maKhachHang;
-	}
-
-	public void setMaKhachHang(String maKhachHang) {
-		this.maKhachHang = maKhachHang;
-	}
-
 	public Map<String, Integer> getGiays() {
 		return giays;
 	}
@@ -49,6 +43,30 @@ public class AddDonHang {
 
 	public void setPhukiens(Map<String, Integer> phukiens) {
 		this.phukiens = phukiens;
+	}
+
+	public String getDiachi() {
+		return diachi;
+	}
+
+	public void setDiachi(String diachi) {
+		this.diachi = diachi;
+	}
+
+	public String getGhichu() {
+		return ghichu;
+	}
+
+	public void setGhichu(String ghichu) {
+		this.ghichu = ghichu;
+	}
+
+	public String getMaloaithanhtoan() {
+		return maloaithanhtoan;
+	}
+
+	public void setMaloaithanhtoan(String maloaithanhtoan) {
+		this.maloaithanhtoan = maloaithanhtoan;
 	}
 
 }

@@ -11,6 +11,7 @@ public class AddDonHangVangLai {
 	private String email;
 	private String ghichu;
 	private String makhuyenmai;
+	private String maloaithanhtoan;
 	private Map<String, Integer> giays = new HashMap<String, Integer>();
 	private Map<String, Integer> phukiens = new HashMap<String, Integer>();
 
@@ -87,6 +88,14 @@ public class AddDonHangVangLai {
 
 	public void setMakhuyenmai(String makhuyenmai) {
 		this.makhuyenmai = makhuyenmai;
+	}
+
+	public String getMaloaithanhtoan() {
+		return maloaithanhtoan;
+	}
+
+	public void setMaloaithanhtoan(String maloaithanhtoan) {
+		this.maloaithanhtoan = maloaithanhtoan;
 	}
 
 }

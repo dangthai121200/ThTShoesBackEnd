@@ -9,8 +9,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
@@ -50,6 +52,12 @@ public class Donhang implements Serializable {
 	@Column(nullable = false)
 	private int tonggia;
 
+	@Lob
+	private String diachi;
+
+	@Lob
+	private String ghichu;
+
 	// bi-directional many-to-one association to Dskhuyenmai
 	@ManyToOne
 	@JoinColumn(name = "makm")
@@ -76,6 +84,10 @@ public class Donhang implements Serializable {
 	// bi-directional many-to-one association to PhukienDonhang
 	@OneToMany(mappedBy = "donhang")
 	private List<PhukienDonhang> phukienDonhangs = new ArrayList<>();
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "maloaithanhtoan")
+	private Phuongthucthanhtoan phuongthucthanhtoan;
 
 	public Donhang() {
 		this.madon = "";
@@ -131,6 +143,22 @@ public class Donhang implements Serializable {
 		this.tonggia = tonggia;
 	}
 
+	public String getDiachi() {
+		return diachi;
+	}
+
+	public void setDiachi(String diachi) {
+		this.diachi = diachi;
+	}
+
+	public String getGhichu() {
+		return ghichu;
+	}
+
+	public void setGhichu(String ghichu) {
+		this.ghichu = ghichu;
+	}
+
 	public Dskhuyenmai getDskhuyenmai() {
 		if (this.dskhuyenmai == null) {
 			this.dskhuyenmai = new Dskhuyenmai();
@@ -154,7 +182,7 @@ public class Donhang implements Serializable {
 	}
 
 	public Khachvanglai getKhachvanglai() {
-		if(this.khachvanglai == null) {
+		if (this.khachvanglai == null) {
 			this.khachvanglai = new Khachvanglai();
 		}
 		return this.khachvanglai;
@@ -214,6 +242,17 @@ public class Donhang implements Serializable {
 		phukienDonhang.setDonhang(null);
 
 		return phukienDonhang;
+	}
+
+	public Phuongthucthanhtoan getPhuongthucthanhtoan() {
+		if(this.phuongthucthanhtoan == null) {
+			this.phuongthucthanhtoan = new Phuongthucthanhtoan();
+		}
+		return phuongthucthanhtoan;
+	}
+
+	public void setPhuongthucthanhtoan(Phuongthucthanhtoan phuongthucthanhtoan) {
+		this.phuongthucthanhtoan = phuongthucthanhtoan;
 	}
 
 }
