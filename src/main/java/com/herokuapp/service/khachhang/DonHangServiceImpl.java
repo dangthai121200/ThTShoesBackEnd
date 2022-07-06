@@ -1,6 +1,7 @@
 package com.herokuapp.service.khachhang;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -80,6 +81,7 @@ public class DonHangServiceImpl implements DonHangService {
 		Donhang donhang = new Donhang();
 		List<GiayDonhang> giayDonhangs = new ArrayList<>();
 		List<PhukienDonhang> phukienDonhangs = new ArrayList<>();
+		Dskhuyenmai dskhuyenmai = null;
 		String makh = ((UserDetailsConfigure) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
 				.getManguoidung();
 
@@ -101,10 +103,13 @@ public class DonHangServiceImpl implements DonHangService {
 		donhang.setKhachhang(khachhang);
 
 		if (addDonHang.getMaKhuyenMai() != null && !StringUtils.isEmpty((addDonHang.getMaKhuyenMai()))) {
-			Dskhuyenmai dskhuyenmai = new Dskhuyenmai();
-			dskhuyenmai.setMakm(addDonHang.getMaKhuyenMai());
-			donhang.setDskhuyenmai(dskhuyenmai);
-			phanTramGiam = khuyenMaiReponsitory.findById(addDonHang.getMaKhuyenMai()).get().getGiatrigiam();
+			dskhuyenmai = khuyenMaiReponsitory.findById(addDonHang.getMaKhuyenMai()).get();
+			if (dskhuyenmai.getNgaykt().after(new Date()) && dskhuyenmai.getSoluong() > 0) {
+				donhang.setDskhuyenmai(dskhuyenmai);
+				phanTramGiam = dskhuyenmai.getGiatrigiam();
+				dskhuyenmai.setSoluong(dskhuyenmai.getSoluong() - 1);
+			}
+
 		}
 
 		for (Map.Entry<String, Integer> item : addDonHang.getGiays().entrySet()) {
@@ -141,6 +146,9 @@ public class DonHangServiceImpl implements DonHangService {
 		donhang.setTonggia(tonggia - soTienGiam);
 		donhang.setSoluong(soluong);
 
+		if (dskhuyenmai != null) {
+			khuyenMaiReponsitory.save(dskhuyenmai);
+		}
 		donHangReponsitory.save(donhang);
 		giayDonHangReponsitory.saveAll(giayDonhangs);
 		phukienDonhangReponsitory.saveAll(phukienDonhangs);
@@ -168,6 +176,7 @@ public class DonHangServiceImpl implements DonHangService {
 		int soluong = 0;
 		int phanTramGiam = 0;
 		Donhang donhang = new Donhang();
+		Dskhuyenmai dskhuyenmai = null;
 		List<GiayDonhang> giayDonhangs = new ArrayList<>();
 		List<PhukienDonhang> phukienDonhangs = new ArrayList<>();
 
@@ -195,16 +204,23 @@ public class DonHangServiceImpl implements DonHangService {
 		donhang.setDiachi(addDonHangVangLai.getDiachi());
 		if (addDonHangVangLai.getGhichu() != null && !StringUtils.isEmpty(addDonHangVangLai.getGhichu())) {
 			donhang.setGhichu(addDonHangVangLai.getGhichu());
-		}	
+		}
 		if (addDonHangVangLai.getMakhuyenmai() != null && !StringUtils.isEmpty(addDonHangVangLai.getMakhuyenmai())) {
+			dskhuyenmai = khuyenMaiReponsitory.findById(addDonHangVangLai.getMakhuyenmai()).get();
+			if (dskhuyenmai.getNgaykt().after(new Date()) && dskhuyenmai.getSoluong() > 0) {
+				donhang.setDskhuyenmai(dskhuyenmai);
+				phanTramGiam = dskhuyenmai.getGiatrigiam();
+				dskhuyenmai.setSoluong(dskhuyenmai.getSoluong() - 1);
+			}
+
 			donhang.getDskhuyenmai().setMakm(addDonHangVangLai.getMakhuyenmai());
 			phanTramGiam = khuyenMaiReponsitory.findById(addDonHangVangLai.getMakhuyenmai()).get().getGiatrigiam();
 		}
 		donhang.getPhuongthucthanhtoan().setMaloaithanhtoan(addDonHangVangLai.getMaloaithanhtoan());
-		//End create new donhang
+		// End create new donhang
 
 		// Create list giay_donghang
-		for(Map.Entry<String, Integer> item : addDonHangVangLai.getGiays().entrySet()) {
+		for (Map.Entry<String, Integer> item : addDonHangVangLai.getGiays().entrySet()) {
 			GiayDonhang giayDonhang = new GiayDonhang();
 			GiayDonhangPK giayDonhangPK = new GiayDonhangPK();
 			Giay giay = giayReponsitory.findById(item.getKey()).get();
@@ -221,7 +237,7 @@ public class DonHangServiceImpl implements DonHangService {
 		// End create list giay_donghang
 
 		// Create new list phukien_donhang
-		for(Map.Entry<String, Integer> item : addDonHangVangLai.getPhukiens().entrySet()) {
+		for (Map.Entry<String, Integer> item : addDonHangVangLai.getPhukiens().entrySet()) {
 			PhukienDonhang phukienDonhang = new PhukienDonhang();
 			PhukienDonhangPK phukienDonhangPK = new PhukienDonhangPK();
 			Phukien phukien = phuKienReponsitory.findById(item.getKey()).get();
@@ -236,16 +252,18 @@ public class DonHangServiceImpl implements DonHangService {
 			phukienDonhangs.add(phukienDonhang);
 		}
 		// End create new list phukien_donhang
-		
+
 		int soTienGiam = (tonggia / 100) * phanTramGiam;
 		donhang.setTonggia(tonggia - soTienGiam);
 		donhang.setSoluong(soluong);
-		
+
+		if (dskhuyenmai != null) {
+			khuyenMaiReponsitory.save(dskhuyenmai);
+		}
 		khachHangVangLaiReponsitory.save(khachvanglai);
 		donHangReponsitory.save(donhang);
 		giayDonHangReponsitory.saveAll(giayDonhangs);
 		phukienDonhangReponsitory.saveAll(phukienDonhangs);
-
 	}
 
 }

@@ -2,6 +2,10 @@ package com.herokuapp.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 
@@ -23,7 +27,7 @@ public class Mausac implements Serializable {
 	private String tenmau;
 
 	//bi-directional many-to-many association to Giay
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 		name="giay_mau"
 		, joinColumns={

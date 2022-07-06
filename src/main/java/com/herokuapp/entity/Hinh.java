@@ -3,6 +3,9 @@ package com.herokuapp.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 /**
  * The persistent class for the hinh database table.
@@ -22,12 +25,12 @@ public class Hinh implements Serializable {
 	private String duongdan;
 
 	//bi-directional many-to-one association to Giay
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="magiay", nullable=false)
 	private Giay giay;
 
 	//bi-directional many-to-one association to Phukien
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="mapk", nullable=false)
 	private Phukien phukien;
 

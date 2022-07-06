@@ -24,12 +24,12 @@ public class GiayDonhang implements Serializable {
 	private int tonggia;
 
 	//bi-directional many-to-one association to Donhang
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="madon", nullable=false, insertable=false, updatable=false)
 	private Donhang donhang;
 
 	//bi-directional many-to-one association to Giay
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="magiay", nullable=false, insertable=false, updatable=false)
 	private Giay giay;
 

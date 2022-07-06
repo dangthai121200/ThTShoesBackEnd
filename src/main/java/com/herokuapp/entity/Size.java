@@ -2,6 +2,10 @@ package com.herokuapp.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 
@@ -23,7 +27,7 @@ public class Size implements Serializable {
 	private String tensize;
 
 	//bi-directional many-to-many association to Giay
-	@ManyToMany(mappedBy="sizes")
+	@ManyToMany(mappedBy="sizes", fetch = FetchType.LAZY)
 	private List<Giay> giays;
 
 	public Size() {

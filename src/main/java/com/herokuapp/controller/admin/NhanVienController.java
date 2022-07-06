@@ -1,4 +1,4 @@
-package com.herokuapp.controller.nhanvien;
+package com.herokuapp.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.herokuapp.domain.nhanvien.InfoNhanvienDangKy;
-import com.herokuapp.service.nhanvien.NhanVienService;
+import com.herokuapp.domain.admin.InfoNhanvienDangKy;
+import com.herokuapp.service.admin.NhanVienService;
 import com.herokuapp.util.URL;
 
 @RestController
@@ -18,7 +18,7 @@ public class NhanVienController {
 	@Autowired
 	public NhanVienService nhanVienService;
 
-	@PostMapping
+	@PostMapping(value = URL.ADD_NHAN_VIEN)
 	public ResponseEntity<String> addNhanvien(@RequestBody InfoNhanvienDangKy infoNhanvienDangKy) {
 		try {
 			nhanVienService.addNhanVien(infoNhanvienDangKy);

@@ -19,12 +19,15 @@ public class URL {
 	public static final String PHU_KIEN = "/phukien";
 	
 	public static final String DAT_HANG = "/dathang";
+	public static final String DON_HANG = "/donhang";
 	
 	public static final String KHACH_VANG_LAI = "/khachvanglai";
 	
 	public static final String LICH_SU_DAT_HANG = "/lichsudathang";
 	
 	public static final String NHAN_VIEN = "/nhanvien";
+	
+	public static final String ADD_NHAN_VIEN = "/themnhanvien";
 	
 
 	public static final String LOGIN = "/login";

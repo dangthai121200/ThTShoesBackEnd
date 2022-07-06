@@ -1,11 +1,11 @@
-package com.herokuapp.service.nhanvien;
+package com.herokuapp.service.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.herokuapp.domain.nhanvien.InfoNhanvienDangKy;
+import com.herokuapp.domain.admin.InfoNhanvienDangKy;
 import com.herokuapp.entity.Nhanvien;
 import com.herokuapp.entity.Taikhoan;
 import com.herokuapp.entity.Taikhoanseq;
@@ -33,25 +33,26 @@ public class NhanVienServiceImpl implements NhanVienService {
 	public EmailService emailService;
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void addNhanVien(InfoNhanvienDangKy infoNhanvienDangKy) {
 		String maNguoiDung = PrefixId.NHAN_VIEN + getTaiKhoanIdSeq();
 
-	
 		Taikhoan taiKhoan = infoNhanvienDangKy.getTaikhoan().converToEntity();
 		taiKhoan.setQuyen(Quyen.NHANVIEN);
 		taiKhoan.setManguoidung(maNguoiDung);
+		taiKhoan.setTinhtrang((byte) 1);
 		taiKhoanReponsitory.save(taiKhoan);
 
 		Nhanvien nhanvien = infoNhanvienDangKy.getNhanvien().converToEntity();
 		nhanvien.setManv(maNguoiDung);
 		nhanVienReponsitory.save(nhanvien);
 
-		if (infoNhanvienDangKy.getTaikhoan().getEmail() != null) {
-			String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
-			String url = baseUrl + URL.KHACH_HANG + URL.DANG_KY + "/" + maNguoiDung;
-			emailService.sendSimpleMessage(infoNhanvienDangKy.getTaikhoan().getEmail(), "Thông Báo Xác Thực Tài Khoản",
-					url);
-		}
+//		if (infoNhanvienDangKy.getTaikhoan().getEmail() != null) {
+//			String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
+//			String url = baseUrl + URL.KHACH_HANG + URL.DANG_KY + "/" + maNguoiDung;
+//			emailService.sendSimpleMessage(infoNhanvienDangKy.getTaikhoan().getEmail(), "Thông Báo Xác Thực Tài Khoản",
+//					url);
+//		}
 
 	}
 

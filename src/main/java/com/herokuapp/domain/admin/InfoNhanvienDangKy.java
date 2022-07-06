@@ -1,4 +1,4 @@
-package com.herokuapp.domain.nhanvien;
+package com.herokuapp.domain.admin;
 
 import com.herokuapp.domain.common.TaiKhoanDomain;
 

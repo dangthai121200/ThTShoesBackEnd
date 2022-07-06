@@ -26,17 +26,17 @@ public class Binhluan implements Serializable {
 	private Date thoigian;
 
 	//bi-directional many-to-one association to Giay
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="magiay")
 	private Giay giay;
 
 	//bi-directional many-to-one association to Khachhang
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="makh", nullable=false)
 	private Khachhang khachhang;
 
 	//bi-directional many-to-one association to Phukien
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="mapk")
 	private Phukien phukien;
 

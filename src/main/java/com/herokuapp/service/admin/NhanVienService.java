@@ -1,6 +1,6 @@
-package com.herokuapp.service.nhanvien;
+package com.herokuapp.service.admin;
 
-import com.herokuapp.domain.nhanvien.InfoNhanvienDangKy;
+import com.herokuapp.domain.admin.InfoNhanvienDangKy;
 
 public interface NhanVienService {
 	void addNhanVien(InfoNhanvienDangKy infoNhanvienDangKy);

@@ -1,26 +1,32 @@
-package com.herokuapp.domain.khachhang;
+package com.herokuapp.domain.admin;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.herokuapp.abstracts.AbstractsDomain;
 import com.herokuapp.entity.Giay;
 
-public class GiayDomain extends AbstractsDomain<Giay> {
+public class GiayAdminDomain extends AbstractsDomain<Giay> {
 
 	private String magiay;
 	private String chatlieu;
 	private int gia;
 	private String kieudang;
+	private Date ngaythem;
 	private String mota;
 	private String tengiay;
 	private int trongluong;
-	private int soluong;
 	private String urlanh;
-	private List<SizeDomain> sizes = new ArrayList<>();
-	private List<HinhDomain> hinhs = new ArrayList<>();;
-	private List<MauSacDomain> mausacs = new ArrayList<>();
-	private LoaigiayHangDanhmucDomain loaigiayHangDanhmuc = new LoaigiayHangDanhmucDomain();
+	private int soluong;
+	private int maLgiayHang;
+	private List<SizeAdminDomain> sizes = new ArrayList<>();
+	private List<HinhAdminDomain> hinhs = new ArrayList<>();
+	private List<MauSacAdminDomain> mausacs = new ArrayList<>();
+
+	public GiayAdminDomain() {
+		super();
+	}
 
 	public String getMagiay() {
 		return magiay;
@@ -36,14 +42,6 @@ public class GiayDomain extends AbstractsDomain<Giay> {
 
 	public void setChatlieu(String chatlieu) {
 		this.chatlieu = chatlieu;
-	}
-
-	public String getUrlanh() {
-		return urlanh;
-	}
-
-	public void setUrlanh(String urlanh) {
-		this.urlanh = urlanh;
 	}
 
 	public int getGia() {
@@ -62,6 +60,14 @@ public class GiayDomain extends AbstractsDomain<Giay> {
 		this.kieudang = kieudang;
 	}
 
+	public Date getNgaythem() {
+		return ngaythem;
+	}
+
+	public void setNgaythem(Date ngaythem) {
+		this.ngaythem = ngaythem;
+	}
+
 	public String getMota() {
 		return mota;
 	}
@@ -78,14 +84,6 @@ public class GiayDomain extends AbstractsDomain<Giay> {
 		this.tengiay = tengiay;
 	}
 
-	public int getSoluong() {
-		return soluong;
-	}
-
-	public void setSoluong(int soluong) {
-		this.soluong = soluong;
-	}
-
 	public int getTrongluong() {
 		return trongluong;
 	}
@@ -94,40 +92,57 @@ public class GiayDomain extends AbstractsDomain<Giay> {
 		this.trongluong = trongluong;
 	}
 
-	public List<SizeDomain> getSizes() {
+	public String getUrlanh() {
+		return urlanh;
+	}
+
+	public void setUrlanh(String urlanh) {
+		this.urlanh = urlanh;
+	}
+
+	public int getSoluong() {
+		return soluong;
+	}
+
+	public void setSoluong(int soluong) {
+		this.soluong = soluong;
+	}
+
+	public int getMaLgiayHang() {
+		return maLgiayHang;
+	}
+
+	public void setMaLgiayHang(int maLgiayHang) {
+		this.maLgiayHang = maLgiayHang;
+	}
+
+	public List<SizeAdminDomain> getSizes() {
 		return sizes;
 	}
 
-	public void setSizes(List<SizeDomain> sizes) {
+	public void setSizes(List<SizeAdminDomain> sizes) {
 		this.sizes = sizes;
 	}
 
-	public List<HinhDomain> getHinhs() {
+	public List<HinhAdminDomain> getHinhs() {
 		return hinhs;
 	}
 
-	public void setHinhs(List<HinhDomain> hinhs) {
+	public void setHinhs(List<HinhAdminDomain> hinhs) {
 		this.hinhs = hinhs;
 	}
 
-	public List<MauSacDomain> getMausacs() {
+	public List<MauSacAdminDomain> getMausacs() {
 		return mausacs;
 	}
 
-	public void setMausacs(List<MauSacDomain> mausacs) {
+	public void setMausacs(List<MauSacAdminDomain> mausacs) {
 		this.mausacs = mausacs;
-	}
-
-	public LoaigiayHangDanhmucDomain getLoaigiayHangDanhmuc() {
-		return loaigiayHangDanhmuc;
-	}
-
-	public void setLoaigiayHangDanhmuc(LoaigiayHangDanhmucDomain loaigiayHangDanhmuc) {
-		this.loaigiayHangDanhmuc = loaigiayHangDanhmuc;
 	}
 
 	@Override
 	public void converToDomain(Giay giay) {
+
 		this.magiay = giay.getMagiay();
 		this.chatlieu = giay.getChatlieu();
 		this.gia = giay.getGia();
@@ -137,29 +152,24 @@ public class GiayDomain extends AbstractsDomain<Giay> {
 		this.trongluong = giay.getTrongluong();
 		this.soluong = giay.getSoluong();
 		this.urlanh = giay.getUrlanh();
-
-		giay.getSizes().forEach(size -> {
-			SizeDomain sizeDomain = new SizeDomain();
-			sizeDomain.converToDomain(size);
-			this.sizes.add(sizeDomain);
-		});
-
-		giay.getMausacs().forEach(mausac -> {
-			MauSacDomain mauSacDomain = new MauSacDomain();
-			mauSacDomain.converToDomain(mausac);
-			this.mausacs.add(mauSacDomain);
-		});
-
-		giay.getHinhs().forEach(hinh -> {
-			HinhDomain hinhDomain = new HinhDomain();
-			hinhDomain.converToDomain(hinh);
-			this.hinhs.add(hinhDomain);
-		});
+		this.ngaythem = giay.getNgaythem();
 	}
 
 	@Override
 	public Giay converToEntity() {
-		return null;
+		Giay giay = new Giay();
+		giay.setTengiay(this.tengiay);
+		giay.setChatlieu(this.chatlieu);
+		giay.setGia(this.gia);
+		giay.setKieudang(this.kieudang);
+		giay.setTrongluong(this.trongluong);
+		giay.setSoluong(this.soluong);
+		giay.setUrlanh(this.urlanh);
+		if (this.mota != null) {
+			giay.setMota(this.mota);
+		}
+		giay.setMaLgiayHang(this.maLgiayHang);
+		return giay;
 	}
 
 }

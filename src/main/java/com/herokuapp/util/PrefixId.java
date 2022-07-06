@@ -10,4 +10,6 @@ public class PrefixId {
 	
 	public static final String NHAN_VIEN = "NV";
 	
+	public static final String GIAY = "GA";
+	
 }

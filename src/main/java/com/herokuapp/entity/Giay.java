@@ -1,6 +1,7 @@
 package com.herokuapp.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -33,7 +34,7 @@ public class Giay implements Serializable {
 
 	private String kieudang;
 
-	private String ngaythem;
+	private Date ngaythem;
 
 	private String mota;
 
@@ -73,6 +74,8 @@ public class Giay implements Serializable {
 	private List<Mausac> mausacs;
 
 	public Giay() {
+		this.magiay = "";
+		this.ngaythem = new Date();
 	}
 
 	public String getUrlanh() {
@@ -99,11 +102,11 @@ public class Giay implements Serializable {
 		this.chatlieu = chatlieu;
 	}
 
-	public String getNgaythem() {
+	public Date getNgaythem() {
 		return ngaythem;
 	}
 
-	public void setNgaythem(String ngaythem) {
+	public void setNgaythem(Date ngaythem) {
 		this.ngaythem = ngaythem;
 	}
 
