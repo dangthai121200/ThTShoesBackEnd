@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -47,23 +48,23 @@ public class Phukien implements Serializable {
 	private String tenpk;
 
 	@Lob
-	private String urlAnh;
+	private String urlanh;
 
 	//bi-directional many-to-one association to Binhluan
-	@OneToMany(mappedBy="phukien")
+	@OneToMany(mappedBy="phukien", fetch = FetchType.LAZY)
 	private List<Binhluan> binhluans;
 
 	//bi-directional many-to-one association to Hinh
-	@OneToMany(mappedBy="phukien")
+	@OneToMany(mappedBy="phukien", fetch = FetchType.LAZY)
 	private List<Hinh> hinhs;
 
 	//bi-directional many-to-one association to Loaiphukien
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="maloaipk", nullable=false)
 	private Loaiphukien loaiphukien;
 
 	//bi-directional many-to-one association to PhukienDonhang
-	@OneToMany(mappedBy="phukien")
+	@OneToMany(mappedBy="phukien", fetch = FetchType.LAZY)
 	private List<PhukienDonhang> phukienDonhangs;
 
 	public Phukien() {
@@ -118,11 +119,11 @@ public class Phukien implements Serializable {
 	}
 
 	public String getUrlAnh() {
-		return this.urlAnh;
+		return this.urlanh;
 	}
 
 	public void setUrlAnh(String urlAnh) {
-		this.urlAnh = urlAnh;
+		this.urlanh = urlAnh;
 	}
 
 	public List<Binhluan> getBinhluans() {

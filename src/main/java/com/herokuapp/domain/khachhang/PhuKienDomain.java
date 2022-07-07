@@ -1,5 +1,8 @@
 package com.herokuapp.domain.khachhang;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.herokuapp.abstracts.AbstractsDomain;
 import com.herokuapp.entity.Phukien;
 
@@ -9,8 +12,9 @@ public class PhuKienDomain extends AbstractsDomain<Phukien> {
 	private String mota;
 	private int soluong;
 	private String tenpk;
-	private HinhDomain hinh;
-	private LoaiPhuKienDomain loaiPhuKien;
+	private String urlanh;
+	private List<HinhDomain> hinhs = new ArrayList<>();
+	private LoaiPhuKienDomain loaiPhuKien = new LoaiPhuKienDomain();
 
 	public PhuKienDomain() {
 
@@ -56,12 +60,12 @@ public class PhuKienDomain extends AbstractsDomain<Phukien> {
 		this.tenpk = tenpk;
 	}
 
-	public HinhDomain getHinh() {
-		return hinh;
+	public List<HinhDomain> getHinhs() {
+		return hinhs;
 	}
 
-	public void setHinh(HinhDomain hinh) {
-		this.hinh = hinh;
+	public void setHinhs(List<HinhDomain> hinhs) {
+		this.hinhs = hinhs;
 	}
 
 	public LoaiPhuKienDomain getLoaiPhuKien() {
@@ -72,6 +76,14 @@ public class PhuKienDomain extends AbstractsDomain<Phukien> {
 		this.loaiPhuKien = loaiPhuKien;
 	}
 
+	public String getUrlanh() {
+		return urlanh;
+	}
+
+	public void setUrlanh(String urlanh) {
+		this.urlanh = urlanh;
+	}
+
 	@Override
 	public void converToDomain(Phukien phuKien) {
 		this.mapk = phuKien.getMapk();
@@ -79,6 +91,14 @@ public class PhuKienDomain extends AbstractsDomain<Phukien> {
 		this.mota = phuKien.getMota();
 		this.soluong = phuKien.getSoluong();
 		this.tenpk = phuKien.getTenpk();
+		this.urlanh = phuKien.getUrlAnh();
+		this.loaiPhuKien.converToDomain(phuKien.getLoaiphukien());
+		phuKien.getHinhs().forEach(hinh -> {
+			HinhDomain hinhDomain = new HinhDomain();
+			hinhDomain.converToDomain(hinh);
+			this.hinhs.add(hinhDomain);
+		});
+
 	}
 
 	@Override

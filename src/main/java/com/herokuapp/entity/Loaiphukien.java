@@ -24,7 +24,7 @@ public class Loaiphukien implements Serializable {
 	private String tenloai;
 
 	//bi-directional many-to-one association to Phukien
-	@OneToMany(mappedBy="loaiphukien")
+	@OneToMany(mappedBy="loaiphukien", fetch = FetchType.LAZY)
 	private List<Phukien> phukiens;
 
 	public Loaiphukien() {
