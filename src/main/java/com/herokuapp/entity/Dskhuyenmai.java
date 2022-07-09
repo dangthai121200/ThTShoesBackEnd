@@ -16,7 +16,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 /**
  * The persistent class for the dskhuyenmai database table.
  * 
@@ -46,6 +45,11 @@ public class Dskhuyenmai implements Serializable {
 
 	@Column(nullable=false)
 	private int soluong;
+	
+	@Lob
+	private String urlanh;
+	
+	private String tieude;
 
 	//bi-directional many-to-one association to Donhang
 	@OneToMany(mappedBy="dskhuyenmai")
@@ -113,6 +117,24 @@ public class Dskhuyenmai implements Serializable {
 
 	public void setDonhangs(List<Donhang> donhangs) {
 		this.donhangs = donhangs;
+	}
+	
+	
+
+	public String getUrlanh() {
+		return urlanh;
+	}
+
+	public void setUrlanh(String urlanh) {
+		this.urlanh = urlanh;
+	}
+
+	public String getTieude() {
+		return tieude;
+	}
+
+	public void setTieude(String tieude) {
+		this.tieude = tieude;
 	}
 
 	public Donhang addDonhang(Donhang donhang) {
