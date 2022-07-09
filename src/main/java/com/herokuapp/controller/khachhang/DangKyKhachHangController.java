@@ -15,7 +15,7 @@ import com.herokuapp.util.URL;
 
 @RestController
 @RequestMapping(URL.KHACH_HANG)
-public class DangKyController {
+public class DangKyKhachHangController {
 
 	@Autowired
 	private DangKyService dangKyService;

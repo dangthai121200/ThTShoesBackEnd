@@ -11,7 +11,7 @@ import com.herokuapp.util.URL;
 
 @RestController
 @RequestMapping(value = URL.KHACH_HANG)
-public class LoaiGiayController {
+public class LoaiGiayKhachHangController {
 
 	@Autowired
 	public LoaiGiayService loaiGiayService;

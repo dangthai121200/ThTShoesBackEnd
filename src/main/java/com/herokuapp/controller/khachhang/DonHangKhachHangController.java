@@ -17,7 +17,7 @@ import com.herokuapp.util.URL;
 
 @RestController
 @RequestMapping(value = URL.KHACH_HANG)
-public class DonHangController {
+public class DonHangKhachHangController {
 
 	@Autowired
 	public DonHangService donHangService;

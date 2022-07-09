@@ -12,7 +12,7 @@ import com.herokuapp.util.URL;
 
 @Controller
 @RequestMapping(URL.KHACH_HANG)
-public class XacThucController {
+public class XacThucKhachHangController {
 
 	@Autowired
 	private DangKyService dangKyService;
