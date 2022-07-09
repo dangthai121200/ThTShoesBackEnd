@@ -14,7 +14,7 @@ import com.herokuapp.service.khachhang.KhachHangService;
 import com.herokuapp.util.URL;
 
 @RestController
-@RequestMapping(URL.NHAN_VIEN)
+@RequestMapping(URL.KHACH_HANG)
 public class DangKyController {
 
 	@Autowired
