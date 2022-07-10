@@ -35,15 +35,15 @@ public class DonHangKhachHangController {
 	}
 
 	@RequestMapping(value = URL.DAT_HANG + URL.LICH_SU_DAT_HANG, method = RequestMethod.GET)
-	public ListDonHang getLichSuDonHangByKhachHangId() {
+	public ResponseEntity<ListDonHang> getLichSuDonHangByKhachHangId() {
 		String makh = ((UserDetailsConfigure) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
 				.getManguoidung();
 		try {
 			ListDonHang listDonHang = donHangService.getLichSuDonHangByKhachHangId(makh);
-			return listDonHang;
+			return ResponseEntity.ok(listDonHang);
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			return null;
+			return ResponseEntity.badRequest().build();
 		}
 
 	}

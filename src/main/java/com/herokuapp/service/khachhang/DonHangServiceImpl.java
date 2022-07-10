@@ -155,7 +155,6 @@ public class DonHangServiceImpl implements DonHangService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
 	public ListDonHang getLichSuDonHangByKhachHangId(String makh) {
 		ListDonHang listDonHang = new ListDonHang();
 		List<DonHangDomain> donHangDomains = new ArrayList<>();
@@ -171,6 +170,7 @@ public class DonHangServiceImpl implements DonHangService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void addDonHangKhachVangLai(AddDonHangVangLai addDonHangVangLai) {
 		int tonggia = 0;
 		int soluong = 0;
