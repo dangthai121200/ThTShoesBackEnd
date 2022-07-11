@@ -69,7 +69,7 @@ public class Donhang implements Serializable {
 	private Khachhang khachhang;
 
 	// bi-directional many-to-one association to Khachvanglai
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "makhvl")
 	private Khachvanglai khachvanglai;
 

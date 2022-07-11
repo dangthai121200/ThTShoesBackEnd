@@ -205,6 +205,7 @@ public class DonHangServiceImpl implements DonHangService {
 		if (addDonHangVangLai.getGhichu() != null && !StringUtils.isEmpty(addDonHangVangLai.getGhichu())) {
 			donhang.setGhichu(addDonHangVangLai.getGhichu());
 		}
+		
 		if (addDonHangVangLai.getMakhuyenmai() != null && !StringUtils.isEmpty(addDonHangVangLai.getMakhuyenmai())) {
 			dskhuyenmai = khuyenMaiReponsitory.findById(addDonHangVangLai.getMakhuyenmai()).get();
 			if (dskhuyenmai.getNgaykt().after(new Date()) && dskhuyenmai.getSoluong() > 0) {
@@ -256,14 +257,16 @@ public class DonHangServiceImpl implements DonHangService {
 		int soTienGiam = (tonggia / 100) * phanTramGiam;
 		donhang.setTonggia(tonggia - soTienGiam);
 		donhang.setSoluong(soluong);
-
-		if (dskhuyenmai != null) {
-			khuyenMaiReponsitory.save(dskhuyenmai);
-		}
+		
 		khachHangVangLaiReponsitory.save(khachvanglai);
 		donHangReponsitory.save(donhang);
 		giayDonHangReponsitory.saveAll(giayDonhangs);
 		phukienDonhangReponsitory.saveAll(phukienDonhangs);
+
+		if (dskhuyenmai != null) {
+			khuyenMaiReponsitory.save(dskhuyenmai);
+		}
+		
 	}
 
 }
