@@ -1,5 +1,6 @@
 package com.herokuapp.domain.khachhang;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +15,7 @@ public class DonHangDomain extends AbstractsDomain<Donhang> {
 	private String nguoinhan;
 	private int soluong;
 	private TinhTrang tinhtrang;
-	private int tonggia;
+	private BigDecimal tonggia;
 	private String makhuyenmai;
 	private List<GiayDonhangDomain> giayDonhangs = new ArrayList<>();
 	private List<PhukienDonhangDomain> phukienDonhangs = new ArrayList<>();
@@ -59,11 +60,11 @@ public class DonHangDomain extends AbstractsDomain<Donhang> {
 		this.tinhtrang = tinhtrang;
 	}
 
-	public int getTonggia() {
+	public BigDecimal getTonggia() {
 		return tonggia;
 	}
 
-	public void setTonggia(int tonggia) {
+	public void setTonggia(BigDecimal tonggia) {
 		this.tonggia = tonggia;
 	}
 

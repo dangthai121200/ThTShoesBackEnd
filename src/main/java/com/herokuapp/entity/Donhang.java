@@ -1,6 +1,7 @@
 package com.herokuapp.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -50,7 +51,7 @@ public class Donhang implements Serializable {
 	private TinhTrang tinhtrang;
 
 	@Column(nullable = false)
-	private int tonggia;
+	private BigDecimal tonggia;
 
 	@Lob
 	private String diachi;
@@ -59,12 +60,12 @@ public class Donhang implements Serializable {
 	private String ghichu;
 
 	// bi-directional many-to-one association to Dskhuyenmai
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "makm")
 	private Dskhuyenmai dskhuyenmai;
 
 	// bi-directional many-to-one association to Khachhang
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "makh")
 	private Khachhang khachhang;
 
@@ -74,15 +75,15 @@ public class Donhang implements Serializable {
 	private Khachvanglai khachvanglai;
 
 	// bi-directional many-to-one association to GiayDonhang
-	@OneToMany(mappedBy = "donhang")
+	@OneToMany(mappedBy = "donhang", fetch = FetchType.LAZY)
 	private List<GiayDonhang> giayDonhangs;
 
 	// bi-directional many-to-many association to Nhanvien
-	@ManyToMany(mappedBy = "donhangs")
+	@ManyToMany(mappedBy = "donhangs", fetch = FetchType.LAZY)
 	private List<Nhanvien> nhanviens;
 
 	// bi-directional many-to-one association to PhukienDonhang
-	@OneToMany(mappedBy = "donhang")
+	@OneToMany(mappedBy = "donhang", fetch = FetchType.LAZY)
 	private List<PhukienDonhang> phukienDonhangs = new ArrayList<>();
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -135,11 +136,11 @@ public class Donhang implements Serializable {
 		this.tinhtrang = tinhtrang;
 	}
 
-	public int getTonggia() {
+	public BigDecimal getTonggia() {
 		return this.tonggia;
 	}
 
-	public void setTonggia(int tonggia) {
+	public void setTonggia(BigDecimal tonggia) {
 		this.tonggia = tonggia;
 	}
 
@@ -160,9 +161,6 @@ public class Donhang implements Serializable {
 	}
 
 	public Dskhuyenmai getDskhuyenmai() {
-		if (this.dskhuyenmai == null) {
-			this.dskhuyenmai = new Dskhuyenmai();
-		}
 		return this.dskhuyenmai;
 	}
 
@@ -215,6 +213,9 @@ public class Donhang implements Serializable {
 	}
 
 	public List<Nhanvien> getNhanviens() {
+		if (this.nhanviens == null) {
+			this.nhanviens = new ArrayList<>();
+		}
 		return this.nhanviens;
 	}
 
@@ -245,7 +246,7 @@ public class Donhang implements Serializable {
 	}
 
 	public Phuongthucthanhtoan getPhuongthucthanhtoan() {
-		if(this.phuongthucthanhtoan == null) {
+		if (this.phuongthucthanhtoan == null) {
 			this.phuongthucthanhtoan = new Phuongthucthanhtoan();
 		}
 		return phuongthucthanhtoan;

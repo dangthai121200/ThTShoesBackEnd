@@ -1,5 +1,6 @@
 package com.herokuapp.service.khachhang;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -142,8 +143,8 @@ public class DonHangServiceImpl implements DonHangService {
 			phukienDonhangs.add(phukienDonhang);
 		}
 
-		int soTienGiam = (tonggia / 100) * phanTramGiam;
-		donhang.setTonggia(tonggia - soTienGiam);
+		BigDecimal tongGiaDonHang = caculateTongGiaDonHang(tonggia, phanTramGiam);
+		donhang.setTonggia(tongGiaDonHang);
 		donhang.setSoluong(soluong);
 
 		if (dskhuyenmai != null) {
@@ -213,9 +214,6 @@ public class DonHangServiceImpl implements DonHangService {
 				phanTramGiam = dskhuyenmai.getGiatrigiam();
 				dskhuyenmai.setSoluong(dskhuyenmai.getSoluong() - 1);
 			}
-
-			donhang.getDskhuyenmai().setMakm(addDonHangVangLai.getMakhuyenmai());
-			phanTramGiam = khuyenMaiReponsitory.findById(addDonHangVangLai.getMakhuyenmai()).get().getGiatrigiam();
 		}
 		donhang.getPhuongthucthanhtoan().setMaloaithanhtoan(addDonHangVangLai.getMaloaithanhtoan());
 		// End create new donhang
@@ -254,8 +252,8 @@ public class DonHangServiceImpl implements DonHangService {
 		}
 		// End create new list phukien_donhang
 
-		int soTienGiam = (tonggia / 100) * phanTramGiam;
-		donhang.setTonggia(tonggia - soTienGiam);
+		BigDecimal tongGiaDonHang = caculateTongGiaDonHang(tonggia, phanTramGiam);
+		donhang.setTonggia(tongGiaDonHang);
 		donhang.setSoluong(soluong);
 		
 		khachHangVangLaiReponsitory.save(khachvanglai);
@@ -267,6 +265,15 @@ public class DonHangServiceImpl implements DonHangService {
 			khuyenMaiReponsitory.save(dskhuyenmai);
 		}
 		
+	}
+	
+	private BigDecimal caculateTongGiaDonHang(int tonggiaSanPham, int phamtramgiam) {
+		BigDecimal tonggia = BigDecimal.ZERO;
+		BigDecimal tonggiaSanPhamDec = BigDecimal.valueOf(Double.valueOf(String.valueOf(tonggiaSanPham)));
+		BigDecimal phamTramGiamDec = BigDecimal.valueOf(Double.valueOf(String.valueOf(phamtramgiam)));
+		BigDecimal sotiengiam = (tonggiaSanPhamDec.divide(new BigDecimal("100"))).multiply(phamTramGiamDec);
+		tonggia = tonggiaSanPhamDec.subtract(sotiengiam);
+		return tonggia;
 	}
 
 }
