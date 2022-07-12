@@ -10,14 +10,14 @@ import com.herokuapp.service.khachhang.LoaiPhuKienService;
 import com.herokuapp.util.URL;
 
 @RestController
-@RequestMapping(URL.KHACH_HANG)
+@RequestMapping(URL.KHACH_HANG + URL.LOAI_PHU_KIEN)
 public class LoaiPhuKienKHController {
 	
 	@Autowired
 	private LoaiPhuKienService loaiPhuKienService;
 	
 	
-	@GetMapping(value = URL.LOAI_PHU_KIEN)
+	@GetMapping
 	public ListLoaiPhuKien getAllLoaiPhKien() {
 		return loaiPhuKienService.getAllLoaiPhuKien();
 	}

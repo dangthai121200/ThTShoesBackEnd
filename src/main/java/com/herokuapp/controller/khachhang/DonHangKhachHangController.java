@@ -16,13 +16,13 @@ import com.herokuapp.service.khachhang.DonHangService;
 import com.herokuapp.util.URL;
 
 @RestController
-@RequestMapping(value = URL.KHACH_HANG)
+@RequestMapping(value = URL.KHACH_HANG + URL.DAT_HANG)
 public class DonHangKhachHangController {
 
 	@Autowired
 	public DonHangService donHangService;
 
-	@RequestMapping(value = URL.DAT_HANG, method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<String> addDonHang(@RequestBody AddDonHang addDonHang) {
 		try {
 			donHangService.addDonHang(addDonHang);
@@ -34,7 +34,7 @@ public class DonHangKhachHangController {
 
 	}
 
-	@RequestMapping(value = URL.DAT_HANG + URL.LICH_SU_DAT_HANG, method = RequestMethod.GET)
+	@RequestMapping(value = URL.LICH_SU_DAT_HANG, method = RequestMethod.GET)
 	public ResponseEntity<ListDonHang> getLichSuDonHangByKhachHangId() {
 		String makh = ((UserDetailsConfigure) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
 				.getManguoidung();
@@ -48,7 +48,7 @@ public class DonHangKhachHangController {
 
 	}
 	
-	@RequestMapping(value = URL.DAT_HANG + URL.KHACH_VANG_LAI, method = RequestMethod.POST)
+	@RequestMapping(value = URL.KHACH_VANG_LAI, method = RequestMethod.POST)
 	public ResponseEntity<String> addDonHangKhachVanglai(@RequestBody AddDonHangVangLai donHangVangLai) {
 		try {
 			donHangService.addDonHangKhachVangLai(donHangVangLai);

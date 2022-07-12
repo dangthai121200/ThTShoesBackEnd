@@ -12,19 +12,19 @@ import com.herokuapp.service.khachhang.KhuyenMaiService;
 import com.herokuapp.util.URL;
 
 @RestController
-@RequestMapping(value = URL.KHACH_HANG)
+@RequestMapping(value = URL.KHACH_HANG + URL.KHUYEN_MAI)
 public class KhuyenMaiKhachHangController {
 
 	@Autowired
 	public KhuyenMaiService khuyenMaiService;
 
-	@GetMapping(value = URL.KHUYEN_MAI)
+	@GetMapping
 	public ListKhuyenMai getAllKhuyenMai() {
 		return khuyenMaiService.getAllKhuyenMai();
 
 	}
 
-	@GetMapping(value = URL.KHUYEN_MAI + "/{idKm}")
+	@GetMapping(value = "/{idKm}")
 	public KhuyenMaiDomain getKhuyenMaiById(@PathVariable("idKm") String idKm) {
 		return khuyenMaiService.getKhuyenMaiById(idKm);
 	}

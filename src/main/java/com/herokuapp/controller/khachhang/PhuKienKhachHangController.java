@@ -12,20 +12,20 @@ import com.herokuapp.service.khachhang.PhukienService;
 import com.herokuapp.util.URL;
 
 @RestController
-@RequestMapping(value = URL.KHACH_HANG)
+@RequestMapping(value = URL.KHACH_HANG + URL.PHU_KIEN)
 public class PhuKienKhachHangController {
 
 	@Autowired
 	public PhukienService phukienService;
 
-	@GetMapping(value = URL.PHU_KIEN)
+	@GetMapping
 	public ListPhukien getAllPhukien() {
 		ListPhukien listPhukien = new ListPhukien();
 		listPhukien.setPhukiens(phukienService.getAllPhukien());
 		return listPhukien;
 	}
 	
-	@GetMapping(value = URL.PHU_KIEN + "/{idPk}")
+	@GetMapping(value = "/{idPk}")
 	public PhuKienDomain getPhukienById(@PathVariable("idPk") String idPk) {
 		
 		return phukienService.getPhukienById(idPk);

@@ -10,13 +10,13 @@ import com.herokuapp.service.khachhang.LoaiGiayService;
 import com.herokuapp.util.URL;
 
 @RestController
-@RequestMapping(value = URL.KHACH_HANG)
+@RequestMapping(value = URL.KHACH_HANG + URL.LOAI_GIAY)
 public class LoaiGiayKhachHangController {
 
 	@Autowired
 	public LoaiGiayService loaiGiayService;
 
-	@GetMapping(value = URL.LOAI_GIAY)
+	@GetMapping
 	public ListLoaiGiay getAllLoaiGiay() {
 		return loaiGiayService.getAllLoaiGiay();
 	}

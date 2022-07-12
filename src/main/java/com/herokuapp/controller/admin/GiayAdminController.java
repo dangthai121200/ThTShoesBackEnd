@@ -14,18 +14,18 @@ import com.herokuapp.service.admin.GiayAdminService;
 import com.herokuapp.util.URL;
 
 @RestController
-@RequestMapping(value = URL.NHAN_VIEN)
+@RequestMapping(value = URL.NHAN_VIEN + URL.GIAY)
 public class GiayAdminController {
 
 	@Autowired
 	public GiayAdminService giayService;
 
-	@GetMapping(value = URL.GIAY)
+	@GetMapping
 	public ListGiayAdmin getAllGiay() {
 		return giayService.getAllGiay();
 	}
 
-	@PostMapping(value = URL.GIAY)
+	@PostMapping
 	public ResponseEntity<String> addGiay(@RequestBody GiayAdminDomain giayAdminDomain) {
 		try {
 			giayService.addGiay(giayAdminDomain);

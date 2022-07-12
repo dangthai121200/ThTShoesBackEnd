@@ -12,20 +12,20 @@ import com.herokuapp.service.khachhang.GiayService;
 import com.herokuapp.util.URL;
 
 @RestController
-@RequestMapping(value = URL.KHACH_HANG)
+@RequestMapping(value = URL.KHACH_HANG + URL.GIAY)
 public class GiayKhachHangController {
 
 	@Autowired
 	public GiayService giayService;
 
-	@GetMapping(value = URL.GIAY)
+	@GetMapping
 	public ListGiay getAllGiay() {
 		ListGiay listGiay = new ListGiay();
 		listGiay.setGiays(giayService.getAllGiay());
 		return listGiay;
 	}
 	
-	@GetMapping(value = URL.GIAY + "/{idGiay}")
+	@GetMapping(value = "/{idGiay}")
 	public GiayDomain getGiayById(@PathVariable(name = "idGiay") String idGiay) {
 		return giayService.getGiayById(idGiay);
 	}
