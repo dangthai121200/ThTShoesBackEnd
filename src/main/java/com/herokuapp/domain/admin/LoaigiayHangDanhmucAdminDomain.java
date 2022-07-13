@@ -2,8 +2,6 @@ package com.herokuapp.domain.admin;
 
 import com.herokuapp.abstracts.AbstractsDomain;
 import com.herokuapp.controller.admin.DanhmucAdminDomain;
-import com.herokuapp.controller.admin.HangAdminDomain;
-import com.herokuapp.controller.admin.LoaiGiayAdminDomain;
 import com.herokuapp.entity.LoaigiayHangDanhmuc;
 
 public class LoaigiayHangDanhmucAdminDomain extends AbstractsDomain<LoaigiayHangDanhmuc> {
