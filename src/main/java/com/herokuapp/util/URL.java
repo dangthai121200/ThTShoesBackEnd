@@ -35,6 +35,8 @@ public class URL {
 	public static final String SIZE = "/size";
 	public static final String MAU_SAC = "/mausac";
 	
+	public static final String LGIAY_HANG_DMUC = "/lgiayhangdanhmuc";
+	
 
 	public static final String LOGIN = "/login";
 	public static final String CHANGE_PASSWORD = "/doimatkhau";
