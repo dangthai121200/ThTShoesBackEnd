@@ -31,6 +31,7 @@ public class Size implements Serializable {
 	private List<Giay> giays;
 
 	public Size() {
+		this.masize = "";
 	}
 
 	public String getMasize() {

@@ -32,6 +32,8 @@ public class URL {
 	
 	public static final String ADD_NHAN_VIEN = "/themnhanvien";
 	
+	public static final String SIZE = "/size";
+	
 
 	public static final String LOGIN = "/login";
 	public static final String CHANGE_PASSWORD = "/doimatkhau";
