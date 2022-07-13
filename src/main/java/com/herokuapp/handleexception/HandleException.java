@@ -9,10 +9,15 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class HandleException extends ResponseEntityExceptionHandler {
-	
+
 	@ExceptionHandler(NoSuchElementException.class)
-	public ResponseEntity<String>  noSuchElementException(NoSuchElementException ex){
+	public ResponseEntity<String> noSuchElementException(NoSuchElementException ex) {
 		return ResponseEntity.badRequest().body("Không tìm thấy giá trị");
 	}
-	
+
+	@ExceptionHandler(ThtShoesException.class)
+	public ResponseEntity<String> thtShoesException(ThtShoesException ex) {
+		return ResponseEntity.badRequest().body(ex.getMessage());
+	}
+
 }

@@ -28,5 +28,7 @@
 		<class>com.herokuapp.entity.Khachvanglaiseq</class>
 		<class>com.herokuapp.entity.Phuongthucthanhtoan</class>
 		<class>com.herokuapp.entity.Giayseq</class>
+		<class>com.herokuapp.entity.NhanvienDonhang</class>
+		<class>com.herokuapp.entity.NhanvienDonhangPK</class>
 	</persistence-unit>
 </persistence>
