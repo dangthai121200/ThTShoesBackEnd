@@ -3,6 +3,7 @@ package com.herokuapp.controller.admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,13 @@ public class GiayAdminController {
 	@GetMapping
 	public ListGiayAdmin getAllGiay() {
 		return giayService.getAllGiay();
+	}
+	
+	@GetMapping(value = "/{idGiay}")
+	public GiayAdminDomain getGiayById(@PathVariable(name = "idGiay") String idGiay) {
+		GiayAdminDomain giayAdminDomain = giayService.getGiayById(idGiay);
+		return giayAdminDomain;
+		
 	}
 
 	@PostMapping

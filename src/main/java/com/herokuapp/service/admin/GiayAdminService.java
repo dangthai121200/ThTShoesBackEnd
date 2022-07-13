@@ -8,4 +8,6 @@ public interface GiayAdminService {
 	ListGiayAdmin getAllGiay();
 
 	void addGiay(GiayAdminDomain giayAdminDomain);
+
+	GiayAdminDomain getGiayById(String idGiay);
 }
