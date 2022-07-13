@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.herokuapp.domain.admin.DonHangAdminDomain;
+import com.herokuapp.domain.admin.list.ListDonHangAdmin;
 import com.herokuapp.entity.Donhang;
 import com.herokuapp.entity.Dskhuyenmai;
 import com.herokuapp.entity.Giay;
@@ -38,7 +40,7 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 
 	@Autowired
 	public PhuKienReponsitory phuKienReponsitory;
-	
+
 	@Autowired
 	public KhuyenMaiReponsitory khuyenMaiReponsitory;
 
@@ -57,7 +59,7 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 
 		List<PhukienDonhang> phukienDonhangs = null;
 		List<Phukien> phukienDonhangsUpdateSoLuong = new ArrayList<>();
-		
+
 		Dskhuyenmai dskhuyenmai = null;
 
 		HanhDong hanhDong = null;
@@ -102,8 +104,8 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 				phukienDonhangsUpdateSoLuong.add(phukien);
 			}
 		}
-		
-		if(dskhuyenmai != null) {
+
+		if (dskhuyenmai != null) {
 			dskhuyenmai.setSoluong(dskhuyenmai.getSoluong() + 1);
 			khuyenMaiReponsitory.save(dskhuyenmai);
 		}
@@ -113,6 +115,29 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 		giayReponsitory.saveAll(giayDonhangsUpdateSoLuong);
 		phuKienReponsitory.saveAll(phukienDonhangsUpdateSoLuong);
 
+	}
+
+	@Override
+	public ListDonHangAdmin getAllDonHang() {
+		ListDonHangAdmin listDonHangAdmin = new ListDonHangAdmin();
+		List<DonHangAdminDomain> donHangAdminDomains = new ArrayList<>();
+		List<Donhang> donhangs = donHangReponsitory.findAll();
+		donhangs.forEach(donhang -> {
+			DonHangAdminDomain donHangAdminDomain = new DonHangAdminDomain();
+			donHangAdminDomain.converToDomain(donhang);
+			donHangAdminDomains.add(donHangAdminDomain);
+		});
+
+		listDonHangAdmin.setDonHangs(donHangAdminDomains);
+		return listDonHangAdmin;
+	}
+
+	@Override
+	public DonHangAdminDomain getDonHangById(String idDonhang) {
+		DonHangAdminDomain donHangAdminDomain = new DonHangAdminDomain();
+		Donhang donhang = donHangReponsitory.findById(idDonhang).get();
+		donHangAdminDomain.converToDomain(donhang);
+		return donHangAdminDomain;
 	}
 
 }

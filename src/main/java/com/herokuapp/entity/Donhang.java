@@ -169,9 +169,6 @@ public class Donhang implements Serializable {
 	}
 
 	public Khachhang getKhachhang() {
-		if (this.khachhang == null) {
-			this.khachhang = new Khachhang();
-		}
 		return this.khachhang;
 	}
 
@@ -180,9 +177,6 @@ public class Donhang implements Serializable {
 	}
 
 	public Khachvanglai getKhachvanglai() {
-		if (this.khachvanglai == null) {
-			this.khachvanglai = new Khachvanglai();
-		}
 		return this.khachvanglai;
 	}
 

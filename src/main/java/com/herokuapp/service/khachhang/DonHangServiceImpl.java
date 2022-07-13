@@ -200,7 +200,10 @@ public class DonHangServiceImpl implements DonHangService {
 		// End create new khachvanglai
 
 		// Create new donhang
-		donhang.getKhachvanglai().setMakh(idNextKhachVanglai);
+		
+		Khachvanglai khachvanglaiSetDonHang = new Khachvanglai();
+		khachvanglaiSetDonHang.setMakh(idNextKhachVanglai);
+		donhang.setKhachvanglai(khachvanglaiSetDonHang);
 		donhang.setNguoinhan(addDonHangVangLai.getHo() + " " + addDonHangVangLai.getTen());
 		donhang.setDiachi(addDonHangVangLai.getDiachi());
 		if (addDonHangVangLai.getGhichu() != null && !StringUtils.isEmpty(addDonHangVangLai.getGhichu())) {

@@ -37,7 +37,7 @@ public class Khachvanglai implements Serializable {
 	private String ten;
 
 	//bi-directional many-to-one association to Donhang
-	@OneToMany(mappedBy="khachvanglai")
+	@OneToMany(mappedBy="khachvanglai", fetch = FetchType.LAZY)
 	private List<Donhang> donhangs;
 
 	public Khachvanglai() {
