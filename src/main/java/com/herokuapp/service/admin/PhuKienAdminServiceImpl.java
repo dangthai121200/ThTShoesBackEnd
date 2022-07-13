@@ -32,4 +32,12 @@ public class PhuKienAdminServiceImpl implements PhuKienAdminService {
 		return listPhuKienAdmin;
 	}
 
+	@Override
+	public PhuKienAdminDomain getPhuKienById(String idPhuKien) {
+		PhuKienAdminDomain phuKienAdminDomain = new PhuKienAdminDomain();
+		Phukien phukien = phuKienReponsitory.findById(idPhuKien).get();
+		phuKienAdminDomain.converToDomain(phukien);
+		return phuKienAdminDomain;
+	}
+
 }
