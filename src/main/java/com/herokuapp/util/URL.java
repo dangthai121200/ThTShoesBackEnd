@@ -33,6 +33,7 @@ public class URL {
 	public static final String ADD_NHAN_VIEN = "/themnhanvien";
 	
 	public static final String SIZE = "/size";
+	public static final String MAU_SAC = "/mausac";
 	
 
 	public static final String LOGIN = "/login";
