@@ -1,11 +1,15 @@
 package com.herokuapp.service.admin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.herokuapp.domain.admin.InfoNhanvienDangKy;
 import com.herokuapp.domain.admin.NhanVienAdminDomain;
+import com.herokuapp.domain.admin.list.ListNhanVienAdmin;
 import com.herokuapp.entity.Nhanvien;
 import com.herokuapp.entity.Taikhoan;
 import com.herokuapp.entity.Taikhoanseq;
@@ -67,6 +71,21 @@ public class NhanVienServiceImpl implements NhanVienService {
 		NhanVienAdminDomain nhanVienAdminDomain = new NhanVienAdminDomain();
 		nhanVienAdminDomain.converToDomain(nhanvien);
 		return nhanVienAdminDomain;
+	}
+
+	@Override
+	public ListNhanVienAdmin getAllNhanVien() {
+		ListNhanVienAdmin listNhanVienAdmin = new ListNhanVienAdmin();
+		List<NhanVienAdminDomain> nhanVienAdminDomains = new ArrayList<>();
+		List<Nhanvien> nhanviens = nhanVienReponsitory.findAll();
+
+		nhanviens.forEach(nhanvien -> {
+			NhanVienAdminDomain nhanVienAdminDomain = new NhanVienAdminDomain();
+			nhanVienAdminDomain.converToDomain(nhanvien);
+			nhanVienAdminDomains.add(nhanVienAdminDomain);
+		});
+		listNhanVienAdmin.setNhanviens(nhanVienAdminDomains);
+		return listNhanVienAdmin;
 	}
 
 }

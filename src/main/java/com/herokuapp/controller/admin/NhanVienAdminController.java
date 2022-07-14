@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.herokuapp.domain.admin.InfoNhanvienDangKy;
 import com.herokuapp.domain.admin.NhanVienAdminDomain;
+import com.herokuapp.domain.admin.list.ListNhanVienAdmin;
 import com.herokuapp.security.UserDetailsConfigure;
 import com.herokuapp.service.admin.NhanVienService;
 import com.herokuapp.util.URL;
@@ -21,6 +22,11 @@ public class NhanVienAdminController {
 
 	@Autowired
 	public NhanVienService nhanVienService;
+
+	@GetMapping
+	public ListNhanVienAdmin getAllNhanVien() {
+		return nhanVienService.getAllNhanVien();
+	}
 
 	@PostMapping(value = URL.ADD_NHAN_VIEN)
 	public ResponseEntity<String> addNhanvien(@RequestBody InfoNhanvienDangKy infoNhanvienDangKy) {
