@@ -9,6 +9,7 @@ public class KhachHangAdminDomain extends AbstractsDomain<Khachhang> {
 	private String ho;
 	private int sdt;
 	private String ten;
+	private TaiKhoanAdminDomain taiKhoan = new TaiKhoanAdminDomain();
 
 	public KhachHangAdminDomain() {
 	}
@@ -53,6 +54,14 @@ public class KhachHangAdminDomain extends AbstractsDomain<Khachhang> {
 		this.ten = ten;
 	}
 
+	public TaiKhoanAdminDomain getTaiKhoan() {
+		return taiKhoan;
+	}
+
+	public void setTaiKhoan(TaiKhoanAdminDomain taiKhoan) {
+		this.taiKhoan = taiKhoan;
+	}
+
 	@Override
 	public void converToDomain(Khachhang khachhang) {
 		this.makh = khachhang.getMakh();
@@ -60,11 +69,12 @@ public class KhachHangAdminDomain extends AbstractsDomain<Khachhang> {
 		this.ten = khachhang.getTen();
 		this.diachi = (String) khachhang.getDiachi();
 		this.sdt = khachhang.getSdt();
+		this.taiKhoan.converToDomain(khachhang.getTaikhoan());
 	}
 
 	@Override
 	public Khachhang converToEntity() {
-		
+
 		return null;
 	}
 

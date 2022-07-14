@@ -17,7 +17,7 @@ import com.herokuapp.util.URL;
 
 @RestController
 @RequestMapping(URL.NHAN_VIEN)
-public class NhanVienController {
+public class NhanVienAdminController {
 
 	@Autowired
 	public NhanVienService nhanVienService;
