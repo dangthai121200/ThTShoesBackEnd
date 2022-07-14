@@ -3,9 +3,9 @@ package com.herokuapp.service.admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.herokuapp.domain.admin.InfoNhanvienDangKy;
+import com.herokuapp.domain.admin.NhanVienAdminDomain;
 import com.herokuapp.entity.Nhanvien;
 import com.herokuapp.entity.Taikhoan;
 import com.herokuapp.entity.Taikhoanseq;
@@ -15,7 +15,6 @@ import com.herokuapp.reponsitory.TaiKhoanReponsitory;
 import com.herokuapp.reponsitory.TaiKhoanSeqReponsitory;
 import com.herokuapp.service.common.EmailService;
 import com.herokuapp.util.PrefixId;
-import com.herokuapp.util.URL;
 
 @Service
 public class NhanVienServiceImpl implements NhanVienService {
@@ -60,6 +59,14 @@ public class NhanVienServiceImpl implements NhanVienService {
 	private int getTaiKhoanIdSeq() {
 		int id = taiKhoanSeqReponsitory.save(new Taikhoanseq()).getId();
 		return id;
+	}
+
+	@Override
+	public NhanVienAdminDomain getInfoNhanVien(String idMaNhanvien) {
+		Nhanvien nhanvien = nhanVienReponsitory.findById(idMaNhanvien).get();
+		NhanVienAdminDomain nhanVienAdminDomain = new NhanVienAdminDomain();
+		nhanVienAdminDomain.converToDomain(nhanvien);
+		return nhanVienAdminDomain;
 	}
 
 }

@@ -2,12 +2,16 @@ package com.herokuapp.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.herokuapp.domain.admin.InfoNhanvienDangKy;
+import com.herokuapp.domain.admin.NhanVienAdminDomain;
+import com.herokuapp.security.UserDetailsConfigure;
 import com.herokuapp.service.admin.NhanVienService;
 import com.herokuapp.util.URL;
 
@@ -27,6 +31,13 @@ public class NhanVienController {
 			ex.printStackTrace();
 			return ResponseEntity.badRequest().body("Đăng ký thất bại");
 		}
+	}
+
+	@GetMapping(value = URL.INFO_NHAN_VIEN)
+	public NhanVienAdminDomain getInfoNhanVien() {
+		String idMaNhanvien = ((UserDetailsConfigure) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal()).getManguoidung();
+		return nhanVienService.getInfoNhanVien(idMaNhanvien);
 	}
 
 }

@@ -29,6 +29,7 @@ public class URL {
 	public static final String LICH_SU_DAT_HANG = "/lichsudathang";
 	
 	public static final String NHAN_VIEN = "/nhanvien";
+	public static final String INFO_NHAN_VIEN = "/info";
 	
 	public static final String ADD_NHAN_VIEN = "/themnhanvien";
 	
