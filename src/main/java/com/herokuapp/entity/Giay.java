@@ -50,10 +50,6 @@ public class Giay implements Serializable {
 	@OneToMany(mappedBy = "giay", fetch = FetchType.LAZY)
 	private List<Binhluan> binhluans;
 
-	// bi-directional many-to-one association to GiayDonhang
-	@OneToMany(mappedBy = "giay", fetch = FetchType.LAZY)
-	private List<GiayDonhang> giayDonhangs;
-
 	// bi-directional many-to-one association to Hinh
 	@OneToMany(mappedBy = "giay", fetch = FetchType.LAZY)
 	private List<Hinh> hinhs;
@@ -167,28 +163,6 @@ public class Giay implements Serializable {
 		binhluan.setGiay(null);
 
 		return binhluan;
-	}
-
-	public List<GiayDonhang> getGiayDonhangs() {
-		return this.giayDonhangs;
-	}
-
-	public void setGiayDonhangs(List<GiayDonhang> giayDonhangs) {
-		this.giayDonhangs = giayDonhangs;
-	}
-
-	public GiayDonhang addGiayDonhang(GiayDonhang giayDonhang) {
-		getGiayDonhangs().add(giayDonhang);
-		giayDonhang.setGiay(this);
-
-		return giayDonhang;
-	}
-
-	public GiayDonhang removeGiayDonhang(GiayDonhang giayDonhang) {
-		getGiayDonhangs().remove(giayDonhang);
-		giayDonhang.setGiay(null);
-
-		return giayDonhang;
 	}
 
 	public List<Hinh> getHinhs() {

@@ -87,14 +87,14 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 		donhang.setTinhtrang(tinhTrangKeTiep);
 		nhanvienDonhang.setHanhdong(hanhDong);
 
-		if (giayDonhangs != null) {
-			for (GiayDonhang giayDonhang : giayDonhangs) {
-				Giay giay = giayDonhang.getGiay();
-				int soluong = giay.getSoluong() - giayDonhang.getSoluong();
-				giay.setSoluong(soluong);
-				giayDonhangsUpdateSoLuong.add(giay);
-			}
-		}
+//		if (giayDonhangs != null) {
+//			for (GiayDonhang giayDonhang : giayDonhangs) {
+//				Giay giay = giayDonhang.getGiay();
+//				int soluong = giay.getSoluong() - giayDonhang.getSoluong();
+//				giay.setSoluong(soluong);
+//				giayDonhangsUpdateSoLuong.add(giay);
+//			}
+//		}
 
 		if (phukienDonhangs != null) {
 			for (PhukienDonhang phukienDonhang : phukienDonhangs) {

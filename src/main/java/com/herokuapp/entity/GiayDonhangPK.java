@@ -12,19 +12,19 @@ public class GiayDonhangPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(insertable=false, updatable=false, unique=true, nullable=false, length=10)
-	private String magiay;
+	@Column(name = "id_giay_mau_size",insertable=false, updatable=false, unique=true, nullable=false, length=10)
+	private String idGiaySizeMau;
 
 	@Column(insertable=false, updatable=false, unique=true, nullable=false, length=10)
 	private String madon;
 
 	public GiayDonhangPK() {
 	}
-	public String getMagiay() {
-		return this.magiay;
+	public String getidGiaySizeMau() {
+		return this.idGiaySizeMau;
 	}
-	public void setMagiay(String magiay) {
-		this.magiay = magiay;
+	public void setidGiaySizeMau(String idGiaySizeMau) {
+		this.idGiaySizeMau = idGiaySizeMau;
 	}
 	public String getMadon() {
 		return this.madon;
@@ -42,14 +42,14 @@ public class GiayDonhangPK implements Serializable {
 		}
 		GiayDonhangPK castOther = (GiayDonhangPK)other;
 		return 
-			this.magiay.equals(castOther.magiay)
+			this.idGiaySizeMau.equals(castOther.idGiaySizeMau)
 			&& this.madon.equals(castOther.madon);
 	}
 
 	public int hashCode() {
 		final int prime = 31;
 		int hash = 17;
-		hash = hash * prime + this.magiay.hashCode();
+		hash = hash * prime + this.idGiaySizeMau.hashCode();
 		hash = hash * prime + this.madon.hashCode();
 		
 		return hash;

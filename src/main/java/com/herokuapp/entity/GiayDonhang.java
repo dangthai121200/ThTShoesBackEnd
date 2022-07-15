@@ -1,37 +1,40 @@
 package com.herokuapp.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the giay_donhang database table.
  * 
  */
 @Entity
-@Table(name="giay_donhang")
-@NamedQuery(name="GiayDonhang.findAll", query="SELECT g FROM GiayDonhang g")
+@Table(name = "giay_donhang")
+@NamedQuery(name = "GiayDonhang.findAll", query = "SELECT g FROM GiayDonhang g")
 public class GiayDonhang implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
 	private GiayDonhangPK id;
 
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private int soluong;
 
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private int tonggia;
 
-	//bi-directional many-to-one association to Donhang
+	// bi-directional many-to-one association to Donhang
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="madon", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name = "madon", nullable = false, insertable = false, updatable = false)
 	private Donhang donhang;
 
-	//bi-directional many-to-one association to Giay
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="magiay", nullable=false, insertable=false, updatable=false)
-	private Giay giay;
 
 	public GiayDonhang() {
 	}
@@ -66,14 +69,6 @@ public class GiayDonhang implements Serializable {
 
 	public void setDonhang(Donhang donhang) {
 		this.donhang = donhang;
-	}
-
-	public Giay getGiay() {
-		return this.giay;
-	}
-
-	public void setGiay(Giay giay) {
-		this.giay = giay;
 	}
 
 }

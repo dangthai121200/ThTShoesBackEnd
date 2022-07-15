@@ -1,13 +1,17 @@
 package com.herokuapp.controller.khachhang;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.herokuapp.domain.khachhang.AddDonHangVangLai;
 import com.herokuapp.domain.khachhang.GiayDomain;
+import com.herokuapp.domain.khachhang.InfoGiayDonHang;
 import com.herokuapp.domain.khachhang.PageHomeDomain;
 import com.herokuapp.domain.khachhang.PhuKienDomain;
 import com.herokuapp.service.khachhang.GiayService;
@@ -36,4 +40,18 @@ public class HomeController {
 		pageHomeDomain.setPhuKienLatest(phuKienLatest);
 		return pageHomeDomain;
 	}
+	
+//	@GetMapping(URL.TRANG_CHU)
+//	public AddDonHangVangLai home() {
+//		AddDonHangVangLai addDonHangVangLai = new AddDonHangVangLai();
+//		Map<String, InfoGiayDonHang> map = new HashMap<String, InfoGiayDonHang>();
+//		InfoGiayDonHang infoGiayDonHang = new InfoGiayDonHang();
+//		infoGiayDonHang.setMamau("m1");
+//		infoGiayDonHang.setMasize("s1");
+//		infoGiayDonHang.setSoluong(10);
+//		map.put("cc", infoGiayDonHang);
+//		addDonHangVangLai.setGiays(map);
+//		return addDonHangVangLai;
+//	}
+	
 }

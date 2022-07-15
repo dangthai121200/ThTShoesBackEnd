@@ -16,8 +16,8 @@ public class GiayDonhangAdminDomain extends AbstractsDomain<GiayDonhang> {
 
 	@Override
 	public void converToDomain(GiayDonhang giayDonHang) {
-		this.magiay = giayDonHang.getGiay().getMagiay();
-		this.tengiay = giayDonHang.getGiay().getTengiay();
+//		this.magiay = giayDonHang.getGiay().getMagiay();
+//		this.tengiay = giayDonHang.getGiay().getTengiay();
 		this.soluong = giayDonHang.getSoluong();
 		this.tonggia = giayDonHang.getTonggia();
 
