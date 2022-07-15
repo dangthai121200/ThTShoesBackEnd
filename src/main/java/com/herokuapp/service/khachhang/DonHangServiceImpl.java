@@ -92,7 +92,9 @@ public class DonHangServiceImpl implements DonHangService {
 				.getManguoidung();
 
 		String idNextDonHang = PrefixId.DONGHANG + String.valueOf(donHangSeqReponsitory.getIdNext());
-
+		
+		//create donhang
+		
 		donhang.setNguoinhan(addDonHang.getNguoinhan());
 		donhang.setDiachi(addDonHang.getDiachi());
 
@@ -107,7 +109,9 @@ public class DonHangServiceImpl implements DonHangService {
 		Khachhang khachhang = new Khachhang();
 		khachhang.setMakh(makh);
 		donhang.setKhachhang(khachhang);
+		// end create donhang
 
+		// set makhuyenmai
 		if (addDonHang.getMaKhuyenMai() != null && !StringUtils.isEmpty((addDonHang.getMaKhuyenMai()))) {
 			dskhuyenmai = khuyenMaiReponsitory.findById(addDonHang.getMaKhuyenMai()).get();
 			if (dskhuyenmai.getNgaykt().after(new Date()) && dskhuyenmai.getSoluong() > 0) {
@@ -117,21 +121,31 @@ public class DonHangServiceImpl implements DonHangService {
 			}
 
 		}
-
-//		for (Map.Entry<String, Integer> item : addDonHang.getGiays().entrySet()) {
-//			GiayDonhang giayDonhang = new GiayDonhang();
-//			GiayDonhangPK giayDonhangPK = new GiayDonhangPK();
-//			Giay giay = giayReponsitory.findById(item.getKey()).get();
-//			giayDonhangPK.setMadon(idNextDonHang);
-//			giayDonhangPK.setMagiay(item.getKey());
-//			giayDonhang.setId(giayDonhangPK);
-//			giayDonhang.setSoluong(item.getValue());
-//			int tongGiaGiay = giay.getGia() * item.getValue();
-//			giayDonhang.setTonggia(tongGiaGiay);
-//			tonggia += tongGiaGiay;
-//			soluong += item.getValue();
-//			giayDonhangs.add(giayDonhang);
-//		}
+		
+		//end set makhuyenmai
+		
+		//create giay_donghang
+		
+		for (Map.Entry<String, InfoGiayDonHang> item : addDonHang.getGiays().entrySet()) {
+			GiayDonhang giayDonhang = new GiayDonhang();
+			GiayDonhangPK giayDonhangPK = new GiayDonhangPK();
+			Giay giay = giayReponsitory.findById(item.getKey()).get();
+			String idGiayMauSize = giaySizeMauReponsitory.getIdByIdGiayIdSizeIdMau(item.getKey(),
+					item.getValue().getMasize(), item.getValue().getMamau());
+			giayDonhangPK.setMadon(idNextDonHang);
+			giayDonhangPK.setidGiaySizeMau(idGiayMauSize);
+			giayDonhang.setId(giayDonhangPK);
+			giayDonhang.setSoluong(item.getValue().getSoluong());
+			int tongGiaGiay = giay.getGia() * item.getValue().getSoluong();
+			giayDonhang.setTonggia(tongGiaGiay);
+			tonggia += tongGiaGiay;
+			soluong += item.getValue().getSoluong();
+			giayDonhangs.add(giayDonhang);
+		}
+		
+		//end create giay_donghang
+		
+		//create phukien_donghang
 
 		for (Map.Entry<String, Integer> item : addDonHang.getPhukiens().entrySet()) {
 			PhukienDonhang phukienDonhang = new PhukienDonhang();
@@ -147,6 +161,8 @@ public class DonHangServiceImpl implements DonHangService {
 			soluong += item.getValue();
 			phukienDonhangs.add(phukienDonhang);
 		}
+		
+		//end create phukien_donghang
 
 		BigDecimal tongGiaDonHang = caculateTongGiaDonHang(tonggia, phanTramGiam);
 		donhang.setTonggia(tongGiaDonHang);

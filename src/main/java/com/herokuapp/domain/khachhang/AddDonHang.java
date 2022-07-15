@@ -10,7 +10,7 @@ public class AddDonHang {
 	private String ghichu;
 	private String maloaithanhtoan;
 	private String maKhuyenMai;
-	private Map<String, Integer> giays = new HashMap<String, Integer>();
+	private Map<String, InfoGiayDonHang> giays = new HashMap<String, InfoGiayDonHang>();
 	private Map<String, Integer> phukiens = new HashMap<String, Integer>();
 
 	public String getNguoinhan() {
@@ -29,11 +29,11 @@ public class AddDonHang {
 		this.maKhuyenMai = maKhuyenMai;
 	}
 
-	public Map<String, Integer> getGiays() {
+	public Map<String, InfoGiayDonHang> getGiays() {
 		return giays;
 	}
 
-	public void setGiays(Map<String, Integer> giays) {
+	public void setGiays(Map<String, InfoGiayDonHang> giays) {
 		this.giays = giays;
 	}
 
