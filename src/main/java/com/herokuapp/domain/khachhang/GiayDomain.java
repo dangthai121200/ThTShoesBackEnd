@@ -17,10 +17,9 @@ public class GiayDomain extends AbstractsDomain<Giay> {
 	private int trongluong;
 	private int soluong;
 	private String urlanh;
-	private List<SizeDomain> sizes = new ArrayList<>();
-	private List<HinhDomain> hinhs = new ArrayList<>();;
-	private List<MauSacDomain> mausacs = new ArrayList<>();
+	private List<HinhDomain> hinhs = new ArrayList<>();
 	private LoaigiayHangDanhmucDomain loaigiayHangDanhmuc = new LoaigiayHangDanhmucDomain();
+	private List<SizeDomain> sizes = new ArrayList<>();
 
 	public String getMagiay() {
 		return magiay;
@@ -94,14 +93,6 @@ public class GiayDomain extends AbstractsDomain<Giay> {
 		this.trongluong = trongluong;
 	}
 
-	public List<SizeDomain> getSizes() {
-		return sizes;
-	}
-
-	public void setSizes(List<SizeDomain> sizes) {
-		this.sizes = sizes;
-	}
-
 	public List<HinhDomain> getHinhs() {
 		return hinhs;
 	}
@@ -110,20 +101,20 @@ public class GiayDomain extends AbstractsDomain<Giay> {
 		this.hinhs = hinhs;
 	}
 
-	public List<MauSacDomain> getMausacs() {
-		return mausacs;
-	}
-
-	public void setMausacs(List<MauSacDomain> mausacs) {
-		this.mausacs = mausacs;
-	}
-
 	public LoaigiayHangDanhmucDomain getLoaigiayHangDanhmuc() {
 		return loaigiayHangDanhmuc;
 	}
 
 	public void setLoaigiayHangDanhmuc(LoaigiayHangDanhmucDomain loaigiayHangDanhmuc) {
 		this.loaigiayHangDanhmuc = loaigiayHangDanhmuc;
+	}
+
+	public List<SizeDomain> getSizes() {
+		return sizes;
+	}
+
+	public void setSizes(List<SizeDomain> sizes) {
+		this.sizes = sizes;
 	}
 
 	@Override
@@ -137,18 +128,6 @@ public class GiayDomain extends AbstractsDomain<Giay> {
 		this.trongluong = giay.getTrongluong();
 		this.soluong = giay.getSoluong();
 		this.urlanh = giay.getUrlanh();
-
-		giay.getSizes().forEach(size -> {
-			SizeDomain sizeDomain = new SizeDomain();
-			sizeDomain.converToDomain(size);
-			this.sizes.add(sizeDomain);
-		});
-
-		giay.getMausacs().forEach(mausac -> {
-			MauSacDomain mauSacDomain = new MauSacDomain();
-			mauSacDomain.converToDomain(mausac);
-			this.mausacs.add(mauSacDomain);
-		});
 
 		giay.getHinhs().forEach(hinh -> {
 			HinhDomain hinhDomain = new HinhDomain();

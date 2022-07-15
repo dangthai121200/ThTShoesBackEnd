@@ -10,4 +10,6 @@ import com.herokuapp.entity.Size;
 @Transactional(rollbackFor = Exception.class)
 public interface SizeReponsitory extends JpaRepository<Size, String> {
 
+	
+
 }

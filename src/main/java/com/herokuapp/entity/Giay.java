@@ -8,9 +8,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -53,12 +50,6 @@ public class Giay implements Serializable {
 	@OneToMany(mappedBy = "giay", fetch = FetchType.LAZY)
 	private List<Binhluan> binhluans;
 
-	// bi-directional many-to-many association to Size
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "giay_size", joinColumns = { @JoinColumn(name = "magiay") }, inverseJoinColumns = {
-			@JoinColumn(name = "masize") })
-	private List<Size> sizes;
-
 	// bi-directional many-to-one association to GiayDonhang
 	@OneToMany(mappedBy = "giay", fetch = FetchType.LAZY)
 	private List<GiayDonhang> giayDonhangs;
@@ -67,11 +58,9 @@ public class Giay implements Serializable {
 	@OneToMany(mappedBy = "giay", fetch = FetchType.LAZY)
 	private List<Hinh> hinhs;
 
-	// bi-directional many-to-many association to Mausac
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "giay_mau", joinColumns = { @JoinColumn(name = "magiay") }, inverseJoinColumns = {
-			@JoinColumn(name = "mamau") })
-	private List<Mausac> mausacs;
+	// bi-directional many-to-one association to GiayMauSize
+	@OneToMany(mappedBy = "giay", fetch = FetchType.LAZY)
+	private List<GiayMauSize> giayMauSizes;
 
 	public Giay() {
 		this.magiay = "";
@@ -180,14 +169,6 @@ public class Giay implements Serializable {
 		return binhluan;
 	}
 
-	public List<Size> getSizes() {
-		return this.sizes;
-	}
-
-	public void setSizes(List<Size> sizes) {
-		this.sizes = sizes;
-	}
-
 	public List<GiayDonhang> getGiayDonhangs() {
 		return this.giayDonhangs;
 	}
@@ -232,20 +213,34 @@ public class Giay implements Serializable {
 		return hinh;
 	}
 
-	public List<Mausac> getMausacs() {
-		return this.mausacs;
-	}
-
-	public void setMausacs(List<Mausac> mausacs) {
-		this.mausacs = mausacs;
-	}
-
 	public int getMaLgiayHang() {
 		return maLgiayHang;
 	}
 
 	public void setMaLgiayHang(int maLgiayHang) {
 		this.maLgiayHang = maLgiayHang;
+	}
+
+	public List<GiayMauSize> getGiayMauSizes() {
+		return this.giayMauSizes;
+	}
+
+	public void setGiayMauSizes(List<GiayMauSize> giayMauSizes) {
+		this.giayMauSizes = giayMauSizes;
+	}
+
+	public GiayMauSize addGiayMauSize(GiayMauSize giayMauSize) {
+		getGiayMauSizes().add(giayMauSize);
+		giayMauSize.setGiay(this);
+
+		return giayMauSize;
+	}
+
+	public GiayMauSize removeGiayMauSize(GiayMauSize giayMauSize) {
+		getGiayMauSizes().remove(giayMauSize);
+		giayMauSize.setGiay(null);
+
+		return giayMauSize;
 	}
 
 }

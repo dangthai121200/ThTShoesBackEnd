@@ -12,7 +12,7 @@ public class LoaigiayHangDanhmucPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="ma_lgiay_hang", insertable=false, updatable=false, unique=true, nullable=false)
+	@Column(name="ma_lgiay_hang", unique=true, nullable=false)
 	private int maLgiayHang;
 
 	@Column(insertable=false, updatable=false, unique=true, nullable=false, length=10)

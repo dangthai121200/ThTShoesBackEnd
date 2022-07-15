@@ -3,9 +3,6 @@ package com.herokuapp.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.List;
 
 
@@ -26,18 +23,9 @@ public class Mausac implements Serializable {
 	@Column(nullable=false, length=10)
 	private String tenmau;
 
-	//bi-directional many-to-many association to Giay
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-		name="giay_mau"
-		, joinColumns={
-			@JoinColumn(name="mamau", nullable=false)
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="magiay", nullable=false)
-			}
-		)
-	private List<Giay> giays;
+	//bi-directional many-to-one association to GiayMauSize
+	@OneToMany(mappedBy="mausac")
+	private List<GiayMauSize> giayMauSizes;
 
 	public Mausac() {
 	}
@@ -58,12 +46,26 @@ public class Mausac implements Serializable {
 		this.tenmau = tenmau;
 	}
 
-	public List<Giay> getGiays() {
-		return this.giays;
+	public List<GiayMauSize> getGiayMauSizes() {
+		return this.giayMauSizes;
 	}
 
-	public void setGiays(List<Giay> giays) {
-		this.giays = giays;
+	public void setGiayMauSizes(List<GiayMauSize> giayMauSizes) {
+		this.giayMauSizes = giayMauSizes;
+	}
+
+	public GiayMauSize addGiayMauSize(GiayMauSize giayMauSize) {
+		getGiayMauSizes().add(giayMauSize);
+		giayMauSize.setMausac(this);
+
+		return giayMauSize;
+	}
+
+	public GiayMauSize removeGiayMauSize(GiayMauSize giayMauSize) {
+		getGiayMauSizes().remove(giayMauSize);
+		giayMauSize.setMausac(null);
+
+		return giayMauSize;
 	}
 
 }

@@ -9,6 +9,8 @@ public class MauSacDomain extends AbstractsDomain<Mausac> {
 
 	private String tenmau;
 
+	private int soluong;
+
 	public MauSacDomain() {
 	}
 
@@ -26,6 +28,14 @@ public class MauSacDomain extends AbstractsDomain<Mausac> {
 
 	public void setTenmau(String tenmau) {
 		this.tenmau = tenmau;
+	}
+
+	public int getSoluong() {
+		return soluong;
+	}
+
+	public void setSoluong(int soluong) {
+		this.soluong = soluong;
 	}
 
 	@Override

@@ -34,18 +34,6 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 			GiayAdminDomain giayAdminDomain = new GiayAdminDomain();
 			giayAdminDomain.converToDomain(giay);
 
-			giay.getSizes().forEach(size -> {
-				SizeAdminDomain sizeDomain = new SizeAdminDomain();
-				sizeDomain.converToDomain(size);
-				giayAdminDomain.getSizes().add(sizeDomain);
-			});
-
-			giay.getMausacs().forEach(mausac -> {
-				MauSacAdminDomain mauSacDomain = new MauSacAdminDomain();
-				mauSacDomain.converToDomain(mausac);
-				giayAdminDomain.getMausacs().add(mauSacDomain);
-			});
-
 			giay.getHinhs().forEach(hinh -> {
 				HinhAdminDomain hinhDomain = new HinhAdminDomain();
 				hinhDomain.converToDomain(hinh);
@@ -69,17 +57,6 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 		Giay giay = giayReponsitory.findById(idGiay).get();
 		GiayAdminDomain giayAdminDomain = new GiayAdminDomain();
 		giayAdminDomain.converToDomain(giay);
-		giay.getSizes().forEach(size -> {
-			SizeAdminDomain sizeDomain = new SizeAdminDomain();
-			sizeDomain.converToDomain(size);
-			giayAdminDomain.getSizes().add(sizeDomain);
-		});
-
-		giay.getMausacs().forEach(mausac -> {
-			MauSacAdminDomain mauSacDomain = new MauSacAdminDomain();
-			mauSacDomain.converToDomain(mausac);
-			giayAdminDomain.getMausacs().add(mauSacDomain);
-		});
 
 		giay.getHinhs().forEach(hinh -> {
 			HinhAdminDomain hinhDomain = new HinhAdminDomain();
