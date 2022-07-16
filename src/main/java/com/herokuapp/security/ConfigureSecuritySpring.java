@@ -59,36 +59,35 @@ public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.LOAI_GIAY + "/**").permitAll();
 		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.LOAI_PHU_KIEN + "/**").permitAll();
 
-		http.authorizeRequests().antMatchers(HttpMethod.POST, URL.KHACH_HANG + URL.DAT_HANG)
+		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.DAT_HANG)
 				.hasAuthority(Quyen.KHACHHANG.getName());
-		http.authorizeRequests().antMatchers(HttpMethod.POST, URL.KHACH_HANG + URL.DAT_HANG + URL.KHACH_VANG_LAI)
-				.permitAll();
+		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.DAT_HANG + URL.KHACH_VANG_LAI + "/**").permitAll();
 
 		// URL NHAN VIEN
-			//add nhanvien
+		// add nhanvien
 		http.authorizeRequests().antMatchers(HttpMethod.POST, URL.NHAN_VIEN + URL.ADD_NHAN_VIEN)
 				.hasAuthority(Quyen.ADMIN.getName());
-			//show nhanvien
+		// show nhanvien
 		http.authorizeRequests().antMatchers(HttpMethod.GET, URL.NHAN_VIEN).hasAuthority(Quyen.ADMIN.getName());
-			// Info Nhanvien
+		// Info Nhanvien
 		http.authorizeRequests().antMatchers(URL.NHAN_VIEN + URL.INFO_NHAN_VIEN).hasAnyAuthority(Quyen.ADMIN.getName(),
 				Quyen.NHANVIEN.getName());
 
-			// Add Giay
+		// Add Giay
 		http.authorizeRequests().antMatchers(HttpMethod.POST, URL.NHAN_VIEN + URL.GIAY)
 				.hasAuthority(Quyen.ADMIN.getName());
-			// Show giay
+		// Show giay
 		http.authorizeRequests().antMatchers(HttpMethod.GET, URL.NHAN_VIEN + URL.GIAY)
 				.hasAnyAuthority(Quyen.ADMIN.getName(), Quyen.NHANVIEN.getName());
 		http.authorizeRequests().antMatchers(HttpMethod.GET, URL.NHAN_VIEN + URL.GIAY + "/**")
 				.hasAnyAuthority(Quyen.ADMIN.getName(), Quyen.NHANVIEN.getName());
-			// donhang
+		// donhang
 		http.authorizeRequests().antMatchers(URL.NHAN_VIEN + URL.DON_HANG + "/**")
 				.hasAnyAuthority(Quyen.ADMIN.getName(), Quyen.NHANVIEN.getName());
 		http.authorizeRequests().antMatchers(URL.NHAN_VIEN + URL.DON_HANG).hasAnyAuthority(Quyen.ADMIN.getName(),
 				Quyen.NHANVIEN.getName());
 
-			// Show phukien
+		// Show phukien
 		http.authorizeRequests().antMatchers(HttpMethod.GET, URL.NHAN_VIEN + URL.PHU_KIEN)
 				.hasAnyAuthority(Quyen.ADMIN.getName(), Quyen.NHANVIEN.getName());
 		http.authorizeRequests().antMatchers(HttpMethod.GET, URL.NHAN_VIEN + URL.PHU_KIEN + "/**")

@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.herokuapp.abstracts.AbstractsDomain;
 import com.herokuapp.entity.Donhang;
+import com.herokuapp.entity.GiayDonhang;
 import com.herokuapp.enums.TinhTrang;
 
 public class DonHangDomain extends AbstractsDomain<Donhang> {
@@ -77,6 +78,9 @@ public class DonHangDomain extends AbstractsDomain<Donhang> {
 	}
 
 	public List<GiayDonhangDomain> getGiayDonhangs() {
+		if (this.giayDonhangs == null) {
+			this.giayDonhangs = new ArrayList<>();
+		}
 		return giayDonhangs;
 	}
 
@@ -105,14 +109,6 @@ public class DonHangDomain extends AbstractsDomain<Donhang> {
 			this.makhuyenmai = donhang.getDskhuyenmai().getMakm();
 		}
 
-		if (donhang.getGiayDonhangs() != null) {
-			donhang.getGiayDonhangs().forEach(giayDonhang -> {
-				GiayDonhangDomain giayDonhangDomain = new GiayDonhangDomain();
-				giayDonhangDomain.converToDomain(giayDonhang);
-				giayDonhangs.add(giayDonhangDomain);
-			});
-		}
-
 		if (donhang.getPhukienDonhangs() != null) {
 			donhang.getPhukienDonhangs().forEach(phukienDonhang -> {
 				PhukienDonhangDomain phukienDonhangDomain = new PhukienDonhangDomain();
@@ -125,5 +121,15 @@ public class DonHangDomain extends AbstractsDomain<Donhang> {
 	@Override
 	public Donhang converToEntity() {
 		return null;
+	}
+
+	public void addGiayDonHang(GiayDonhangDomain giayDonhangDomain) {
+		this.giayDonhangs.add(giayDonhangDomain);
+	}
+
+	public void addGiayDonHang(GiayDonhang giayDonhang) {
+		GiayDonhangDomain giayDonhangDomain = new GiayDonhangDomain();
+		giayDonhangDomain.converToDomain(giayDonhang);
+		this.giayDonhangs.add(giayDonhangDomain);
 	}
 }

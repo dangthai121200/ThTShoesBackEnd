@@ -9,6 +9,8 @@ public class GiayDonhangDomain extends AbstractsDomain<GiayDonhang> {
 	private String tengiay;
 	private int soluong;
 	private int tonggia;
+	private MauSacDomain mauSac = new MauSacDomain();
+	private SizeDomain size = new SizeDomain();
 
 	public GiayDonhangDomain() {
 
@@ -59,6 +61,22 @@ public class GiayDonhangDomain extends AbstractsDomain<GiayDonhang> {
 	public GiayDonhang converToEntity() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public MauSacDomain getMauSac() {
+		return mauSac;
+	}
+
+	public void setMauSac(MauSacDomain mauSac) {
+		this.mauSac = mauSac;
+	}
+
+	public SizeDomain getSize() {
+		return size;
+	}
+
+	public void setSize(SizeDomain size) {
+		this.size = size;
 	}
 
 }

@@ -15,13 +15,18 @@ import org.springframework.util.StringUtils;
 import com.herokuapp.domain.khachhang.AddDonHang;
 import com.herokuapp.domain.khachhang.AddDonHangVangLai;
 import com.herokuapp.domain.khachhang.DonHangDomain;
+import com.herokuapp.domain.khachhang.GiayDonhangDomain;
 import com.herokuapp.domain.khachhang.InfoGiayDonHang;
+import com.herokuapp.domain.khachhang.MauSacDomain;
+import com.herokuapp.domain.khachhang.SizeDomain;
 import com.herokuapp.domain.khachhang.list.ListDonHang;
+import com.herokuapp.domain.khachhang.list.ListDonHangVangLai;
 import com.herokuapp.entity.Donhang;
 import com.herokuapp.entity.Dskhuyenmai;
 import com.herokuapp.entity.Giay;
 import com.herokuapp.entity.GiayDonhang;
 import com.herokuapp.entity.GiayDonhangPK;
+import com.herokuapp.entity.GiayMauSize;
 import com.herokuapp.entity.Khachhang;
 import com.herokuapp.entity.Khachvanglai;
 import com.herokuapp.entity.Phukien;
@@ -92,9 +97,9 @@ public class DonHangServiceImpl implements DonHangService {
 				.getManguoidung();
 
 		String idNextDonHang = PrefixId.DONGHANG + String.valueOf(donHangSeqReponsitory.getIdNext());
-		
-		//create donhang
-		
+
+		// create donhang
+
 		donhang.setNguoinhan(addDonHang.getNguoinhan());
 		donhang.setDiachi(addDonHang.getDiachi());
 
@@ -121,11 +126,11 @@ public class DonHangServiceImpl implements DonHangService {
 			}
 
 		}
-		
-		//end set makhuyenmai
-		
-		//create giay_donghang
-		
+
+		// end set makhuyenmai
+
+		// create giay_donghang
+
 		for (Map.Entry<String, InfoGiayDonHang> item : addDonHang.getGiays().entrySet()) {
 			GiayDonhang giayDonhang = new GiayDonhang();
 			GiayDonhangPK giayDonhangPK = new GiayDonhangPK();
@@ -142,10 +147,10 @@ public class DonHangServiceImpl implements DonHangService {
 			soluong += item.getValue().getSoluong();
 			giayDonhangs.add(giayDonhang);
 		}
-		
-		//end create giay_donghang
-		
-		//create phukien_donghang
+
+		// end create giay_donghang
+
+		// create phukien_donghang
 
 		for (Map.Entry<String, Integer> item : addDonHang.getPhukiens().entrySet()) {
 			PhukienDonhang phukienDonhang = new PhukienDonhang();
@@ -161,8 +166,8 @@ public class DonHangServiceImpl implements DonHangService {
 			soluong += item.getValue();
 			phukienDonhangs.add(phukienDonhang);
 		}
-		
-		//end create phukien_donghang
+
+		// end create phukien_donghang
 
 		BigDecimal tongGiaDonHang = caculateTongGiaDonHang(tonggia, phanTramGiam);
 		donhang.setTonggia(tongGiaDonHang);
@@ -193,7 +198,7 @@ public class DonHangServiceImpl implements DonHangService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public void addDonHangKhachVangLai(AddDonHangVangLai addDonHangVangLai) {
+	public String addDonHangKhachVangLai(AddDonHangVangLai addDonHangVangLai) {
 		int tonggia = 0;
 		int soluong = 0;
 		int phanTramGiam = 0;
@@ -291,7 +296,7 @@ public class DonHangServiceImpl implements DonHangService {
 		if (dskhuyenmai != null) {
 			khuyenMaiReponsitory.save(dskhuyenmai);
 		}
-
+		return idNextKhachVanglai;
 	}
 
 	private BigDecimal caculateTongGiaDonHang(int tonggiaSanPham, int phamtramgiam) {
@@ -301,6 +306,39 @@ public class DonHangServiceImpl implements DonHangService {
 		BigDecimal sotiengiam = (tonggiaSanPhamDec.divide(new BigDecimal("100"))).multiply(phamTramGiamDec);
 		tonggia = tonggiaSanPhamDec.subtract(sotiengiam);
 		return tonggia;
+	}
+
+	@Override
+	public ListDonHangVangLai getLichSuDonHangByKhachVangLaiId(String idKVL) {
+		ListDonHangVangLai listDonHangVangLai = new ListDonHangVangLai();
+		DonHangDomain donHangDomain = new DonHangDomain();
+		Khachvanglai khachvanglai = khachHangVangLaiReponsitory.findById(idKVL).get();
+		Donhang donhang = khachvanglai.getDonhangs().get(0);
+
+		// only convert list phukien
+		donHangDomain.converToDomain(donhang);
+
+		for (GiayDonhang giayDonhang : donhang.getGiayDonhangs()) {
+			GiayDonhangDomain giayDonhangDomain = new GiayDonhangDomain();
+			giayDonhangDomain.converToDomain(giayDonhang);
+			GiayMauSize giayMauSize = giaySizeMauReponsitory.getGiayMauSizeById(giayDonhang.getId().getidGiaySizeMau());
+
+			Giay giay = giayMauSize.getGiay();
+			giayDonhangDomain.setMagiay(giay.getMagiay());
+			giayDonhangDomain.setTengiay(giay.getTengiay());
+
+			SizeDomain sizeDomain = new SizeDomain();
+			sizeDomain.converToDomain(giayMauSize.getSize());
+			giayDonhangDomain.setSize(sizeDomain);
+
+			MauSacDomain mauSacDomain = new MauSacDomain();
+			mauSacDomain.converToDomain(giayMauSize.getMausac());
+			giayDonhangDomain.setMauSac(mauSacDomain);
+			donHangDomain.addGiayDonHang(giayDonhangDomain);
+		}
+
+		listDonHangVangLai.setDonHang(donHangDomain);
+		return listDonHangVangLai;
 	}
 
 }

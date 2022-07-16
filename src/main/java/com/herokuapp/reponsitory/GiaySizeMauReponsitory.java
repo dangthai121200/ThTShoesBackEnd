@@ -16,8 +16,13 @@ public interface GiaySizeMauReponsitory extends JpaRepository<GiayMauSize, GiayM
 	@Query(value = "select soluong from giay_mau_size where magiay = :idGiay and masize = :idSize and mamau = :idMau", nativeQuery = true)
 	int getSoLuongByIdGiayIdSizeIdMau(@Param(value = "idGiay") String idGiay, @Param(value = "idSize") String idSize,
 			@Param(value = "idMau") String idMau);
+	
 	@Query(value = "select id from giay_mau_size where magiay = :idGiay and masize = :idSize and mamau = :idMau", nativeQuery = true)
 	String getIdByIdGiayIdSizeIdMau(@Param(value = "idGiay") String idGiay, @Param(value = "idSize") String idSize,
 			@Param(value = "idMau") String idMau);
+	
+	
+	@Query(value = "select * from giay_mau_size where id = :id", nativeQuery = true)
+	GiayMauSize getGiayMauSizeById(@Param(value = "id") String idGiayMauSize);
 
 }
