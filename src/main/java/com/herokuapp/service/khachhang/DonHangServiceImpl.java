@@ -182,21 +182,6 @@ public class DonHangServiceImpl implements DonHangService {
 	}
 
 	@Override
-	public ListDonHang getLichSuDonHangByKhachHangId(String makh) {
-		ListDonHang listDonHang = new ListDonHang();
-		List<DonHangDomain> donHangDomains = new ArrayList<>();
-		Khachhang khachhang = khachHangReponsitory.findById(makh).get();
-		List<Donhang> donhangs = khachhang.getDonhangs();
-		donhangs.forEach(donhang -> {
-			DonHangDomain donHangDomain = new DonHangDomain();
-			donHangDomain.converToDomain(donhang);
-			donHangDomains.add(donHangDomain);
-		});
-		listDonHang.setDonHangs(donHangDomains);
-		return listDonHang;
-	}
-
-	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public String addDonHangKhachVangLai(AddDonHangVangLai addDonHangVangLai) {
 		int tonggia = 0;
@@ -309,11 +294,26 @@ public class DonHangServiceImpl implements DonHangService {
 	}
 
 	@Override
+	public ListDonHang getLichSuDonHangByKhachHangId(String makh) {
+		ListDonHang listDonHang = new ListDonHang();
+		Khachhang khachhang = khachHangReponsitory.findById(makh).get();
+		for (Donhang donhang : khachhang.getDonhangs()) {
+			listDonHang.addDonHangDomain(convertToDonHangDomain(donhang));
+		}
+		return listDonHang;
+	}
+
+	@Override
 	public ListDonHangVangLai getLichSuDonHangByKhachVangLaiId(String idKVL) {
 		ListDonHangVangLai listDonHangVangLai = new ListDonHangVangLai();
-		DonHangDomain donHangDomain = new DonHangDomain();
 		Khachvanglai khachvanglai = khachHangVangLaiReponsitory.findById(idKVL).get();
-		Donhang donhang = khachvanglai.getDonhangs().get(0);
+		DonHangDomain donHangDomain = convertToDonHangDomain(khachvanglai.getDonhangs().get(0));
+		listDonHangVangLai.setDonHang(donHangDomain);
+		return listDonHangVangLai;
+	}
+
+	private DonHangDomain convertToDonHangDomain(Donhang donhang) {
+		DonHangDomain donHangDomain = new DonHangDomain();
 
 		// only convert list phukien
 		donHangDomain.converToDomain(donhang);
@@ -337,8 +337,7 @@ public class DonHangServiceImpl implements DonHangService {
 			donHangDomain.addGiayDonHang(giayDonhangDomain);
 		}
 
-		listDonHangVangLai.setDonHang(donHangDomain);
-		return listDonHangVangLai;
+		return donHangDomain;
 	}
 
 }
