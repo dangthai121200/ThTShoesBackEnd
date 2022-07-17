@@ -28,6 +28,7 @@ public class GiayDomain extends AbstractsDomain<Giay> {
 	public void setMagiay(String magiay) {
 		this.magiay = magiay;
 	}
+	
 
 	public String getChatlieu() {
 		return chatlieu;
@@ -119,12 +120,12 @@ public class GiayDomain extends AbstractsDomain<Giay> {
 
 	@Override
 	public void converToDomain(Giay giay) {
+		this.tengiay = giay.getTengiay();
 		this.magiay = giay.getMagiay();
 		this.chatlieu = giay.getChatlieu();
 		this.gia = giay.getGia();
 		this.kieudang = giay.getKieudang();
 		this.mota = giay.getMota();
-		this.tengiay = giay.getTengiay();
 		this.trongluong = giay.getTrongluong();
 		this.soluong = giay.getSoluong();
 		this.urlanh = giay.getUrlanh();
