@@ -201,7 +201,7 @@ public class DonHangServiceImpl implements DonHangService {
 		khachvanglai.setHo(addDonHangVangLai.getHo());
 		khachvanglai.setTen(addDonHangVangLai.getTen());
 		khachvanglai.setDiachi(addDonHangVangLai.getDiachi());
-		khachvanglai.setSdt(Integer.valueOf(addDonHangVangLai.getSdt()));
+		khachvanglai.setSdt(Long.parseLong(addDonHangVangLai.getSdt()));
 		if (addDonHangVangLai.getGhichu() != null && !StringUtils.isEmpty(addDonHangVangLai.getGhichu())) {
 			khachvanglai.setGhichu(addDonHangVangLai.getGhichu());
 		}
