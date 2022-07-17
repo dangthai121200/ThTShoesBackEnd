@@ -1,7 +1,9 @@
 package com.herokuapp.domain.khachhang;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class AddDonHangVangLai {
 	private String ho;
@@ -13,8 +15,7 @@ public class AddDonHangVangLai {
 	private String makhuyenmai;
 	private String maloaithanhtoan;
 
-	private Map<String, InfoGiayDonHang> giays = new HashMap<String, InfoGiayDonHang>();
-
+	private Set<InfoGiayDonHang> giays = new HashSet<InfoGiayDonHang>();
 	private Map<String, Integer> phukiens = new HashMap<String, Integer>();
 
 	public AddDonHangVangLai() {
@@ -68,11 +69,11 @@ public class AddDonHangVangLai {
 		this.ghichu = ghichu;
 	}
 
-	public Map<String, InfoGiayDonHang> getGiays() {
+	public Set<InfoGiayDonHang> getGiays() {
 		return giays;
 	}
 
-	public void setGiays(Map<String, InfoGiayDonHang> giays) {
+	public void setGiays(Set<InfoGiayDonHang> giays) {
 		this.giays = giays;
 	}
 
@@ -99,5 +100,6 @@ public class AddDonHangVangLai {
 	public void setMaloaithanhtoan(String maloaithanhtoan) {
 		this.maloaithanhtoan = maloaithanhtoan;
 	}
+	
 
 }
