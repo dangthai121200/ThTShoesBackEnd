@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -132,22 +131,22 @@ public class DonHangServiceImpl implements DonHangService {
 
 		// create giay_donghang
 
-//		for (Map.Entry<String, InfoGiayDonHang> item : addDonHang.getGiays().entrySet()) {
-//			GiayDonhang giayDonhang = new GiayDonhang();
-//			GiayDonhangPK giayDonhangPK = new GiayDonhangPK();
-//			Giay giay = giayReponsitory.findById(item.getKey()).get();
-//			String idGiayMauSize = giaySizeMauReponsitory.getIdByIdGiayIdSizeIdMau(item.getKey(),
-//					item.getValue().getMasize(), item.getValue().getMamau());
-//			giayDonhangPK.setMadon(idNextDonHang);
-//			giayDonhangPK.setidGiaySizeMau(idGiayMauSize);
-//			giayDonhang.setId(giayDonhangPK);
-//			giayDonhang.setSoluong(item.getValue().getSoluong());
-//			int tongGiaGiay = giay.getGia() * item.getValue().getSoluong();
-//			giayDonhang.setTonggia(tongGiaGiay);
-//			tonggia += tongGiaGiay;
-//			soluong += item.getValue().getSoluong();
-//			giayDonhangs.add(giayDonhang);
-//		}
+		for (InfoGiayDonHang item : addDonHang.getGiays()) {
+			GiayDonhang giayDonhang = new GiayDonhang();
+			GiayDonhangPK giayDonhangPK = new GiayDonhangPK();
+			Giay giay = giayReponsitory.findById(item.getMagiay()).get();
+			String idGiayMauSize = giaySizeMauReponsitory.getIdByIdGiayIdSizeIdMau(item.getMagiay(), item.getMasize(),
+					item.getMamau());
+			giayDonhangPK.setMadon(idNextDonHang);
+			giayDonhangPK.setidGiaySizeMau(idGiayMauSize);
+			giayDonhang.setId(giayDonhangPK);
+			giayDonhang.setSoluong(item.getSoluong());
+			int tongGiaGiay = giay.getGia() * item.getSoluong();
+			giayDonhang.setTonggia(tongGiaGiay);
+			tonggia += tongGiaGiay;
+			soluong += item.getSoluong();
+			giayDonhangs.add(giayDonhang);
+		}
 
 		// end create giay_donghang
 
@@ -239,8 +238,8 @@ public class DonHangServiceImpl implements DonHangService {
 			GiayDonhang giayDonhang = new GiayDonhang();
 			GiayDonhangPK giayDonhangPK = new GiayDonhangPK();
 			Giay giay = giayReponsitory.findById(item.getMagiay()).get();
-			String idGiayMauSize = giaySizeMauReponsitory.getIdByIdGiayIdSizeIdMau(item.getMagiay(),
-					item.getMasize(), item.getMamau());
+			String idGiayMauSize = giaySizeMauReponsitory.getIdByIdGiayIdSizeIdMau(item.getMagiay(), item.getMasize(),
+					item.getMamau());
 			giayDonhangPK.setMadon(idNextDonHang);
 			giayDonhangPK.setidGiaySizeMau(idGiayMauSize);
 			giayDonhang.setId(giayDonhangPK);
