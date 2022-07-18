@@ -5,38 +5,14 @@ import com.herokuapp.entity.GiayDonhang;
 
 public class GiayDonhangAdminDomain extends AbstractsDomain<GiayDonhang> {
 
-	private String magiay;
-	private String tengiay;
+	private GiayAdminDomain giay;
+	private SizeAdminDomain size;
+	private MauSacAdminDomain mausac;
 	private int soluong;
 	private int tonggia;
 
 	public GiayDonhangAdminDomain() {
 
-	}
-
-	@Override
-	public void converToDomain(GiayDonhang giayDonHang) {
-//		this.magiay = giayDonHang.getGiay().getMagiay();
-//		this.tengiay = giayDonHang.getGiay().getTengiay();
-		this.soluong = giayDonHang.getSoluong();
-		this.tonggia = giayDonHang.getTonggia();
-
-	}
-
-	public String getMagiay() {
-		return magiay;
-	}
-
-	public void setMagiay(String magiay) {
-		this.magiay = magiay;
-	}
-
-	public String getTengiay() {
-		return tengiay;
-	}
-
-	public void setTengiay(String tengiay) {
-		this.tengiay = tengiay;
 	}
 
 	public int getSoluong() {
@@ -53,6 +29,39 @@ public class GiayDonhangAdminDomain extends AbstractsDomain<GiayDonhang> {
 
 	public void setTonggia(int tonggia) {
 		this.tonggia = tonggia;
+	}
+
+	public GiayAdminDomain getGiay() {
+		return giay;
+	}
+
+	public void setGiay(GiayAdminDomain giay) {
+		this.giay = giay;
+	}
+
+	public SizeAdminDomain getSize() {
+		return size;
+	}
+
+	public void setSize(SizeAdminDomain size) {
+		this.size = size;
+	}
+
+	public MauSacAdminDomain getMausac() {
+		return mausac;
+	}
+
+	public void setMausac(MauSacAdminDomain mausac) {
+		this.mausac = mausac;
+	}
+
+	@Override
+	public void converToDomain(GiayDonhang giayDonHang) {
+//		this.magiay = giayDonHang.getGiay().getMagiay();
+//		this.tengiay = giayDonHang.getGiay().getTengiay();
+		this.soluong = giayDonHang.getSoluong();
+		this.tonggia = giayDonHang.getTonggia();
+
 	}
 
 	@Override

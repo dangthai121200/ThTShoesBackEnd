@@ -123,21 +123,6 @@ public class DonHangAdminDomain extends AbstractsDomain<Donhang> {
 			this.makhuyenmai = donhang.getDskhuyenmai().getMakm();
 		}
 
-		if (donhang.getGiayDonhangs() != null) {
-			donhang.getGiayDonhangs().forEach(giayDonhang -> {
-				GiayDonhangAdminDomain giayDonhangDomain = new GiayDonhangAdminDomain();
-				giayDonhangDomain.converToDomain(giayDonhang);
-				giayDonhangs.add(giayDonhangDomain);
-			});
-		}
-
-		if (donhang.getPhukienDonhangs() != null) {
-			donhang.getPhukienDonhangs().forEach(phukienDonhang -> {
-				PhukienDonhangAdminDomain phukienDonhangDomain = new PhukienDonhangAdminDomain();
-				phukienDonhangDomain.converToDomain(phukienDonhang);
-				phukienDonhangs.add(phukienDonhangDomain);
-			});
-		}
 		if (donhang.getKhachvanglai() != null) {
 			this.khachvanglai = new KhachVangLaiAdminDomain();
 			this.khachvanglai.converToDomain(donhang.getKhachvanglai());

@@ -8,20 +8,29 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.herokuapp.domain.admin.DonHangAdminDomain;
+import com.herokuapp.domain.admin.GiayAdminDomain;
+import com.herokuapp.domain.admin.GiayDonhangAdminDomain;
+import com.herokuapp.domain.admin.MauSacAdminDomain;
+import com.herokuapp.domain.admin.PhukienDonhangAdminDomain;
+import com.herokuapp.domain.admin.SizeAdminDomain;
 import com.herokuapp.domain.admin.list.ListDonHangAdmin;
 import com.herokuapp.entity.Donhang;
 import com.herokuapp.entity.Dskhuyenmai;
 import com.herokuapp.entity.Giay;
 import com.herokuapp.entity.GiayDonhang;
+import com.herokuapp.entity.GiayMauSize;
+import com.herokuapp.entity.Mausac;
 import com.herokuapp.entity.NhanvienDonhang;
 import com.herokuapp.entity.NhanvienDonhangPK;
 import com.herokuapp.entity.Phukien;
 import com.herokuapp.entity.PhukienDonhang;
+import com.herokuapp.entity.Size;
 import com.herokuapp.enums.HanhDong;
 import com.herokuapp.enums.TinhTrang;
 import com.herokuapp.handleexception.ThtShoesException;
 import com.herokuapp.reponsitory.DonHangReponsitory;
 import com.herokuapp.reponsitory.GiayReponsitory;
+import com.herokuapp.reponsitory.GiaySizeMauReponsitory;
 import com.herokuapp.reponsitory.KhuyenMaiReponsitory;
 import com.herokuapp.reponsitory.NhanVienDonHangReponsitory;
 import com.herokuapp.reponsitory.PhuKienReponsitory;
@@ -43,6 +52,9 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 
 	@Autowired
 	public KhuyenMaiReponsitory khuyenMaiReponsitory;
+
+	@Autowired
+	public GiaySizeMauReponsitory giaySizeMauReponsitory;
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -135,8 +147,36 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 	@Override
 	public DonHangAdminDomain getDonHangById(String idDonhang) {
 		DonHangAdminDomain donHangAdminDomain = new DonHangAdminDomain();
+		List<GiayDonhangAdminDomain> giayDonhangs = new ArrayList<>();
+		List<PhukienDonhangAdminDomain> phukienDonhangs = new ArrayList<>();
 		Donhang donhang = donHangReponsitory.findById(idDonhang).get();
 		donHangAdminDomain.converToDomain(donhang);
+		for (GiayDonhang giayDonhang : donhang.getGiayDonhangs()) {
+			GiayDonhangAdminDomain giayDonhangAdminDomain = new GiayDonhangAdminDomain();
+			GiayAdminDomain giayAdminDomain = new GiayAdminDomain();
+			SizeAdminDomain sizeAdminDomain = new SizeAdminDomain();
+			MauSacAdminDomain mauSacAdminDomain = new MauSacAdminDomain();
+			GiayMauSize giayMauSize = giaySizeMauReponsitory.getGiayMauSizeById(giayDonhang.getId().getidGiaySizeMau());
+			Giay giay = giayMauSize.getGiay();
+			giayAdminDomain.converToDomain(giay);
+			Size size = giayMauSize.getSize();
+			sizeAdminDomain.converToDomain(size);
+			Mausac mausac = giayMauSize.getMausac();
+			mauSacAdminDomain.converToDomain(mausac);
+			giayDonhangAdminDomain.setGiay(giayAdminDomain);
+			giayDonhangAdminDomain.setSize(sizeAdminDomain);
+			giayDonhangAdminDomain.setMausac(mauSacAdminDomain);
+			giayDonhangs.add(giayDonhangAdminDomain);
+		}
+		donHangAdminDomain.setGiayDonhangs(giayDonhangs);
+		if (donhang.getPhukienDonhangs() != null) {
+			donhang.getPhukienDonhangs().forEach(phukienDonhang -> {
+				PhukienDonhangAdminDomain phukienDonhangDomain = new PhukienDonhangAdminDomain();
+				phukienDonhangDomain.converToDomain(phukienDonhang);
+				phukienDonhangs.add(phukienDonhangDomain);
+			});
+		}
+		donHangAdminDomain.setPhukienDonhangs(phukienDonhangs);
 		return donHangAdminDomain;
 	}
 
