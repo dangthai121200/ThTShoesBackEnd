@@ -156,16 +156,25 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 			GiayAdminDomain giayAdminDomain = new GiayAdminDomain();
 			SizeAdminDomain sizeAdminDomain = new SizeAdminDomain();
 			MauSacAdminDomain mauSacAdminDomain = new MauSacAdminDomain();
+			
+			
+			giayDonhangAdminDomain.converToDomain(giayDonhang);
+			
 			GiayMauSize giayMauSize = giaySizeMauReponsitory.getGiayMauSizeById(giayDonhang.getId().getidGiaySizeMau());
+			
 			Giay giay = giayMauSize.getGiay();
 			giayAdminDomain.converToDomain(giay);
+			
 			Size size = giayMauSize.getSize();
 			sizeAdminDomain.converToDomain(size);
+			
 			Mausac mausac = giayMauSize.getMausac();
 			mauSacAdminDomain.converToDomain(mausac);
+			
 			giayDonhangAdminDomain.setGiay(giayAdminDomain);
 			giayDonhangAdminDomain.setSize(sizeAdminDomain);
 			giayDonhangAdminDomain.setMausac(mauSacAdminDomain);
+			
 			giayDonhangs.add(giayDonhangAdminDomain);
 		}
 		donHangAdminDomain.setGiayDonhangs(giayDonhangs);
