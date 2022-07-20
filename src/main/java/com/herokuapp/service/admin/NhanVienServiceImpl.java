@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.herokuapp.domain.admin.InfoNhanvienDangKy;
 import com.herokuapp.domain.admin.NhanVienAdminDomain;
+import com.herokuapp.domain.admin.TaiKhoanAdminDomain;
 import com.herokuapp.domain.admin.list.ListNhanVienAdmin;
 import com.herokuapp.entity.Nhanvien;
 import com.herokuapp.entity.Taikhoan;
@@ -86,6 +87,17 @@ public class NhanVienServiceImpl implements NhanVienService {
 		});
 		listNhanVienAdmin.setNhanviens(nhanVienAdminDomains);
 		return listNhanVienAdmin;
+	}
+
+	@Override
+	public NhanVienAdminDomain getNhanVienyId(String mavn) {
+		Nhanvien nhanvien = nhanVienReponsitory.findById(mavn).get();
+		NhanVienAdminDomain nhanVienAdminDomain = new NhanVienAdminDomain();
+		TaiKhoanAdminDomain taiKhoanAdminDomain = new TaiKhoanAdminDomain();
+		taiKhoanAdminDomain.converToDomain(nhanvien.getTaikhoan());
+		nhanVienAdminDomain.setTaiKhoan(taiKhoanAdminDomain);
+		nhanVienAdminDomain.converToDomain(nhanvien);
+		return nhanVienAdminDomain;
 	}
 
 }

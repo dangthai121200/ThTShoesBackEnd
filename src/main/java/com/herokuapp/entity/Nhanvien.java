@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -53,7 +54,7 @@ public class Nhanvien implements Serializable {
 	private List<Donhang> donhangs;
 
 	// bi-directional one-to-one association to Taikhoan
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "manv", nullable = false, insertable = false, updatable = false)
 	private Taikhoan taikhoan;
 

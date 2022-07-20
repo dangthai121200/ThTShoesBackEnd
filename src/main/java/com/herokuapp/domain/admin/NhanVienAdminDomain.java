@@ -71,8 +71,6 @@ public class NhanVienAdminDomain extends AbstractsDomain<Nhanvien> {
 		ten = nhanvien.getTen();
 		diachi = nhanvien.getDiachi();
 		sdt = nhanvien.getSdt();
-		this.taiKhoan.converToDomain(nhanvien.getTaikhoan());
-
 	}
 
 	@Override

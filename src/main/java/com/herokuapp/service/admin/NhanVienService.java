@@ -10,4 +10,6 @@ public interface NhanVienService {
 	NhanVienAdminDomain getInfoNhanVien(String idMaNhanvien);
 
 	ListNhanVienAdmin getAllNhanVien();
+
+	NhanVienAdminDomain getNhanVienyId(String mavn);
 }

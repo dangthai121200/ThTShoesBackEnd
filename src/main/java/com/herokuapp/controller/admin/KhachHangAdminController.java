@@ -14,7 +14,6 @@ public class KhachHangAdminController {
 	@GetMapping
 	public ListKhachHangAdmin getAllKhachHang() {
 		return null;
-		
 	}
 	
 	
