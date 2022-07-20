@@ -23,10 +23,12 @@ public class KhuyenMaiAdminDomain extends AbstractsDomain<Dskhuyenmai> {
 	private Date ngaykt;
 
 	private int soluong;
-	
+
 	private String urlanh;
-	
+
 	private String tieude;
+
+	private NhanVienAdminDomain nhanVienAdminDomain;
 
 	public KhuyenMaiAdminDomain() {
 
@@ -79,8 +81,6 @@ public class KhuyenMaiAdminDomain extends AbstractsDomain<Dskhuyenmai> {
 	public void setSoluong(int soluong) {
 		this.soluong = soluong;
 	}
-	
-	
 
 	public String getUrlanh() {
 		return urlanh;
@@ -96,6 +96,14 @@ public class KhuyenMaiAdminDomain extends AbstractsDomain<Dskhuyenmai> {
 
 	public void setTieude(String tieude) {
 		this.tieude = tieude;
+	}
+
+	public NhanVienAdminDomain getNhanVienAdminDomain() {
+		return nhanVienAdminDomain;
+	}
+
+	public void setNhanVienAdminDomain(NhanVienAdminDomain nhanVienAdminDomain) {
+		this.nhanVienAdminDomain = nhanVienAdminDomain;
 	}
 
 	@Override

@@ -43,7 +43,7 @@ public class Nhanvien implements Serializable {
 	private String ten;
 
 	// bi-directional many-to-one association to Dskhuyenmai
-	@OneToMany(mappedBy = "nhanvien")
+	@OneToMany(mappedBy = "nhanvien", fetch = FetchType.LAZY)
 	private List<Dskhuyenmai> dskhuyenmais;
 
 	// bi-directional many-to-many association to Donhang

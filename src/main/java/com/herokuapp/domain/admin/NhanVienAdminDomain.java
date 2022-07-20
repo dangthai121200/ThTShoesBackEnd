@@ -10,7 +10,7 @@ public class NhanVienAdminDomain extends AbstractsDomain<Nhanvien> {
 	private String ho;
 	private int sdt;
 	private String ten;
-	private TaiKhoanAdminDomain taiKhoan = new TaiKhoanAdminDomain();
+	private TaiKhoanAdminDomain taiKhoan;
 
 	public NhanVienAdminDomain() {
 

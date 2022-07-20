@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -21,16 +23,16 @@ import javax.persistence.TemporalType;
  * 
  */
 @Entity
-@Table(name="dskhuyenmai")
-@NamedQuery(name="Dskhuyenmai.findAll", query="SELECT d FROM Dskhuyenmai d")
+@Table(name = "dskhuyenmai")
+@NamedQuery(name = "Dskhuyenmai.findAll", query = "SELECT d FROM Dskhuyenmai d")
 public class Dskhuyenmai implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique=true, nullable=false, length=10)
+	@Column(unique = true, nullable = false, length = 10)
 	private String makm;
 
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private int giatrigiam;
 
 	@Lob
@@ -40,27 +42,28 @@ public class Dskhuyenmai implements Serializable {
 	private Date ngaybd;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private Date ngaykt;
 
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private int soluong;
-	
+
 	@Lob
 	private String urlanh;
-	
+
 	private String tieude;
 
-	//bi-directional many-to-one association to Donhang
-	@OneToMany(mappedBy="dskhuyenmai")
+	// bi-directional many-to-one association to Donhang
+	@OneToMany(mappedBy = "dskhuyenmai", fetch = FetchType.LAZY)
 	private List<Donhang> donhangs;
 
-	//bi-directional many-to-one association to Nhanvien
-	@ManyToOne
-	@JoinColumn(name="manv", nullable=false)
+	// bi-directional many-to-one association to Nhanvien
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "manv")
 	private Nhanvien nhanvien;
 
 	public Dskhuyenmai() {
+		this.makm = "";
 	}
 
 	public String getMakm() {
@@ -118,8 +121,6 @@ public class Dskhuyenmai implements Serializable {
 	public void setDonhangs(List<Donhang> donhangs) {
 		this.donhangs = donhangs;
 	}
-	
-	
 
 	public String getUrlanh() {
 		return urlanh;
