@@ -1,5 +1,6 @@
 package com.herokuapp.lockdata;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -21,6 +22,7 @@ public class LockReponsitoryImpl implements LockReponsitory {
 
 	public LockReponsitoryImpl() {
 		listTable.put(Table.DON_HANG, new HashSet<Lock>());
+		listTable.put(Table.GIAY, new HashSet<Lock>());
 	}
 
 	@Override
@@ -44,6 +46,17 @@ public class LockReponsitoryImpl implements LockReponsitory {
 			if (lock.getIdReCord().equals(idRecord) && lock.getUsername().equals(username)) {
 				listTable.get(nameTable).remove(lock);
 				break;
+			}
+		}
+	}
+
+	@Override
+	public void refresh() {
+		for (Map.Entry<String, HashSet<Lock>> entry : listTable.entrySet()) {
+			for (Lock lock : entry.getValue()) {
+				if (lock.getTimeOut().after(new Date())) {
+					listTable.get(entry.getKey()).remove(lock);
+				}
 			}
 		}
 	}

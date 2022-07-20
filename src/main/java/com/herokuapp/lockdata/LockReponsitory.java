@@ -12,4 +12,6 @@ public interface LockReponsitory {
 	Lock checkLock(String nameTable, String idRecord, String username);
 	
 	void unLock(String nameTable, String idRecord, String username);
+	
+	void refresh();
 }
