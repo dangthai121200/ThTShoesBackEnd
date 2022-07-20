@@ -15,7 +15,6 @@ public class AddKhuyenMaiAdminDomain extends AbstractsDomain<Dskhuyenmai> {
 	private Date ngaykt = new Date();
 	private String mota;
 	private int giatrigiam;
-	private String manv;
 	private String tieude;
 
 	public AddKhuyenMaiAdminDomain() {
@@ -70,14 +69,6 @@ public class AddKhuyenMaiAdminDomain extends AbstractsDomain<Dskhuyenmai> {
 		this.giatrigiam = giatrigiam;
 	}
 
-	public String getManv() {
-		return manv;
-	}
-
-	public void setManv(String manv) {
-		this.manv = manv;
-	}
-
 	public String getTieude() {
 		return tieude;
 	}
@@ -104,10 +95,6 @@ public class AddKhuyenMaiAdminDomain extends AbstractsDomain<Dskhuyenmai> {
 		dskhuyenmai.setMota(this.mota);
 		dskhuyenmai.setGiatrigiam(this.giatrigiam);
 		dskhuyenmai.setTieude(this.tieude);
-
-		Nhanvien nhanvien = new Nhanvien();
-		nhanvien.setManv(this.manv);
-		dskhuyenmai.setNhanvien(nhanvien);
 		return dskhuyenmai;
 	}
 
