@@ -1,9 +1,11 @@
 package com.herokuapp.service.admin;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,12 +30,15 @@ import com.herokuapp.entity.Size;
 import com.herokuapp.enums.HanhDong;
 import com.herokuapp.enums.TinhTrang;
 import com.herokuapp.handleexception.ThtShoesException;
+import com.herokuapp.lockdata.Lock;
 import com.herokuapp.reponsitory.DonHangReponsitory;
 import com.herokuapp.reponsitory.GiayReponsitory;
 import com.herokuapp.reponsitory.GiaySizeMauReponsitory;
 import com.herokuapp.reponsitory.KhuyenMaiReponsitory;
 import com.herokuapp.reponsitory.NhanVienDonHangReponsitory;
 import com.herokuapp.reponsitory.PhuKienReponsitory;
+import com.herokuapp.security.UserDetailsConfigure;
+import com.herokuapp.util.Table;
 
 @Service
 public class DonHangAdminServiceImpl implements DonHangAdminService {
@@ -56,10 +61,20 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 	@Autowired
 	public GiaySizeMauReponsitory giaySizeMauReponsitory;
 
+	@Autowired
+	public LockService lockService;
+
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void updateStatusForDonhang(String madonghang, String manhanvien, TinhTrang tinhtrang)
 			throws ThtShoesException {
+		String username = ((UserDetailsConfigure) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+				.getUsername();
+		Lock checkLock = lockService.checkLock(Table.DON_HANG, madonghang, username);
+		if (checkLock != null) {
+			throw new ThtShoesException("Data lock by " + checkLock.getUsername() + " at " + checkLock.getTimeOut());
+		}
+
 		NhanvienDonhangPK nhanvienDonhangPK = new NhanvienDonhangPK();
 		nhanvienDonhangPK.setMadon(madonghang);
 		nhanvienDonhangPK.setManv(manhanvien);
@@ -145,7 +160,8 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 	}
 
 	@Override
-	public DonHangAdminDomain getDonHangById(String idDonhang) {
+	public DonHangAdminDomain getDonHangById(String idDonhang) throws Exception {
+
 		DonHangAdminDomain donHangAdminDomain = new DonHangAdminDomain();
 		List<GiayDonhangAdminDomain> giayDonhangs = new ArrayList<>();
 		List<PhukienDonhangAdminDomain> phukienDonhangs = new ArrayList<>();
@@ -177,6 +193,16 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 			});
 		}
 		donHangAdminDomain.setPhukienDonhangs(phukienDonhangs);
+		String username = ((UserDetailsConfigure) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+				.getUsername();
+
+		Lock checkLock = lockService.checkLock(Table.DON_HANG, idDonhang, username);
+		if (checkLock != null) {
+			donHangAdminDomain.setLock(true);
+			donHangAdminDomain.setMessLock("Data lock by " + checkLock.getUsername() + " at " + checkLock.getTimeOut());
+		} else {
+			lockService.lock(Table.DON_HANG, new Lock(idDonhang, username, new Date()));
+		}
 		return donHangAdminDomain;
 	}
 

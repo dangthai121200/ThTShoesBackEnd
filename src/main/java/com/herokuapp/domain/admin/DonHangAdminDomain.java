@@ -21,6 +21,8 @@ public class DonHangAdminDomain extends AbstractsDomain<Donhang> {
 	private List<PhukienDonhangAdminDomain> phukienDonhangs = new ArrayList<>();
 	private KhachVangLaiAdminDomain khachvanglai;
 	private KhachHangAdminDomain khachHang;
+	private boolean isLock = false;
+	private String messLock;
 
 	public String getMadon() {
 		return madon;
@@ -108,6 +110,22 @@ public class DonHangAdminDomain extends AbstractsDomain<Donhang> {
 
 	public void setKhachHang(KhachHangAdminDomain khachHang) {
 		this.khachHang = khachHang;
+	}
+
+	public boolean isLock() {
+		return isLock;
+	}
+
+	public void setLock(boolean isLock) {
+		this.isLock = isLock;
+	}
+
+	public String getMessLock() {
+		return messLock;
+	}
+
+	public void setMessLock(String messLock) {
+		this.messLock = messLock;
 	}
 
 	@Override

@@ -18,4 +18,5 @@ public interface GiayReponsitory extends JpaRepository<Giay, String> {
 
 	@Query(value = "Select g.* from Giay g ORDER BY g.ngaythem DESC LIMIT :amount", nativeQuery = true)
 	public List<Giay> getListLatest(@Param("amount") int amount);
+
 }

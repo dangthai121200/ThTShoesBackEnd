@@ -49,7 +49,7 @@ public class DonHangAdminController {
 	}
 
 	@GetMapping(value = "/{idDH}")
-	DonHangAdminDomain getDonHangById(@PathVariable(name = "idDH") String idDonHang) {
+	DonHangAdminDomain getDonHangById(@PathVariable(name = "idDH") String idDonHang) throws Exception {
 		DonHangAdminDomain donHangAdminDomain = donHangAdminService.getDonHangById(idDonHang);
 		return donHangAdminDomain;
 	}
