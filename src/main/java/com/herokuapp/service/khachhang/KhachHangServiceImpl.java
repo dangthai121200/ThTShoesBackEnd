@@ -50,7 +50,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 	}
 
 	@Override
-	public Boolean checkSdt(int sdt) {
+	public Boolean checkSdt(Long sdt) {
 		try {
 			Khachhang khachhang = khachHangReponsitory.getKhachHangBySdt(sdt);
 			if (khachhang != null) {

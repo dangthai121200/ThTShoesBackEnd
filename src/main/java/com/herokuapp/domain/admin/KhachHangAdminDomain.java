@@ -7,7 +7,7 @@ public class KhachHangAdminDomain extends AbstractsDomain<Khachhang> {
 	private String makh;
 	private String diachi;
 	private String ho;
-	private int sdt;
+	private Long sdt;
 	private String ten;
 	private TaiKhoanAdminDomain taiKhoan = new TaiKhoanAdminDomain();
 
@@ -38,11 +38,11 @@ public class KhachHangAdminDomain extends AbstractsDomain<Khachhang> {
 		this.ho = ho;
 	}
 
-	public int getSdt() {
+	public Long getSdt() {
 		return sdt;
 	}
 
-	public void setSdt(int sdt) {
+	public void setSdt(Long sdt) {
 		this.sdt = sdt;
 	}
 

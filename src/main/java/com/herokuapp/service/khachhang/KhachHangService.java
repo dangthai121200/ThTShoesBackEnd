@@ -7,5 +7,5 @@ public interface KhachHangService {
 
 	KhachHangDomain updateInfoKhachHang(KhachHangDomain khachHangDomain);
 	
-	Boolean checkSdt(int sdt);
+	Boolean checkSdt(Long sdt);
 }

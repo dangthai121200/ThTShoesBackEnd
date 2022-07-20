@@ -13,6 +13,6 @@ import com.herokuapp.entity.Khachhang;
 public interface KhachHangReponsitory extends CrudRepository<Khachhang, String> {
 
 	@Query("Select kh from Khachhang kh where kh.sdt = :sdt")
-	Khachhang getKhachHangBySdt(@Param("sdt") int sdt);
+	Khachhang getKhachHangBySdt(@Param("sdt") Long sdt);
 
 }

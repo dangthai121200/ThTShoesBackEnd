@@ -26,7 +26,7 @@ public class Khachhang implements Serializable {
 	private String ho;
 
 	@Column(nullable=false)
-	private int sdt;
+	private Long sdt;
 
 	@Column(nullable=false, length=30)
 	private String ten;
@@ -71,11 +71,11 @@ public class Khachhang implements Serializable {
 		this.ho = ho;
 	}
 
-	public int getSdt() {
+	public Long getSdt() {
 		return this.sdt;
 	}
 
-	public void setSdt(int sdt) {
+	public void setSdt(Long sdt) {
 		this.sdt = sdt;
 	}
 
