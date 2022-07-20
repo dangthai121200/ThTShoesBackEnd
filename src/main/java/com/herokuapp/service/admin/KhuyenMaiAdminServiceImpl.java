@@ -31,4 +31,12 @@ public class KhuyenMaiAdminServiceImpl implements KhuyenMaiAdminService {
 		return listKhuyenMaiAdmin;
 	}
 
+	@Override
+	public KhuyenMaiAdminDomain getKhuyenMaiById(String makm) {
+		KhuyenMaiAdminDomain khuyenMaiAdminDomain = new KhuyenMaiAdminDomain();
+		Dskhuyenmai dskhuyenmai = khuyenMaiReponsitory.findById(makm).get();
+		khuyenMaiAdminDomain.converToDomain(dskhuyenmai);
+		return khuyenMaiAdminDomain;
+	}
+
 }
