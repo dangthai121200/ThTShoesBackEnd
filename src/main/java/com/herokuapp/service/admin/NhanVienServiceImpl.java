@@ -82,7 +82,10 @@ public class NhanVienServiceImpl implements NhanVienService {
 
 		nhanviens.forEach(nhanvien -> {
 			NhanVienAdminDomain nhanVienAdminDomain = new NhanVienAdminDomain();
+			TaiKhoanAdminDomain taiKhoanAdminDomain = new TaiKhoanAdminDomain();
 			nhanVienAdminDomain.converToDomain(nhanvien);
+			taiKhoanAdminDomain.converToDomain(nhanvien.getTaikhoan());
+			nhanVienAdminDomain.setTaiKhoan(taiKhoanAdminDomain);
 			nhanVienAdminDomains.add(nhanVienAdminDomain);
 		});
 		listNhanVienAdmin.setNhanviens(nhanVienAdminDomains);
