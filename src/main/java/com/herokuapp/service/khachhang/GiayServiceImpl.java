@@ -79,9 +79,6 @@ public class GiayServiceImpl implements GiayService {
 			sizeDomains.add(sizeDomain);
 		}
 
-		giay.getGiayMauSizes().forEach(giayMauSize -> {
-
-		});
 		giayDomain.setSizes(sizeDomains);
 		return giayDomain;
 	}

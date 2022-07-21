@@ -22,7 +22,6 @@ public class GiayAdminDomain extends AbstractsDomain<Giay> {
 	private int maLgiayHang;
 	private List<SizeAdminDomain> sizes = new ArrayList<>();
 	private List<HinhAdminDomain> hinhs = new ArrayList<>();
-	private List<MauSacAdminDomain> mausacs = new ArrayList<>();
 
 	public GiayAdminDomain() {
 		super();
@@ -130,14 +129,6 @@ public class GiayAdminDomain extends AbstractsDomain<Giay> {
 
 	public void setHinhs(List<HinhAdminDomain> hinhs) {
 		this.hinhs = hinhs;
-	}
-
-	public List<MauSacAdminDomain> getMausacs() {
-		return mausacs;
-	}
-
-	public void setMausacs(List<MauSacAdminDomain> mausacs) {
-		this.mausacs = mausacs;
 	}
 
 	@Override

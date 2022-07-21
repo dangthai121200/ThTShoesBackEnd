@@ -1,5 +1,8 @@
 package com.herokuapp.domain.admin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.herokuapp.abstracts.AbstractsDomain;
 import com.herokuapp.entity.Size;
 
@@ -7,6 +10,7 @@ public class SizeAdminDomain extends AbstractsDomain<Size> {
 
 	private String masize;
 	private String tensize;
+	private List<MauSacAdminDomain> mausacs = new ArrayList<>();
 
 	public SizeAdminDomain() {
 	}
@@ -25,6 +29,20 @@ public class SizeAdminDomain extends AbstractsDomain<Size> {
 
 	public void setTensize(String tensize) {
 		this.tensize = tensize;
+	}
+
+	public List<MauSacAdminDomain> getMausacs() {
+		return mausacs;
+	}
+
+	public void setMausacs(List<MauSacAdminDomain> mausacs) {
+		this.mausacs = mausacs;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		SizeAdminDomain sizeAdminDomain = (SizeAdminDomain) obj;
+		return this.masize.equals(sizeAdminDomain.getMasize()) ? true : false;
 	}
 
 	@Override

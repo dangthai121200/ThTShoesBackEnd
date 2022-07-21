@@ -1,5 +1,6 @@
 package com.herokuapp.service.admin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,12 @@ import com.herokuapp.domain.admin.MauSacAdminDomain;
 import com.herokuapp.domain.admin.SizeAdminDomain;
 import com.herokuapp.domain.admin.list.ListGiayAdmin;
 import com.herokuapp.entity.Giay;
+import com.herokuapp.entity.GiayMauSize;
+import com.herokuapp.entity.Mausac;
 import com.herokuapp.reponsitory.GiayReponsitory;
 import com.herokuapp.reponsitory.GiaySeqReponsitory;
+import com.herokuapp.reponsitory.GiaySizeMauReponsitory;
+import com.herokuapp.reponsitory.MauSacReponsitory;
 import com.herokuapp.util.PrefixId;
 
 @Service
@@ -24,6 +29,12 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 
 	@Autowired
 	public GiaySeqReponsitory giaySeqReponsitory;
+
+	@Autowired
+	public MauSacReponsitory mauSacReponsitory;
+
+	@Autowired
+	public GiaySizeMauReponsitory giaySizeMauReponsitory;
 
 	@Override
 	public ListGiayAdmin getAllGiay() {
@@ -57,6 +68,7 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 	public GiayAdminDomain getGiayById(String idGiay) {
 		Giay giay = giayReponsitory.findById(idGiay).get();
 		GiayAdminDomain giayAdminDomain = new GiayAdminDomain();
+		List<SizeAdminDomain> sizeAdminDomains = new ArrayList<>();
 		giayAdminDomain.converToDomain(giay);
 
 		giay.getHinhs().forEach(hinh -> {
@@ -64,7 +76,34 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 			hinhDomain.converToDomain(hinh);
 			giayAdminDomain.getHinhs().add(hinhDomain);
 		});
+
+		for (GiayMauSize giayMauSize : giay.getGiayMauSizes()) {
+			SizeAdminDomain sizeAdminDomain = new SizeAdminDomain();
+			sizeAdminDomain.converToDomain(giayMauSize.getSize());
+			if (sizeAdminDomains.contains(sizeAdminDomain)) {
+				continue;
+			}
+			List<Mausac> mausacs = mauSacReponsitory.getMauSacByIdGiayAndIdSize(giayAdminDomain.getMagiay(),
+					sizeAdminDomain.getMasize());
+			sizeAdminDomain.setMausacs(
+					convertToListMauSacDomain(mausacs, giayAdminDomain.getMagiay(), sizeAdminDomain.getMasize()));
+			sizeAdminDomains.add(sizeAdminDomain);
+		}
+		giayAdminDomain.setSizes(sizeAdminDomains);
 		return giayAdminDomain;
+	}
+
+	private List<MauSacAdminDomain> convertToListMauSacDomain(List<Mausac> mausacs, String maGiay, String maSize) {
+		List<MauSacAdminDomain> mauSacDomains = new ArrayList<>();
+		mausacs.forEach(mausac -> {
+			MauSacAdminDomain mauSacDomain = new MauSacAdminDomain();
+			mauSacDomain.converToDomain(mausac);
+			int soluong = giaySizeMauReponsitory.getSoLuongByIdGiayIdSizeIdMau(maGiay, maSize, mausac.getMamau());
+			mauSacDomain.setSoluong(soluong);
+			mauSacDomains.add(mauSacDomain);
+		});
+		return mauSacDomains;
+
 	}
 
 }
