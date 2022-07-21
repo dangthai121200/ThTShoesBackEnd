@@ -110,10 +110,12 @@ public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers(HttpMethod.GET, URL.NHAN_VIEN + URL.KHUYEN_MAI + URL.GET_BY_ID + "/**")
 				.hasAnyAuthority(Quyen.ADMIN.getName(), Quyen.NHANVIEN.getName());
 
+		// Hinh
+		http.authorizeRequests().antMatchers(URL.NHAN_VIEN + URL.HINH).permitAll();
+
 		http.authorizeRequests().antMatchers("/css/**", "/asssets/**").permitAll();
 
 		http.authorizeRequests().anyRequest().authenticated();
-		// http.formLogin().and().httpBasic();
 
 		http.addFilter(authenticationFilter);
 		http.addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class);

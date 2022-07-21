@@ -7,7 +7,7 @@ import com.herokuapp.domain.khachhang.GiayDomain;
 public interface GiayAdminService {
 	ListGiayAdmin getAllGiay();
 
-	void addGiay(GiayAdminDomain giayAdminDomain);
+	String addGiay(GiayAdminDomain giayAdminDomain);
 
 	GiayAdminDomain getGiayById(String idGiay);
 }

@@ -1,40 +1,51 @@
 package com.herokuapp.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the hinh database table.
  * 
  */
 @Entity
-@Table(name="hinh")
-@NamedQuery(name="Hinh.findAll", query="SELECT h FROM Hinh h")
+@Table(name = "hinh")
+@NamedQuery(name = "Hinh.findAll", query = "SELECT h FROM Hinh h")
 public class Hinh implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique=true, nullable=false, length=10)
+	@Column(unique = true, nullable = false, length = 10)
 	private String mahinh;
 
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private String duongdan;
 
-	//bi-directional many-to-one association to Giay
+	// bi-directional many-to-one association to Giay
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="magiay", nullable=false)
+	@JoinColumn(name = "magiay", nullable = true)
 	private Giay giay;
 
-	//bi-directional many-to-one association to Phukien
+	// bi-directional many-to-one association to Phukien
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="mapk", nullable=false)
+	@JoinColumn(name = "mapk", nullable = true)
 	private Phukien phukien;
 
 	public Hinh() {
+		this.mahinh = "";
+	}
+	
+	public Hinh(String duongdan, Giay giay) {
+		this.mahinh = "";
+		this.duongdan = duongdan;
+		this.giay = giay;
 	}
 
 	public String getMahinh() {

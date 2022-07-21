@@ -36,8 +36,8 @@ public class GiayAdminController {
 	@PostMapping
 	public ResponseEntity<String> addGiay(@RequestBody GiayAdminDomain giayAdminDomain) {
 		try {
-			giayService.addGiay(giayAdminDomain);
-			return ResponseEntity.ok("Thêm Thành Công");
+			String idGiay = giayService.addGiay(giayAdminDomain);
+			return ResponseEntity.ok(idGiay);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return ResponseEntity.badRequest().body("Thêm thất bại");

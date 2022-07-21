@@ -46,10 +46,11 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public void addGiay(GiayAdminDomain giayAdminDomain) {
+	public String addGiay(GiayAdminDomain giayAdminDomain) {
 		String idNextGiay = PrefixId.GIAY + giaySeqReponsitory.getIdNext();
 		Giay giay = giayAdminDomain.converToEntity();
 		giayReponsitory.save(giay);
+		return idNextGiay;
 	}
 
 	@Override
