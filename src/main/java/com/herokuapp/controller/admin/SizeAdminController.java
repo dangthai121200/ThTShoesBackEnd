@@ -34,7 +34,6 @@ public class SizeAdminController {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return ResponseEntity.badRequest().body("Thêm thất bại");
-
 		}
 	}
 }

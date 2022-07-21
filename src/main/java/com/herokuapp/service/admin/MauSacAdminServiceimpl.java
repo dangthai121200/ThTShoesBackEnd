@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.herokuapp.domain.admin.AddMauSac;
 import com.herokuapp.domain.admin.MauSacAdminDomain;
 import com.herokuapp.domain.admin.list.ListMauSacAdmin;
 import com.herokuapp.entity.Mausac;
@@ -29,6 +31,23 @@ public class MauSacAdminServiceimpl implements MauSacAdminService {
 		});
 		listMauSacAdmin.setMausacs(mauSacAdminDomains);
 		return listMauSacAdmin;
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public String addMauSac(AddMauSac addMauSac) {
+		StringBuilder message = new StringBuilder();
+		for (String tenMau : addMauSac.getMausacs()) {
+			Mausac mausac = mauSacReponsitory.getMauSacByTenmau(tenMau);
+			if (mausac == null) {
+				mauSacReponsitory.insertMauSac(tenMau);
+				message.append("Thêm thành công size " + tenMau + ", ");
+
+			} else {
+				message.append("màu " + tenMau + " tồn tại, ");
+			}
+		}
+		return message.toString();
 	}
 
 }

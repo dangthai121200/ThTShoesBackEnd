@@ -1,33 +1,39 @@
 package com.herokuapp.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the mausac database table.
  * 
  */
 @Entity
-@Table(name="mausac")
-@NamedQuery(name="Mausac.findAll", query="SELECT m FROM Mausac m")
+@Table(name = "mausac")
+@NamedQuery(name = "Mausac.findAll", query = "SELECT m FROM Mausac m")
 public class Mausac implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique=true, nullable=false, length=10)
+	@Column(length = 10)
 	private String mamau;
 
-	@Column(nullable=false, length=10)
+	@Column(nullable = false, length = 10)
 	private String tenmau;
 
-	//bi-directional many-to-one association to GiayMauSize
-	@OneToMany(mappedBy="mausac")
+	// bi-directional many-to-one association to GiayMauSize
+	@OneToMany(mappedBy = "mausac", fetch = FetchType.LAZY)
 	private List<GiayMauSize> giayMauSizes;
 
 	public Mausac() {
+		this.mamau = "";
 	}
 
 	public String getMamau() {
