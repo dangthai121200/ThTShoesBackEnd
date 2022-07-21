@@ -12,6 +12,7 @@ public class HandleException extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(NoSuchElementException.class)
 	public ResponseEntity<String> noSuchElementException(NoSuchElementException ex) {
+		ex.printStackTrace();
 		return ResponseEntity.badRequest().body("Không tìm thấy giá trị");
 	}
 

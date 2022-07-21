@@ -70,7 +70,10 @@ public class NhanVienServiceImpl implements NhanVienService {
 	public NhanVienAdminDomain getInfoNhanVien(String idMaNhanvien) {
 		Nhanvien nhanvien = nhanVienReponsitory.findById(idMaNhanvien).get();
 		NhanVienAdminDomain nhanVienAdminDomain = new NhanVienAdminDomain();
+		TaiKhoanAdminDomain taiKhoanAdminDomain = new TaiKhoanAdminDomain();
 		nhanVienAdminDomain.converToDomain(nhanvien);
+		taiKhoanAdminDomain.converToDomain(nhanvien.getTaikhoan());
+		nhanVienAdminDomain.setTaiKhoan(taiKhoanAdminDomain);
 		return nhanVienAdminDomain;
 	}
 
