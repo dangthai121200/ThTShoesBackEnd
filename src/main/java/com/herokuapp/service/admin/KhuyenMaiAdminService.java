@@ -10,7 +10,7 @@ public interface KhuyenMaiAdminService {
 
 	KhuyenMaiAdminDomain getKhuyenMaiById(String makm);
 
-	void addKhuyenMai(AddKhuyenMaiAdminDomain addKhuyenMaiAdminDomain);
+	String addKhuyenMai(AddKhuyenMaiAdminDomain addKhuyenMaiAdminDomain);
 
 	String updateKhuyenMai(AddKhuyenMaiAdminDomain addKhuyenMaiAdminDomain) throws ThtShoesException;
 }

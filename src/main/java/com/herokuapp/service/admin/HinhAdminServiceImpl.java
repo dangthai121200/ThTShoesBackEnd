@@ -25,9 +25,11 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.herokuapp.domain.admin.FormUploadImageProduct;
+import com.herokuapp.entity.Dskhuyenmai;
 import com.herokuapp.entity.Hinh;
 import com.herokuapp.reponsitory.GiayReponsitory;
 import com.herokuapp.reponsitory.HinhReponsitory;
+import com.herokuapp.reponsitory.KhuyenMaiReponsitory;
 import com.herokuapp.reponsitory.PhuKienReponsitory;
 import com.herokuapp.util.PrefixId;
 import com.herokuapp.util.URL;
@@ -43,6 +45,9 @@ public class HinhAdminServiceImpl implements HinhAdminService {
 
 	@Autowired
 	public PhuKienReponsitory phuKienReponsitory;
+
+	@Autowired
+	public KhuyenMaiReponsitory khuyenMaiReponsitory;
 
 	@Transactional(noRollbackFor = Exception.class)
 	public List<String> uploadImage(FormUploadImageProduct formUploadImage)
@@ -140,5 +145,16 @@ public class HinhAdminServiceImpl implements HinhAdminService {
 			e.printStackTrace();
 		}
 		return convFile;
+	}
+
+	@Override
+	public String setAvatarForKhuyenMai(String makm, MultipartFile image)
+			throws JsonMappingException, JsonProcessingException {
+		Dskhuyenmai dskhuyenmai = khuyenMaiReponsitory.findById(makm).get();
+		String body = uploadImageToImgbb(image, makm).getBody();
+		String urlImage = getDataFormJsonImage(body);
+		dskhuyenmai.setUrlanh(urlImage);
+		khuyenMaiReponsitory.save(dskhuyenmai);
+		return urlImage;
 	}
 }

@@ -14,4 +14,6 @@ public class PrefixId {
 	
 	public static final String PHU_KIEN = "PK";
 	
+	public static final String KHUYEN_MAI = "KM";
+	
 }

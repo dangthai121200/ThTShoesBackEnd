@@ -36,8 +36,13 @@ public class KhuyenMaiAdminController {
 
 	@PostMapping
 	public ResponseEntity<String> addKhuyenMai(@RequestBody AddKhuyenMaiAdminDomain addKhuyenMaiAdminDomain) {
-		khuyenMaiAdminService.addKhuyenMai(addKhuyenMaiAdminDomain);
-		return ResponseEntity.ok("Thêm khuyến mãi thành công");
+		try {
+			String idKMNext = khuyenMaiAdminService.addKhuyenMai(addKhuyenMaiAdminDomain);
+			return ResponseEntity.ok(idKMNext);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ResponseEntity.badRequest().body("Thêm thất bại");
+		}
 	}
 
 	@PutMapping

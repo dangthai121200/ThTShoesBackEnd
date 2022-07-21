@@ -9,10 +9,13 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.herokuapp.domain.admin.FormUploadImageProduct;
 
 public interface HinhAdminService {
-	List<String> uploadImage(FormUploadImageProduct formUploadImage) throws JsonMappingException, JsonProcessingException;
+	List<String> uploadImage(FormUploadImageProduct formUploadImage)
+			throws JsonMappingException, JsonProcessingException;
 
 	String setAvatarForGiay(String magiay, MultipartFile image) throws JsonMappingException, JsonProcessingException;
 
 	String setAvatarForPhuKien(String maphukien, MultipartFile image)
 			throws JsonMappingException, JsonProcessingException;
+
+	String setAvatarForKhuyenMai(String makm, MultipartFile image) throws JsonMappingException, JsonProcessingException;
 }

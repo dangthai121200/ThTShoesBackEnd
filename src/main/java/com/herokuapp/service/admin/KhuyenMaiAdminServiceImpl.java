@@ -17,13 +17,18 @@ import com.herokuapp.entity.Dskhuyenmai;
 import com.herokuapp.entity.Nhanvien;
 import com.herokuapp.handleexception.ThtShoesException;
 import com.herokuapp.reponsitory.KhuyenMaiReponsitory;
+import com.herokuapp.reponsitory.KhuyenMaiSeqReponsitory;
 import com.herokuapp.security.UserDetailsConfigure;
+import com.herokuapp.util.PrefixId;
 
 @Service
 public class KhuyenMaiAdminServiceImpl implements KhuyenMaiAdminService {
 
 	@Autowired
 	public KhuyenMaiReponsitory khuyenMaiReponsitory;
+	
+	@Autowired
+	public KhuyenMaiSeqReponsitory khuyenMaiSeqReponsitory;
 
 	@Override
 	public ListKhuyenMaiAdmin getAllKhuyenMai() {
@@ -52,7 +57,8 @@ public class KhuyenMaiAdminServiceImpl implements KhuyenMaiAdminService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public void addKhuyenMai(AddKhuyenMaiAdminDomain addKhuyenMaiAdminDomain) {
+	public String addKhuyenMai(AddKhuyenMaiAdminDomain addKhuyenMaiAdminDomain) {
+		String idKhuyenMaiNext = PrefixId.KHUYEN_MAI + khuyenMaiSeqReponsitory.getIdNext();
 		String manv = ((UserDetailsConfigure) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
 				.getManguoidung();
 		Dskhuyenmai dskhuyenmai = addKhuyenMaiAdminDomain.converToEntity();
@@ -60,6 +66,7 @@ public class KhuyenMaiAdminServiceImpl implements KhuyenMaiAdminService {
 		nhanvien.setManv(manv);
 		dskhuyenmai.setNhanvien(nhanvien);
 		khuyenMaiReponsitory.save(dskhuyenmai);
+		return idKhuyenMaiNext;
 	}
 
 	@Override
