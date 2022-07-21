@@ -12,4 +12,6 @@ public class PrefixId {
 	
 	public static final String GIAY = "GA";
 	
+	public static final String PHU_KIEN = "PK";
+	
 }

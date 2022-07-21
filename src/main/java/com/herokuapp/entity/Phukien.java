@@ -17,22 +17,21 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 /**
  * The persistent class for the phukien database table.
  * 
  */
 @Entity
-@Table(name="phukien")
-@NamedQuery(name="Phukien.findAll", query="SELECT p FROM Phukien p")
+@Table(name = "phukien")
+@NamedQuery(name = "Phukien.findAll", query = "SELECT p FROM Phukien p")
 public class Phukien implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique=true, nullable=false, length=10)
+	@Column(unique = true, nullable = false, length = 10)
 	private String mapk;
 
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private int gia;
 
 	@Lob
@@ -41,33 +40,35 @@ public class Phukien implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date ngaythem;
 
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private int soluong;
 
-	@Column(nullable=false, length=30)
+	@Column(nullable = false, length = 30)
 	private String tenpk;
 
 	@Lob
 	private String urlanh;
 
-	//bi-directional many-to-one association to Binhluan
-	@OneToMany(mappedBy="phukien", fetch = FetchType.LAZY)
+	// bi-directional many-to-one association to Binhluan
+	@OneToMany(mappedBy = "phukien", fetch = FetchType.LAZY)
 	private List<Binhluan> binhluans;
 
-	//bi-directional many-to-one association to Hinh
-	@OneToMany(mappedBy="phukien", fetch = FetchType.LAZY)
+	// bi-directional many-to-one association to Hinh
+	@OneToMany(mappedBy = "phukien", fetch = FetchType.LAZY)
 	private List<Hinh> hinhs;
 
-	//bi-directional many-to-one association to Loaiphukien
+	// bi-directional many-to-one association to Loaiphukien
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="maloaipk", nullable=false)
+	@JoinColumn(name = "maloaipk", nullable = false)
 	private Loaiphukien loaiphukien;
 
-	//bi-directional many-to-one association to PhukienDonhang
-	@OneToMany(mappedBy="phukien", fetch = FetchType.LAZY)
+	// bi-directional many-to-one association to PhukienDonhang
+	@OneToMany(mappedBy = "phukien", fetch = FetchType.LAZY)
 	private List<PhukienDonhang> phukienDonhangs;
 
 	public Phukien() {
+		this.mapk = "";
+		this.ngaythem = new Date();
 	}
 
 	public String getMapk() {

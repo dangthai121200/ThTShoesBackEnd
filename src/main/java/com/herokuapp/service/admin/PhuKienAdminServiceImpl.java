@@ -5,17 +5,25 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.herokuapp.domain.admin.AddPhuKienAdmin;
 import com.herokuapp.domain.admin.PhuKienAdminDomain;
 import com.herokuapp.domain.admin.list.ListPhuKienAdmin;
+import com.herokuapp.entity.Loaiphukien;
 import com.herokuapp.entity.Phukien;
 import com.herokuapp.reponsitory.PhuKienReponsitory;
+import com.herokuapp.reponsitory.PhuKienSeqReponsitory;
+import com.herokuapp.util.PrefixId;
 
 @Service
 public class PhuKienAdminServiceImpl implements PhuKienAdminService {
 
 	@Autowired
 	public PhuKienReponsitory phuKienReponsitory;
+
+	@Autowired
+	public PhuKienSeqReponsitory phuKienSeqReponsitory;
 
 	@Override
 	public ListPhuKienAdmin getAllPhuKien() {
@@ -38,6 +46,18 @@ public class PhuKienAdminServiceImpl implements PhuKienAdminService {
 		Phukien phukien = phuKienReponsitory.findById(idPhuKien).get();
 		phuKienAdminDomain.converToDomain(phukien);
 		return phuKienAdminDomain;
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public String addPhuKien(AddPhuKienAdmin addPhuKienAdmin) {
+		String idNextPhukien = PrefixId.PHU_KIEN + phuKienSeqReponsitory.getIdNext();
+		Phukien phukien = addPhuKienAdmin.converToEntity();
+		Loaiphukien loaiphukien = new Loaiphukien();
+		loaiphukien.setMaloaipk(addPhuKienAdmin.getMaLoaiPk());
+		phukien.setLoaiphukien(loaiphukien);
+		phuKienReponsitory.save(phukien);
+		return idNextPhukien;
 	}
 
 }

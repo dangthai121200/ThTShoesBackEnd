@@ -30,5 +30,6 @@
 		<class>com.herokuapp.entity.Giayseq</class>
 		<class>com.herokuapp.entity.NhanvienDonhang</class>
 		<class>com.herokuapp.entity.NhanvienDonhangPK</class>
+		<class>com.herokuapp.entity.Phukienseq</class>
 	</persistence-unit>
 </persistence>
