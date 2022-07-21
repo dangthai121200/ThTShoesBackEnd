@@ -25,7 +25,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.herokuapp.domain.admin.FormUploadImageProduct;
-import com.herokuapp.entity.Giay;
 import com.herokuapp.entity.Hinh;
 import com.herokuapp.reponsitory.GiayReponsitory;
 import com.herokuapp.reponsitory.HinhReponsitory;
@@ -43,7 +42,7 @@ public class HinhAdminServiceImpl implements HinhAdminService {
 	public GiayReponsitory giayReponsitory;
 
 	@Autowired
-	public PhuKienReponsitory kienReponsitory;
+	public PhuKienReponsitory phuKienReponsitory;
 
 	@Transactional(noRollbackFor = Exception.class)
 	public List<String> uploadImage(FormUploadImageProduct formUploadImage)
@@ -68,6 +67,24 @@ public class HinhAdminServiceImpl implements HinhAdminService {
 				hinhReponsitory.insertHinhOfGiay(urlImage, magiay);
 				listUrlImage.add(urlImage);
 			}
+		} else if (formUploadImage.getMasp().contains(PrefixId.PHU_KIEN)) {
+			String mapk = formUploadImage.getMasp();
+			String urlImage = setAvatarForPhuKien(mapk, formUploadImage.getAvatar());
+			listUrlImage.add(urlImage);
+			for (int i = 0; i < formUploadImage.getListImage().size(); i++) {
+				Hinh hinh = null;
+				String body = "";
+				try {
+					body = uploadImageToImgbb(formUploadImage.getListImage().get(i), mapk).getBody();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					listError.append(formUploadImage.getListImage().get(i).getName());
+					continue;
+				}
+				urlImage = getDataFormJsonImage(body);
+				hinhReponsitory.insertHinhOfPhuKien(urlImage, mapk);
+				listUrlImage.add(urlImage);
+			}
 		}
 		return listUrlImage;
 	}
@@ -82,11 +99,10 @@ public class HinhAdminServiceImpl implements HinhAdminService {
 
 	public String setAvatarForPhuKien(String maphukien, MultipartFile image)
 			throws JsonMappingException, JsonProcessingException {
-//		String body = uploadImageToImgbb(image, maphukien).getBody();
-//		String urlImage = getDataFormJsonImage(body);
-//
-//		batdongsan.setHinhanh(urlImage);
-		return null;
+		String body = uploadImageToImgbb(image, maphukien).getBody();
+		String urlImage = getDataFormJsonImage(body);
+		phuKienReponsitory.setAvatar(urlImage, maphukien);
+		return urlImage;
 	}
 
 	private String getDataFormJsonImage(String data) throws JsonMappingException, JsonProcessingException {

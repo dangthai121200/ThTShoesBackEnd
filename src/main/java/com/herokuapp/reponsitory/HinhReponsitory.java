@@ -16,4 +16,9 @@ public interface HinhReponsitory extends JpaRepository<Hinh, String> {
 	@Modifying
 	@Query(value = "insert into hinh (duongdan, magiay) values (:duongdan, :magiay)", nativeQuery = true)
 	public void insertHinhOfGiay(@Param(value = "duongdan") String duongdan, @Param(value = "magiay") String magiay);
+	
+	
+	@Modifying
+	@Query(value = "insert into hinh (duongdan, mapk) values (:duongdan, :mapk)", nativeQuery = true)
+	public void insertHinhOfPhuKien(@Param(value = "duongdan") String duongdan, @Param(value = "mapk") String mapk);
 }
