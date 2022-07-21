@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.herokuapp.domain.admin.AddSizeAdmin;
 import com.herokuapp.domain.admin.SizeAdminDomain;
 import com.herokuapp.domain.admin.list.ListSizeAdmin;
 import com.herokuapp.entity.Size;
@@ -29,6 +31,25 @@ public class SizeAdminServiceImpl implements SizeAdminService {
 		});
 		listSizeAdmin.setSizes(sizeAdminDomains);
 		return listSizeAdmin;
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public StringBuilder addSize(AddSizeAdmin addSizeAdmin) throws NumberFormatException {
+		StringBuilder message = new StringBuilder();
+		for (String tensize : addSizeAdmin.getListSize()) {
+			Integer.parseInt(tensize);
+			Size size = sizeReponsitory.getSizeByTenSize(tensize);
+			if (size == null) {
+				Size sizeAdd = new Size();
+				sizeAdd.setTensize(tensize);
+				sizeReponsitory.save(sizeAdd);
+				message.append("Thêm thành công size " + tensize + ", ");
+			} else {
+				message.append("size "+tensize + " tồn tại, ");
+			}
+		}
+		return message;
 	}
 
 }
