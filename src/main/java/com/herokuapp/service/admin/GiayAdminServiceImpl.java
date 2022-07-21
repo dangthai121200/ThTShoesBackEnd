@@ -7,13 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.herokuapp.domain.admin.AddGiayAdminDomain;
 import com.herokuapp.domain.admin.GiayAdminDomain;
 import com.herokuapp.domain.admin.HinhAdminDomain;
 import com.herokuapp.domain.admin.MauSacAdminDomain;
 import com.herokuapp.domain.admin.SizeAdminDomain;
+import com.herokuapp.domain.admin.SizeMauAdmin;
 import com.herokuapp.domain.admin.list.ListGiayAdmin;
 import com.herokuapp.entity.Giay;
 import com.herokuapp.entity.GiayMauSize;
+import com.herokuapp.entity.GiayMauSizePK;
 import com.herokuapp.entity.Mausac;
 import com.herokuapp.reponsitory.GiayReponsitory;
 import com.herokuapp.reponsitory.GiaySeqReponsitory;
@@ -57,10 +60,20 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public String addGiay(GiayAdminDomain giayAdminDomain) {
+	public String addGiay(AddGiayAdminDomain giayAdminDomain) {
 		String idNextGiay = PrefixId.GIAY + giaySeqReponsitory.getIdNext();
 		Giay giay = giayAdminDomain.converToEntity();
 		giayReponsitory.save(giay);
+		for (SizeMauAdmin sizeMauAdmin : giayAdminDomain.getSizeMaus()) {
+			GiayMauSize giayMauSize = new GiayMauSize();
+			GiayMauSizePK giayMauSizePK = new GiayMauSizePK();
+			giayMauSizePK.setMagiay(idNextGiay);
+			giayMauSizePK.setMasize(sizeMauAdmin.getMasize());
+			giayMauSizePK.setMamau(sizeMauAdmin.getMamau());
+			giayMauSize.setId(giayMauSizePK);
+			giayMauSize.setSoluong(sizeMauAdmin.getSoluong());
+			giaySizeMauReponsitory.save(giayMauSize);
+		}
 		return idNextGiay;
 	}
 

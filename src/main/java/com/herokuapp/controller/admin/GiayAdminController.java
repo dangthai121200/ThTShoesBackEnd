@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.herokuapp.domain.admin.AddGiayAdminDomain;
 import com.herokuapp.domain.admin.GiayAdminDomain;
 import com.herokuapp.domain.admin.list.ListGiayAdmin;
 import com.herokuapp.service.admin.GiayAdminService;
@@ -34,7 +35,7 @@ public class GiayAdminController {
 	}
 
 	@PostMapping
-	public ResponseEntity<String> addGiay(@RequestBody GiayAdminDomain giayAdminDomain) {
+	public ResponseEntity<String> addGiay(@RequestBody AddGiayAdminDomain giayAdminDomain) {
 		try {
 			String idGiay = giayService.addGiay(giayAdminDomain);
 			return ResponseEntity.ok(idGiay);
