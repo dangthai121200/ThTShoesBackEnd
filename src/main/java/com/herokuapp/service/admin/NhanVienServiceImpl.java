@@ -106,4 +106,18 @@ public class NhanVienServiceImpl implements NhanVienService {
 		return nhanVienAdminDomain;
 	}
 
+	@Override
+	public boolean checkSdt(Long sdt) {
+		try {
+			Nhanvien nhanvien = nhanVienReponsitory.getNhanVienBySdt(sdt);
+			if (nhanvien == null) {
+				return false;
+			}
+			return true;
+		} catch (Exception ex) {
+			return false;
+		}
+
+	}
+
 }
