@@ -29,11 +29,14 @@ import com.herokuapp.enums.HanhDong;
 import com.herokuapp.enums.TinhTrang;
 import com.herokuapp.handleexception.ThtShoesException;
 import com.herokuapp.reponsitory.DonHangReponsitory;
+import com.herokuapp.reponsitory.GiayDonHangReponsitory;
 import com.herokuapp.reponsitory.GiayReponsitory;
 import com.herokuapp.reponsitory.GiaySizeMauReponsitory;
 import com.herokuapp.reponsitory.KhuyenMaiReponsitory;
+import com.herokuapp.reponsitory.MauSacReponsitory;
 import com.herokuapp.reponsitory.NhanVienDonHangReponsitory;
 import com.herokuapp.reponsitory.PhuKienReponsitory;
+import com.herokuapp.reponsitory.SizeReponsitory;
 
 @Service
 public class DonHangAdminServiceImpl implements DonHangAdminService {
@@ -55,6 +58,15 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 
 	@Autowired
 	public GiaySizeMauReponsitory giaySizeMauReponsitory;
+
+	@Autowired
+	public SizeReponsitory sizeReponsitory;
+
+	@Autowired
+	public MauSacReponsitory mauSacReponsitory;
+
+	@Autowired
+	public GiayDonHangReponsitory giayDonHangReponsitory;
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -84,6 +96,11 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 			tinhTrangKeTiep = TinhTrang.TUCHOI;
 			dskhuyenmai = donhang.getDskhuyenmai();
 		} else if (donhang.getTinhtrang() == TinhTrang.CHODUYET) {
+			StringBuilder errorMessGiay = checkListCoTheMuaGiay(donhang.getGiayDonhangs());
+			StringBuilder errorMessPhuKien = checkListCoTheMuaPhuKien(donhang.getPhukienDonhangs());
+			if (errorMessGiay.length() > 0 || errorMessPhuKien.length() > 0) {
+				throw new ThtShoesException(errorMessGiay.toString() + errorMessPhuKien.toString());
+			}
 			hanhDong = HanhDong.DUYET;
 			tinhTrangKeTiep = TinhTrang.DADUYET;
 			giayDonhangs = donhang.getGiayDonhangs();
@@ -128,6 +145,35 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 		giaySizeMauReponsitory.saveAll(giayMauSizesUpdateSoLuong);
 		phuKienReponsitory.saveAll(phukienDonhangsUpdateSoLuong);
 
+	}
+
+	private StringBuilder checkListCoTheMuaGiay(List<GiayDonhang> giayDonHang) {
+		StringBuilder errorMess = new StringBuilder();
+		for (GiayDonhang item : giayDonHang) {
+			GiayMauSize giayMauSize = giaySizeMauReponsitory.getGiayMauSizeById(item.getId().getidGiaySizeMau());
+			boolean checkSoLuong = giayMauSize.getSoluong() >= item.getSoluong() ? true : false;
+			if (!checkSoLuong) {
+				Giay giay = giayMauSize.getGiay();
+				Size size = giayMauSize.getSize();
+				Mausac mausac = giayMauSize.getMausac();
+				String error = giay.getTengiay() + " - " + size.getTensize() + " - " + mausac.getTenmau() + "; ";
+				errorMess.append(error);
+			}
+		}
+		return errorMess;
+	}
+
+	private StringBuilder checkListCoTheMuaPhuKien(List<PhukienDonhang> phukiens) {
+		StringBuilder errorMess = new StringBuilder();
+		for (PhukienDonhang item : phukiens) {
+			Phukien phukien = item.getPhukien();
+			boolean checkSoLuong = phukien.getSoluong() >= item.getSoluong() ? true : false;
+			if (!checkSoLuong) {
+				String mess = phukien.getTenpk() + " - " + phukien.getLoaiphukien().getTenloai() + "; ";
+				errorMess.append(mess);
+			}
+		}
+		return errorMess;
 	}
 
 	@Override

@@ -87,10 +87,12 @@ public class GiayServiceImpl implements GiayService {
 		List<MauSacDomain> mauSacDomains = new ArrayList<>();
 		mausacs.forEach(mausac -> {
 			MauSacDomain mauSacDomain = new MauSacDomain();
-			mauSacDomain.converToDomain(mausac);
 			int soluong = giaySizeMauReponsitory.getSoLuongByIdGiayIdSizeIdMau(maGiay, maSize, mausac.getMamau());
-			mauSacDomain.setSoluong(soluong);
-			mauSacDomains.add(mauSacDomain);
+			if (soluong > 0) {
+				mauSacDomain.converToDomain(mausac);
+				mauSacDomain.setSoluong(soluong);
+				mauSacDomains.add(mauSacDomain);
+			}
 		});
 		return mauSacDomains;
 

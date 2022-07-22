@@ -13,6 +13,7 @@ import com.herokuapp.domain.khachhang.AddDonHang;
 import com.herokuapp.domain.khachhang.AddDonHangVangLai;
 import com.herokuapp.domain.khachhang.list.ListDonHang;
 import com.herokuapp.domain.khachhang.list.ListDonHangVangLai;
+import com.herokuapp.handleexception.ThtShoesException;
 import com.herokuapp.security.UserDetailsConfigure;
 import com.herokuapp.service.khachhang.DonHangService;
 import com.herokuapp.util.URL;
@@ -51,11 +52,13 @@ public class DonHangKhachHangController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<String> addDonHang(@RequestBody AddDonHang addDonHang) {
+	public ResponseEntity<String> addDonHang(@RequestBody AddDonHang addDonHang) throws ThtShoesException {
 		try {
 			donHangService.addDonHang(addDonHang);
 			return ResponseEntity.ok("Thêm thành công");
-		} catch (Exception ex) {
+		} catch (ThtShoesException ex) {
+			throw ex;
+		}catch (Exception ex) {
 			ex.printStackTrace();
 			return ResponseEntity.badRequest().body("Có lỗi xảy ra vùi lòng thử lại");
 		}
@@ -63,11 +66,14 @@ public class DonHangKhachHangController {
 	}
 
 	@RequestMapping(value = URL.KHACH_VANG_LAI, method = RequestMethod.POST)
-	public ResponseEntity<String> addDonHangKhachVanglai(@RequestBody AddDonHangVangLai donHangVangLai) {
+	public ResponseEntity<String> addDonHangKhachVanglai(@RequestBody AddDonHangVangLai donHangVangLai) throws ThtShoesException {
 		try {
 			String idKHVL = donHangService.addDonHangKhachVangLai(donHangVangLai);
 			return ResponseEntity.ok(idKHVL);
-		} catch (Exception ex) {
+		} catch (ThtShoesException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
 			ex.printStackTrace();
 			return ResponseEntity.badRequest().body("Có lỗi xảy ra vùi lòng thử lại");
 		}
