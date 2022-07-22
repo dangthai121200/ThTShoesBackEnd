@@ -67,7 +67,7 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 		nhanvienDonhang.setId(nhanvienDonhangPK);
 
 		List<GiayDonhang> giayDonhangs = null;
-		List<Giay> giayDonhangsUpdateSoLuong = new ArrayList<>();
+		List<GiayMauSize> giayMauSizesUpdateSoLuong = new ArrayList<>();
 
 		List<PhukienDonhang> phukienDonhangs = null;
 		List<Phukien> phukienDonhangsUpdateSoLuong = new ArrayList<>();
@@ -99,14 +99,15 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 		donhang.setTinhtrang(tinhTrangKeTiep);
 		nhanvienDonhang.setHanhdong(hanhDong);
 
-//		if (giayDonhangs != null) {
-//			for (GiayDonhang giayDonhang : giayDonhangs) {
-//				Giay giay = giayDonhang.getGiay();
-//				int soluong = giay.getSoluong() - giayDonhang.getSoluong();
-//				giay.setSoluong(soluong);
-//				giayDonhangsUpdateSoLuong.add(giay);
-//			}
-//		}
+		if (giayDonhangs != null) {
+			for (GiayDonhang giayDonhang : giayDonhangs) {
+				GiayMauSize giayMauSize = giaySizeMauReponsitory
+						.getGiayMauSizeById(giayDonhang.getId().getidGiaySizeMau());
+				int soluong = giayMauSize.getSoluong() - giayDonhang.getSoluong();
+				giayMauSize.setSoluong(soluong);
+				giayMauSizesUpdateSoLuong.add(giayMauSize);
+			}
+		}
 
 		if (phukienDonhangs != null) {
 			for (PhukienDonhang phukienDonhang : phukienDonhangs) {
@@ -124,7 +125,7 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 
 		donHangReponsitory.save(donhang);
 		nhanVienDonHangReponsitory.save(nhanvienDonhang);
-		giayReponsitory.saveAll(giayDonhangsUpdateSoLuong);
+		giaySizeMauReponsitory.saveAll(giayMauSizesUpdateSoLuong);
 		phuKienReponsitory.saveAll(phukienDonhangsUpdateSoLuong);
 
 	}
@@ -156,25 +157,24 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 			GiayAdminDomain giayAdminDomain = new GiayAdminDomain();
 			SizeAdminDomain sizeAdminDomain = new SizeAdminDomain();
 			MauSacAdminDomain mauSacAdminDomain = new MauSacAdminDomain();
-			
-			
+
 			giayDonhangAdminDomain.converToDomain(giayDonhang);
-			
+
 			GiayMauSize giayMauSize = giaySizeMauReponsitory.getGiayMauSizeById(giayDonhang.getId().getidGiaySizeMau());
-			
+
 			Giay giay = giayMauSize.getGiay();
 			giayAdminDomain.converToDomain(giay);
-			
+
 			Size size = giayMauSize.getSize();
 			sizeAdminDomain.converToDomain(size);
-			
+
 			Mausac mausac = giayMauSize.getMausac();
 			mauSacAdminDomain.converToDomain(mausac);
-			
+
 			giayDonhangAdminDomain.setGiay(giayAdminDomain);
 			giayDonhangAdminDomain.setSize(sizeAdminDomain);
 			giayDonhangAdminDomain.setMausac(mauSacAdminDomain);
-			
+
 			giayDonhangs.add(giayDonhangAdminDomain);
 		}
 		donHangAdminDomain.setGiayDonhangs(giayDonhangs);
