@@ -29,11 +29,14 @@ import com.herokuapp.enums.HanhDong;
 import com.herokuapp.enums.TinhTrang;
 import com.herokuapp.handleexception.ThtShoesException;
 import com.herokuapp.reponsitory.DonHangReponsitory;
+import com.herokuapp.reponsitory.GiayDonHangReponsitory;
 import com.herokuapp.reponsitory.GiayReponsitory;
 import com.herokuapp.reponsitory.GiaySizeMauReponsitory;
 import com.herokuapp.reponsitory.KhuyenMaiReponsitory;
+import com.herokuapp.reponsitory.MauSacReponsitory;
 import com.herokuapp.reponsitory.NhanVienDonHangReponsitory;
 import com.herokuapp.reponsitory.PhuKienReponsitory;
+import com.herokuapp.reponsitory.SizeReponsitory;
 
 @Service
 public class DonHangAdminServiceImpl implements DonHangAdminService {
@@ -56,6 +59,15 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 	@Autowired
 	public GiaySizeMauReponsitory giaySizeMauReponsitory;
 
+	@Autowired
+	public SizeReponsitory sizeReponsitory;
+
+	@Autowired
+	public MauSacReponsitory mauSacReponsitory;
+
+	@Autowired
+	public GiayDonHangReponsitory giayDonHangReponsitory;
+
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void updateStatusForDonhang(String madonghang, String manhanvien, TinhTrang tinhtrang)
@@ -67,7 +79,7 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 		nhanvienDonhang.setId(nhanvienDonhangPK);
 
 		List<GiayDonhang> giayDonhangs = null;
-		List<Giay> giayDonhangsUpdateSoLuong = new ArrayList<>();
+		List<GiayMauSize> giayMauSizesUpdateSoLuong = new ArrayList<>();
 
 		List<PhukienDonhang> phukienDonhangs = null;
 		List<Phukien> phukienDonhangsUpdateSoLuong = new ArrayList<>();
@@ -84,6 +96,11 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 			tinhTrangKeTiep = TinhTrang.TUCHOI;
 			dskhuyenmai = donhang.getDskhuyenmai();
 		} else if (donhang.getTinhtrang() == TinhTrang.CHODUYET) {
+			StringBuilder errorMessGiay = checkListCoTheMuaGiay(donhang.getGiayDonhangs());
+			StringBuilder errorMessPhuKien = checkListCoTheMuaPhuKien(donhang.getPhukienDonhangs());
+			if (errorMessGiay.length() > 0 || errorMessPhuKien.length() > 0) {
+				throw new ThtShoesException(errorMessGiay.toString() + errorMessPhuKien.toString());
+			}
 			hanhDong = HanhDong.DUYET;
 			tinhTrangKeTiep = TinhTrang.DADUYET;
 			giayDonhangs = donhang.getGiayDonhangs();
@@ -99,14 +116,15 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 		donhang.setTinhtrang(tinhTrangKeTiep);
 		nhanvienDonhang.setHanhdong(hanhDong);
 
-//		if (giayDonhangs != null) {
-//			for (GiayDonhang giayDonhang : giayDonhangs) {
-//				Giay giay = giayDonhang.getGiay();
-//				int soluong = giay.getSoluong() - giayDonhang.getSoluong();
-//				giay.setSoluong(soluong);
-//				giayDonhangsUpdateSoLuong.add(giay);
-//			}
-//		}
+		if (giayDonhangs != null) {
+			for (GiayDonhang giayDonhang : giayDonhangs) {
+				GiayMauSize giayMauSize = giaySizeMauReponsitory
+						.getGiayMauSizeById(giayDonhang.getId().getidGiaySizeMau());
+				int soluong = giayMauSize.getSoluong() - giayDonhang.getSoluong();
+				giayMauSize.setSoluong(soluong);
+				giayMauSizesUpdateSoLuong.add(giayMauSize);
+			}
+		}
 
 		if (phukienDonhangs != null) {
 			for (PhukienDonhang phukienDonhang : phukienDonhangs) {
@@ -124,9 +142,38 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 
 		donHangReponsitory.save(donhang);
 		nhanVienDonHangReponsitory.save(nhanvienDonhang);
-		giayReponsitory.saveAll(giayDonhangsUpdateSoLuong);
+		giaySizeMauReponsitory.saveAll(giayMauSizesUpdateSoLuong);
 		phuKienReponsitory.saveAll(phukienDonhangsUpdateSoLuong);
 
+	}
+
+	private StringBuilder checkListCoTheMuaGiay(List<GiayDonhang> giayDonHang) {
+		StringBuilder errorMess = new StringBuilder();
+		for (GiayDonhang item : giayDonHang) {
+			GiayMauSize giayMauSize = giaySizeMauReponsitory.getGiayMauSizeById(item.getId().getidGiaySizeMau());
+			boolean checkSoLuong = giayMauSize.getSoluong() >= item.getSoluong() ? true : false;
+			if (!checkSoLuong) {
+				Giay giay = giayMauSize.getGiay();
+				Size size = giayMauSize.getSize();
+				Mausac mausac = giayMauSize.getMausac();
+				String error = giay.getTengiay() + " - " + size.getTensize() + " - " + mausac.getTenmau() + "; ";
+				errorMess.append(error);
+			}
+		}
+		return errorMess;
+	}
+
+	private StringBuilder checkListCoTheMuaPhuKien(List<PhukienDonhang> phukiens) {
+		StringBuilder errorMess = new StringBuilder();
+		for (PhukienDonhang item : phukiens) {
+			Phukien phukien = item.getPhukien();
+			boolean checkSoLuong = phukien.getSoluong() >= item.getSoluong() ? true : false;
+			if (!checkSoLuong) {
+				String mess = phukien.getTenpk() + " - " + phukien.getLoaiphukien().getTenloai() + "; ";
+				errorMess.append(mess);
+			}
+		}
+		return errorMess;
 	}
 
 	@Override
@@ -156,25 +203,24 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 			GiayAdminDomain giayAdminDomain = new GiayAdminDomain();
 			SizeAdminDomain sizeAdminDomain = new SizeAdminDomain();
 			MauSacAdminDomain mauSacAdminDomain = new MauSacAdminDomain();
-			
-			
+
 			giayDonhangAdminDomain.converToDomain(giayDonhang);
-			
+
 			GiayMauSize giayMauSize = giaySizeMauReponsitory.getGiayMauSizeById(giayDonhang.getId().getidGiaySizeMau());
-			
+
 			Giay giay = giayMauSize.getGiay();
 			giayAdminDomain.converToDomain(giay);
-			
+
 			Size size = giayMauSize.getSize();
 			sizeAdminDomain.converToDomain(size);
-			
+
 			Mausac mausac = giayMauSize.getMausac();
 			mauSacAdminDomain.converToDomain(mausac);
-			
+
 			giayDonhangAdminDomain.setGiay(giayAdminDomain);
 			giayDonhangAdminDomain.setSize(sizeAdminDomain);
 			giayDonhangAdminDomain.setMausac(mauSacAdminDomain);
-			
+
 			giayDonhangs.add(giayDonhangAdminDomain);
 		}
 		donHangAdminDomain.setGiayDonhangs(giayDonhangs);

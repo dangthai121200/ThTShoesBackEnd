@@ -15,6 +15,7 @@ import com.herokuapp.domain.admin.NhanVienAdminDomain;
 import com.herokuapp.domain.admin.list.ListNhanVienAdmin;
 import com.herokuapp.security.UserDetailsConfigure;
 import com.herokuapp.service.admin.NhanVienService;
+import com.herokuapp.service.common.TaiKhoanService;
 import com.herokuapp.util.URL;
 
 @RestController
@@ -23,6 +24,9 @@ public class NhanVienAdminController {
 
 	@Autowired
 	public NhanVienService nhanVienService;
+
+	@Autowired
+	public TaiKhoanService taikhoanService;
 
 	@GetMapping
 	public ListNhanVienAdmin getAllNhanVien() {
@@ -37,8 +41,26 @@ public class NhanVienAdminController {
 	@PostMapping(value = URL.ADD_NHAN_VIEN)
 	public ResponseEntity<String> addNhanvien(@RequestBody InfoNhanvienDangKy infoNhanvienDangKy) {
 		try {
-			nhanVienService.addNhanVien(infoNhanvienDangKy);
-			return ResponseEntity.ok("Đăng ký thành công");
+			StringBuilder messError = new StringBuilder();
+			boolean checkUsername = taikhoanService.checkUsername(infoNhanvienDangKy.getTaikhoan().getUsername());
+			boolean checkEmail = taikhoanService.checkEmail(infoNhanvienDangKy.getTaikhoan().getEmail());
+			boolean checkSdt = nhanVienService.checkSdt(Long.valueOf(infoNhanvienDangKy.getNhanvien().getSdt()));
+			if (checkUsername) {
+				messError.append("Username đã tồn tại, ");
+			}
+			if (checkEmail) {
+				messError.append("Email đã tồn tại, ");
+			}
+			if (checkSdt) {
+				messError.append("Số điện thoại đã tồn tại, ");
+			}
+
+			if (!checkUsername && !checkEmail && !checkSdt) {
+				nhanVienService.addNhanVien(infoNhanvienDangKy);
+				return ResponseEntity.ok("Đăng ký thành công");
+			} else {
+				return ResponseEntity.badRequest().body(messError.toString());
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return ResponseEntity.badRequest().body("Đăng ký thất bại");

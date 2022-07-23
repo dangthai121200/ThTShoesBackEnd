@@ -12,4 +12,6 @@ public interface NhanVienService {
 	ListNhanVienAdmin getAllNhanVien();
 
 	NhanVienAdminDomain getNhanVienyId(String mavn);
+	
+	boolean checkSdt(Long sdt);
 }

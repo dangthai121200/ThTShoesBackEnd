@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,10 +30,13 @@ import com.herokuapp.entity.GiayDonhangPK;
 import com.herokuapp.entity.GiayMauSize;
 import com.herokuapp.entity.Khachhang;
 import com.herokuapp.entity.Khachvanglai;
+import com.herokuapp.entity.Mausac;
 import com.herokuapp.entity.Phukien;
 import com.herokuapp.entity.PhukienDonhang;
 import com.herokuapp.entity.PhukienDonhangPK;
 import com.herokuapp.entity.Phuongthucthanhtoan;
+import com.herokuapp.entity.Size;
+import com.herokuapp.handleexception.ThtShoesException;
 import com.herokuapp.reponsitory.DonHangReponsitory;
 import com.herokuapp.reponsitory.DonHangSeqReponsitory;
 import com.herokuapp.reponsitory.GiayDonHangReponsitory;
@@ -42,8 +46,10 @@ import com.herokuapp.reponsitory.KhachHangReponsitory;
 import com.herokuapp.reponsitory.KhachHangVangLaiReponsitory;
 import com.herokuapp.reponsitory.KhachVangLaiSeqReponsitory;
 import com.herokuapp.reponsitory.KhuyenMaiReponsitory;
+import com.herokuapp.reponsitory.MauSacReponsitory;
 import com.herokuapp.reponsitory.PhuKienReponsitory;
 import com.herokuapp.reponsitory.PhukienDonhangReponsitory;
+import com.herokuapp.reponsitory.SizeReponsitory;
 import com.herokuapp.security.UserDetailsConfigure;
 import com.herokuapp.util.PrefixId;
 
@@ -83,9 +89,22 @@ public class DonHangServiceImpl implements DonHangService {
 	@Autowired
 	public GiaySizeMauReponsitory giaySizeMauReponsitory;
 
+	@Autowired
+	public SizeReponsitory sizeReponsitory;
+
+	@Autowired
+	public MauSacReponsitory mauSacReponsitory;
+
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public void addDonHang(AddDonHang addDonHang) {
+	public void addDonHang(AddDonHang addDonHang) throws ThtShoesException {
+
+		StringBuilder errorMessageGiay = checkListCoTheMuaGiay(addDonHang.getGiays());
+		StringBuilder errorMessagePhuKien = checkListCoTheMuaPhuKien(addDonHang.getPhukiens());
+		if (errorMessageGiay.length() > 0 || errorMessagePhuKien.length() > 0) {
+			throw new ThtShoesException(errorMessageGiay.toString() + errorMessagePhuKien.toString());
+		}
+
 		int tonggia = 0;
 		int soluong = 0;
 		int phanTramGiam = 0;
@@ -183,7 +202,13 @@ public class DonHangServiceImpl implements DonHangService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public String addDonHangKhachVangLai(AddDonHangVangLai addDonHangVangLai) {
+	public String addDonHangKhachVangLai(AddDonHangVangLai addDonHangVangLai) throws ThtShoesException {
+
+		StringBuilder errorMessageGiay = checkListCoTheMuaGiay(addDonHangVangLai.getGiays());
+		StringBuilder errorMessagePhuKien = checkListCoTheMuaPhuKien(addDonHangVangLai.getPhukiens());
+		if (errorMessageGiay.length() > 0 || errorMessagePhuKien.length() > 0) {
+			throw new ThtShoesException(errorMessageGiay.toString() + errorMessagePhuKien.toString());
+		}
 		int tonggia = 0;
 		int soluong = 0;
 		int phanTramGiam = 0;
@@ -240,6 +265,7 @@ public class DonHangServiceImpl implements DonHangService {
 			Giay giay = giayReponsitory.findById(item.getMagiay()).get();
 			String idGiayMauSize = giaySizeMauReponsitory.getIdByIdGiayIdSizeIdMau(item.getMagiay(), item.getMasize(),
 					item.getMamau());
+			boolean checkSoLuong = checkSoLuongCoTheMuaGiay(idGiayMauSize, item.getSoluong());
 			giayDonhangPK.setMadon(idNextDonHang);
 			giayDonhangPK.setidGiaySizeMau(idGiayMauSize);
 			giayDonhang.setId(giayDonhangPK);
@@ -282,6 +308,44 @@ public class DonHangServiceImpl implements DonHangService {
 			khuyenMaiReponsitory.save(dskhuyenmai);
 		}
 		return idNextKhachVanglai;
+	}
+
+	private boolean checkSoLuongCoTheMuaGiay(String maGiaySizeMau, int soluongmua) {
+		GiayMauSize giayMauSize = giaySizeMauReponsitory.getGiayMauSizeById(maGiaySizeMau);
+		if (giayMauSize.getSoluong() >= soluongmua) {
+			return true;
+		}
+		return false;
+	}
+
+	private StringBuilder checkListCoTheMuaGiay(Set<InfoGiayDonHang> giays) {
+		StringBuilder errorMess = new StringBuilder();
+		for (InfoGiayDonHang item : giays) {
+			Giay giay = giayReponsitory.findById(item.getMagiay()).get();
+			String idGiayMauSize = giaySizeMauReponsitory.getIdByIdGiayIdSizeIdMau(item.getMagiay(), item.getMasize(),
+					item.getMamau());
+			boolean checkSoLuong = checkSoLuongCoTheMuaGiay(idGiayMauSize, item.getSoluong());
+			if (!checkSoLuong) {
+				Size size = sizeReponsitory.findById(item.getMasize()).get();
+				Mausac mausac = mauSacReponsitory.findById(item.getMamau()).get();
+				String error = giay.getTengiay() + " - " + size.getTensize() + " - " + mausac.getTenmau() + "; ";
+				errorMess.append(error);
+			}
+		}
+		return errorMess;
+	}
+
+	private StringBuilder checkListCoTheMuaPhuKien(Map<String, Integer> phukiens) {
+		StringBuilder errorMess = new StringBuilder();
+		for (Map.Entry<String, Integer> item : phukiens.entrySet()) {
+			Phukien phukien = phuKienReponsitory.findById(item.getKey()).get();
+			boolean checkSoLuong = phukien.getSoluong() >= item.getValue() ? true : false;
+			if (!checkSoLuong) {
+				String mess = phukien.getTenpk() + " - " + phukien.getLoaiphukien().getTenloai() + "; ";
+				errorMess.append(mess);
+			}
+		}
+		return errorMess;
 	}
 
 	private BigDecimal caculateTongGiaDonHang(int tonggiaSanPham, int phamtramgiam) {
