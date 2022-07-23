@@ -1,5 +1,7 @@
 package com.herokuapp.controller.khachhang;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,10 +41,13 @@ public class DonHangKhachHangController {
 	}
 
 	@RequestMapping(value = URL.KHACH_VANG_LAI + URL.LICH_SU_DAT_HANG + "/{idKVL}", method = RequestMethod.GET)
-	public ResponseEntity<ListDonHangVangLai> getLichSuDonHangByKhachVangLaiId(@PathVariable(name = "idKVL") String idKVL) {
+	public ResponseEntity<ListDonHangVangLai> getLichSuDonHangByKhachVangLaiId(
+			@PathVariable(name = "idKVL") String idKVL) {
 		try {
 			ListDonHangVangLai listDonHang = donHangService.getLichSuDonHangByKhachVangLaiId(idKVL);
 			return ResponseEntity.ok(listDonHang);
+		} catch (NoSuchElementException ex) {
+			throw ex;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return ResponseEntity.badRequest().build();

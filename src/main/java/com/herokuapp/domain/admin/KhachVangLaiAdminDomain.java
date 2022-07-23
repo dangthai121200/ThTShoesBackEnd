@@ -8,11 +8,10 @@ public class KhachVangLaiAdminDomain extends AbstractsDomain<Khachvanglai> {
 	private String makh;
 	private String ho;
 	private String ten;
-	private Long sdt;
+	private String sdt;
 	private String diachi;
 	private String email;
 	private String ghichu;
-	
 
 	public KhachVangLaiAdminDomain() {
 
@@ -66,11 +65,11 @@ public class KhachVangLaiAdminDomain extends AbstractsDomain<Khachvanglai> {
 		this.ghichu = ghichu;
 	}
 
-	public Long getSdt() {
+	public String getSdt() {
 		return sdt;
 	}
 
-	public void setSdt(Long sdt) {
+	public void setSdt(String sdt) {
 		this.sdt = sdt;
 	}
 
