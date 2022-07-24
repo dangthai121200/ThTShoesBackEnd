@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.herokuapp.service.khachhang.DangKyService;
+import com.herokuapp.util.PrefixId;
 import com.herokuapp.util.URL;
 
 @Controller
@@ -21,9 +22,14 @@ public class XacThucKhachHangController {
 	public ModelAndView authencationTaiKhoan(@PathVariable(name = "manguoidung") String manguoidung) {
 		ModelAndView modelAndView = new ModelAndView("xacthuc");
 		try {
-			dangKyService.authencationTaiKhoan(manguoidung);
-			modelAndView.addObject("lableSuccess", "KÍCH HOẠT TÀI KHOẢN THÀNH CÔNG");
-			return modelAndView;
+			if (manguoidung.contains(PrefixId.KHACHHANG)) {
+				dangKyService.authencationTaiKhoan(manguoidung);
+				modelAndView.addObject("lableSuccess", "KÍCH HOẠT TÀI KHOẢN THÀNH CÔNG");
+				return modelAndView;
+			} else {
+				modelAndView.addObject("lableError", "KHÔNG CÓ QUYỀN TRUY CẬP");
+				return modelAndView;
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			modelAndView.addObject("lableError", "KÍCH HOẠT TÀI KHOẢN THẤT BẠI");
