@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -26,6 +27,9 @@ public class TaiKhoanServiceImpl implements TaiKhoanService, UserDetailsService 
 
 	@Autowired
 	public TaiKhoanReponsitory taiKhoanReponsitory;
+
+	@Autowired
+	public PasswordEncoder passwordEncoder;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -46,9 +50,9 @@ public class TaiKhoanServiceImpl implements TaiKhoanService, UserDetailsService 
 	public void changePassword(ChangePasswordDomain changePasswordDomain) {
 		UserDetailsConfigure userDetailsConfigure = (UserDetailsConfigure) SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
-		if (changePasswordDomain.getOldPassowrd().equals(userDetailsConfigure.getPassword())
+		if (passwordEncoder.matches(changePasswordDomain.getOldPassowrd(), userDetailsConfigure.getPassword())
 				&& changePasswordDomain.getManguoidung().equals(userDetailsConfigure.getManguoidung())) {
-			taiKhoanReponsitory.changePassword(changePasswordDomain.getNewPassword(),
+			taiKhoanReponsitory.changePassword(passwordEncoder.encode(changePasswordDomain.getNewPassword()),
 					changePasswordDomain.getManguoidung());
 		} else {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Bạn không có quyền truy cập");

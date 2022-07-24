@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +37,9 @@ public class NhanVienServiceImpl implements NhanVienService {
 	@Autowired
 	public EmailService emailService;
 
+	@Autowired
+	public PasswordEncoder passwordEncoder;
+
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void addNhanVien(InfoNhanvienDangKy infoNhanvienDangKy) {
@@ -44,6 +48,7 @@ public class NhanVienServiceImpl implements NhanVienService {
 		Taikhoan taiKhoan = infoNhanvienDangKy.getTaikhoan().converToEntity();
 		taiKhoan.setQuyen(Quyen.NHANVIEN);
 		taiKhoan.setManguoidung(maNguoiDung);
+		taiKhoan.setPassword(passwordEncoder.encode(taiKhoan.getPassword()));
 		taiKhoan.setTinhtrang((byte) 1);
 		taiKhoanReponsitory.save(taiKhoan);
 
