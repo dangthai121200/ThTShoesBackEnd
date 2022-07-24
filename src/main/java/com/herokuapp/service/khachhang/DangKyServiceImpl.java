@@ -1,6 +1,7 @@
 package com.herokuapp.service.khachhang;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -30,6 +31,9 @@ public class DangKyServiceImpl implements DangKyService {
 	public TaiKhoanSeqReponsitory taiKhoanSeqReponsitory;
 
 	@Autowired
+	public PasswordEncoder passwordEncoder;
+
+	@Autowired
 	public EmailService emailService;
 
 	@Transactional(rollbackFor = Exception.class)
@@ -41,6 +45,7 @@ public class DangKyServiceImpl implements DangKyService {
 		Taikhoan taiKhoan = infoDangKy.getTaiKhoan().converToEntity();
 		taiKhoan.setQuyen(Quyen.KHACHHANG);
 		taiKhoan.setManguoidung(maNguoiDung);
+		taiKhoan.setPassword(passwordEncoder.encode(taiKhoan.getPassword()));
 		taiKhoanReponsitory.save(taiKhoan);
 
 		Khachhang khachHang = infoDangKy.getKhachHang().converToEntity();

@@ -12,7 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -106,7 +106,7 @@ public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests().antMatchers(URL.NHAN_VIEN + URL.LOAI_GIAY).hasAnyAuthority(Quyen.ADMIN.getName());
 
-		//loaigiay_hang_danhmuc
+		// loaigiay_hang_danhmuc
 		http.authorizeRequests().antMatchers(URL.NHAN_VIEN + URL.LGIAY_HANG_DMUC)
 				.hasAnyAuthority(Quyen.ADMIN.getName());
 
@@ -154,7 +154,7 @@ public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	public PasswordEncoder noOpPasswordEncoder() {
-		return NoOpPasswordEncoder.getInstance();
+		return new BCryptPasswordEncoder();
 	}
 
 	@Bean
