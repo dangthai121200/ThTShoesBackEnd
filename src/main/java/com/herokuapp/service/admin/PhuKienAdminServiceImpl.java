@@ -12,8 +12,10 @@ import com.herokuapp.domain.admin.PhuKienAdminDomain;
 import com.herokuapp.domain.admin.list.ListPhuKienAdmin;
 import com.herokuapp.entity.Loaiphukien;
 import com.herokuapp.entity.Phukien;
+import com.herokuapp.entity.SoluongPhukien;
 import com.herokuapp.reponsitory.PhuKienReponsitory;
 import com.herokuapp.reponsitory.PhuKienSeqReponsitory;
+import com.herokuapp.reponsitory.SoLuongPhuKienReponsitory;
 import com.herokuapp.util.PrefixId;
 
 @Service
@@ -24,6 +26,9 @@ public class PhuKienAdminServiceImpl implements PhuKienAdminService {
 
 	@Autowired
 	public PhuKienSeqReponsitory phuKienSeqReponsitory;
+
+	@Autowired
+	public SoLuongPhuKienReponsitory soLuongPhuKienReponsitory;
 
 	@Override
 	public ListPhuKienAdmin getAllPhuKien() {
@@ -55,8 +60,17 @@ public class PhuKienAdminServiceImpl implements PhuKienAdminService {
 		Phukien phukien = addPhuKienAdmin.converToEntity();
 		Loaiphukien loaiphukien = new Loaiphukien();
 		loaiphukien.setMaloaipk(addPhuKienAdmin.getMaLoaiPk());
+		phukien.setMapk(idNextPhukien);
 		phukien.setLoaiphukien(loaiphukien);
 		phuKienReponsitory.save(phukien);
+
+		SoluongPhukien soluongPhukien = new SoluongPhukien();
+
+		soluongPhukien.setPhukien(phukien);
+		soluongPhukien.setSoluong(addPhuKienAdmin.getSoluong());
+		soluongPhukien.setMota("Thêm Mới Phụ Kiện");
+		soLuongPhuKienReponsitory.save(soluongPhukien);
+
 		return idNextPhukien;
 	}
 

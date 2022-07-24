@@ -49,6 +49,7 @@ public class SoluongPhukien implements Serializable {
 	private Phukien phukien;
 
 	public SoluongPhukien() {
+		this.ngaythem = new Date();
 	}
 
 	public int getId() {
