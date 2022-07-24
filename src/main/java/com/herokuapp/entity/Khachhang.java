@@ -1,47 +1,56 @@
 package com.herokuapp.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the khachhang database table.
  * 
  */
 @Entity
-@Table(name="khachhang")
-@NamedQuery(name="Khachhang.findAll", query="SELECT k FROM Khachhang k")
+@Table(name = "khachhang")
+@NamedQuery(name = "Khachhang.findAll", query = "SELECT k FROM Khachhang k")
 public class Khachhang implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique=true, nullable=false, length=10)
+	@Column(unique = true, nullable = false, length = 10)
 	private String makh;
 
-	@Column(nullable=false)
+	@Lob
+	@Column(nullable = false)
 	private String diachi;
 
-	@Column(nullable=false, length=10)
+	@Column(nullable = false, length = 10)
 	private String ho;
 
-	@Column(nullable=false)
+	@Column(nullable = false, length = 11)
 	private String sdt;
 
-	@Column(nullable=false, length=30)
+	@Column(nullable = false, length = 30)
 	private String ten;
 
-	//bi-directional many-to-one association to Binhluan
-	@OneToMany(mappedBy="khachhang")
+	// bi-directional many-to-one association to Binhluan
+	@OneToMany(mappedBy = "khachhang")
 	private List<Binhluan> binhluans;
 
-	//bi-directional many-to-one association to Donhang
-	@OneToMany(mappedBy="khachhang")
+	// bi-directional many-to-one association to Donhang
+	@OneToMany(mappedBy = "khachhang")
 	private List<Donhang> donhangs;
 
-	//bi-directional one-to-one association to Taikhoan
+	// bi-directional one-to-one association to Taikhoan
 	@OneToOne
-	@JoinColumn(name="makh", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name = "makh", nullable = false, insertable = false, updatable = false)
 	private Taikhoan taikhoan;
 
 	public Khachhang() {

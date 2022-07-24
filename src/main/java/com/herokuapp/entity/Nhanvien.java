@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -31,12 +32,13 @@ public class Nhanvien implements Serializable {
 	private String manv;
 
 	@Column(nullable = false)
+	@Lob
 	private String diachi;
 
 	@Column(nullable = false, length = 10)
 	private String ho;
 
-	@Column(nullable = false)
+	@Column(nullable = false, length = 11)
 	private int sdt;
 
 	@Column(nullable = false, length = 30)

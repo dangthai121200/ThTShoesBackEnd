@@ -38,6 +38,7 @@ public class Phukien implements Serializable {
 	private String mota;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable = false)
 	private Date ngaythem;
 
 	@Column(nullable = false)
@@ -65,6 +66,10 @@ public class Phukien implements Serializable {
 	// bi-directional many-to-one association to PhukienDonhang
 	@OneToMany(mappedBy = "phukien", fetch = FetchType.LAZY)
 	private List<PhukienDonhang> phukienDonhangs;
+
+	// bi-directional many-to-one association to SoluongPhukien
+	@OneToMany(mappedBy = "phukien")
+	private List<SoluongPhukien> soluongPhukiens;
 
 	public Phukien() {
 		this.mapk = "";
@@ -199,6 +204,28 @@ public class Phukien implements Serializable {
 		phukienDonhang.setPhukien(null);
 
 		return phukienDonhang;
+	}
+	
+	public List<SoluongPhukien> getSoluongPhukiens() {
+		return this.soluongPhukiens;
+	}
+
+	public void setSoluongPhukiens(List<SoluongPhukien> soluongPhukiens) {
+		this.soluongPhukiens = soluongPhukiens;
+	}
+
+	public SoluongPhukien addSoluongPhukien(SoluongPhukien soluongPhukien) {
+		getSoluongPhukiens().add(soluongPhukien);
+		soluongPhukien.setPhukien(this);
+
+		return soluongPhukien;
+	}
+
+	public SoluongPhukien removeSoluongPhukien(SoluongPhukien soluongPhukien) {
+		getSoluongPhukiens().remove(soluongPhukien);
+		soluongPhukien.setPhukien(null);
+
+		return soluongPhukien;
 	}
 
 }

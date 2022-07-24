@@ -35,8 +35,10 @@ public class Donhang implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(length = 10)
 	private String madon;
 
+	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date ngaytao;
 
@@ -46,14 +48,15 @@ public class Donhang implements Serializable {
 	@Column(nullable = false)
 	private int soluong;
 
-	@Column(length = 1)
+	@Column(length = 1, nullable = false)
 	@Enumerated(EnumType.STRING)
 	private TinhTrang tinhtrang;
 
-	@Column(nullable = false)
+	@Column(nullable = false, precision = 10, scale = 2)
 	private BigDecimal tonggia;
 
 	@Lob
+	@Column(nullable = false)
 	private String diachi;
 
 	@Lob

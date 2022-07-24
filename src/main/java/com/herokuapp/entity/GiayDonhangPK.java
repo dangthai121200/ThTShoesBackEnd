@@ -12,7 +12,7 @@ public class GiayDonhangPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "id_giay_mau_size",insertable=false, updatable=false, unique=true, nullable=false, length=10)
+	@Column(name = "id_giay_mau_size",insertable=false, updatable=false, unique=true, nullable=false, length=11)
 	private String idGiaySizeMau;
 
 	@Column(insertable=false, updatable=false, unique=true, nullable=false, length=10)

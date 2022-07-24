@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -25,6 +26,7 @@ public class Hinh implements Serializable {
 	@Column(unique = true, nullable = false, length = 10)
 	private String mahinh;
 
+	@Lob
 	@Column(nullable = false)
 	private String duongdan;
 

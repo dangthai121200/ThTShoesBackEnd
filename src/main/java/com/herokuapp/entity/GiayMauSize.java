@@ -1,15 +1,14 @@
 package com.herokuapp.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -40,6 +39,7 @@ public class GiayMauSize implements Serializable {
 	@JoinColumn(name = "mamau", nullable = false, insertable = false, updatable = false)
 	private Mausac mausac;
 
+	@Column(nullable = false)
 	private int soluong;
 
 	public GiayMauSize() {

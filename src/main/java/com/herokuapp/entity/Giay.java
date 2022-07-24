@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the giay database table.
@@ -23,20 +25,28 @@ public class Giay implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(length = 10)
 	private String magiay;
 
+	@Column(nullable = false, length = 40)
 	private String chatlieu;
 
+	@Column(nullable = false)
 	private int gia;
 
+	@Column(nullable = false, length = 30)
 	private String kieudang;
 
+	@Column(nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date ngaythem;
 
 	private String mota;
 
+	@Column(length = 50, nullable = false)
 	private String tengiay;
 
+	@Column(nullable = false)
 	private int trongluong;
 
 	private String urlanh;

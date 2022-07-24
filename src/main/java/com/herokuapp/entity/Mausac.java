@@ -25,7 +25,7 @@ public class Mausac implements Serializable {
 	@Column(length = 10)
 	private String mamau;
 
-	@Column(nullable = false, length = 10)
+	@Column(nullable = false, length = 10, unique = true)
 	private String tenmau;
 
 	// bi-directional many-to-one association to GiayMauSize

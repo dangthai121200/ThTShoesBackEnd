@@ -28,7 +28,7 @@ public class Size implements Serializable {
 	@Column(length = 10)
 	private String masize;
 
-	@Column(nullable = false, length = 10)
+	@Column(nullable = false, length = 10, unique = true)
 	private String tensize;
 
 	// bi-directional many-to-one association to GiayMauSize

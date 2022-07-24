@@ -1,29 +1,34 @@
 package com.herokuapp.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the danhmuc database table.
  * 
  */
 @Entity
-@Table(name="danhmuc")
-@NamedQuery(name="Danhmuc.findAll", query="SELECT d FROM Danhmuc d")
+@Table(name = "danhmuc")
+@NamedQuery(name = "Danhmuc.findAll", query = "SELECT d FROM Danhmuc d")
 public class Danhmuc implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique=true, nullable=false, length=10)
+	@Column(unique = true, length = 10)
 	private String madanhmuc;
 
-	@Column(length=45)
+	@Column(unique = true, nullable = false, length = 20)
 	private String tendanhmuc;
 
-	//bi-directional many-to-one association to LoaigiayHangDanhmuc
-	@OneToMany(mappedBy="danhmuc")
+	// bi-directional many-to-one association to LoaigiayHangDanhmuc
+	@OneToMany(mappedBy = "danhmuc")
 	private List<LoaigiayHangDanhmuc> loaigiayHangDanhmucs;
 
 	public Danhmuc() {

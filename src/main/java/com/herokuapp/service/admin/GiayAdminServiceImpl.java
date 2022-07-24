@@ -18,10 +18,12 @@ import com.herokuapp.entity.Giay;
 import com.herokuapp.entity.GiayMauSize;
 import com.herokuapp.entity.GiayMauSizePK;
 import com.herokuapp.entity.Mausac;
+import com.herokuapp.entity.SoluongGiay;
 import com.herokuapp.reponsitory.GiayReponsitory;
 import com.herokuapp.reponsitory.GiaySeqReponsitory;
 import com.herokuapp.reponsitory.GiaySizeMauReponsitory;
 import com.herokuapp.reponsitory.MauSacReponsitory;
+import com.herokuapp.reponsitory.SoLuongGiayReponsitory;
 import com.herokuapp.util.PrefixId;
 
 @Service
@@ -38,6 +40,9 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 
 	@Autowired
 	public GiaySizeMauReponsitory giaySizeMauReponsitory;
+
+	@Autowired
+	public SoLuongGiayReponsitory soLuongGiayReponsitory;
 
 	@Override
 	public ListGiayAdmin getAllGiay() {
@@ -65,14 +70,25 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 		Giay giay = giayAdminDomain.converToEntity();
 		giayReponsitory.save(giay);
 		for (SizeMauAdmin sizeMauAdmin : giayAdminDomain.getSizeMaus()) {
-			GiayMauSize giayMauSize = new GiayMauSize();
+
 			GiayMauSizePK giayMauSizePK = new GiayMauSizePK();
 			giayMauSizePK.setMagiay(idNextGiay);
 			giayMauSizePK.setMasize(sizeMauAdmin.getMasize());
 			giayMauSizePK.setMamau(sizeMauAdmin.getMamau());
+
+			GiayMauSize giayMauSize = new GiayMauSize();
 			giayMauSize.setId(giayMauSizePK);
 			giayMauSize.setSoluong(sizeMauAdmin.getSoluong());
+			
+			int idNextGiayMauSize = giaySizeMauReponsitory.getIdNext();
+			
 			giaySizeMauReponsitory.save(giayMauSize);
+
+			SoluongGiay soluongGiay = new SoluongGiay();
+			soluongGiay.setSoluongthem(sizeMauAdmin.getSoluong());
+			soluongGiay.setIdGiaySizeMau(idNextGiayMauSize);
+			soluongGiay.setMota("Thêm Giày Mới");
+			soLuongGiayReponsitory.save(soluongGiay);
 		}
 		return idNextGiay;
 	}

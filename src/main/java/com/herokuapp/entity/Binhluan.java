@@ -16,10 +16,11 @@ public class Binhluan implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique=true, nullable=false, length=10)
+	@Column(length=10)
 	private String mabl;
 
-	@Column(nullable=false, length=10)
+	@Lob
+	@Column(nullable=false)
 	private String mota;
 
 	@Temporal(TemporalType.TIMESTAMP)

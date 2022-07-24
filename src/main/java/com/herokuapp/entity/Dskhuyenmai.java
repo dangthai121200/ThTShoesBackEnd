@@ -29,28 +29,29 @@ public class Dskhuyenmai implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique = true, nullable = false, length = 10)
+	@Column(unique = true, length = 10)
 	private String makm;
+	
+	@Column(nullable = false)
+	private int soluong;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(nullable = false)
+	private Date ngaybd;
+
+	@Temporal(TemporalType.DATE)
+	private Date ngaykt;
+	
+	@Lob
+	private String mota;
 
 	@Column(nullable = false)
 	private int giatrigiam;
 
 	@Lob
-	private String mota;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date ngaybd;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable = false)
-	private Date ngaykt;
-
-	@Column(nullable = false)
-	private int soluong;
-
-	@Lob
 	private String urlanh;
 
+	@Column(nullable = false)
 	private String tieude;
 
 	// bi-directional many-to-one association to Donhang

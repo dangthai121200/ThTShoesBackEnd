@@ -19,7 +19,7 @@ public class Hang implements Serializable {
 	@Column(unique=true, nullable=false, length=10)
 	private String mahang;
 
-	@Column(nullable=false, length=50)
+	@Column(nullable=false, length=50, unique = true)
 	private String tenhang;
 
 	//bi-directional many-to-one association to LoaigiayHangDanhmuc

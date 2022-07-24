@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -25,18 +26,20 @@ public class Khachvanglai implements Serializable {
 	@Column(unique = true, length = 10)
 	private String makh; // this is id default if no has khachangvanglai for dathang
 
+	@Lob
 	@Column(nullable = false)
 	private String diachi;
 
 	@Column(length = 30)
 	private String email;
 
+	@Lob
 	private String ghichu;
 
 	@Column(nullable = false, length = 10)
 	private String ho;
 
-	@Column(nullable = false)
+	@Column(nullable = false, length = 11)
 	private String sdt;
 
 	@Column(nullable = false, length = 30)
