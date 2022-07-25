@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.herokuapp.domain.admin.LoaiGiayAdminDomain;
 import com.herokuapp.domain.admin.list.ListLoaiGiayAdmin;
 import com.herokuapp.entity.Loaigiay;
+import com.herokuapp.handleexception.ThtShoesException;
 import com.herokuapp.reponsitory.LoaiGiayReponsitory;
 
 @Service
@@ -29,6 +30,19 @@ public class LoaiGiayAdminServiceImpl implements LoaiGiayAdminService {
 		});
 		listLoaiGiayAdmin.setLoaiGiays(loaiGiayAdminDomains);
 		return listLoaiGiayAdmin;
+	}
+
+	@Override
+	public void addLoaiGiay(LoaiGiayAdminDomain loaiGiayAdminDomain) throws ThtShoesException {
+		Loaigiay loaigiay = loaiGiayReponsitory.findByTenloai(loaiGiayAdminDomain.getTenloai());
+		if (loaigiay != null) {
+			throw new ThtShoesException("Loại giày đã tồn tại");
+		} else {
+			Loaigiay loaigiayAdd = new Loaigiay();
+			loaigiayAdd.setTenloai(loaiGiayAdminDomain.getTenloai());
+			loaiGiayReponsitory.save(loaigiayAdd);
+		}
+
 	}
 
 }

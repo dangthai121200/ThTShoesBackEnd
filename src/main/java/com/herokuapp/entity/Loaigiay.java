@@ -27,6 +27,7 @@ public class Loaigiay implements Serializable {
 	private List<LoaigiayHangDanhmuc> loaigiayHangDanhmucs;
 
 	public Loaigiay() {
+		this.maloaigiay = "";
 	}
 
 	public String getMaloaigiay() {
