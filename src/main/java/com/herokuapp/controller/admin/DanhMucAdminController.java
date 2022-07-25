@@ -19,6 +19,5 @@ public class DanhMucAdminController {
 	@GetMapping
 	public ListDanhMucAdminDomain getAllDanhMuc() {
 		return danhMucAdminService.getAllDanhMuc();
-		
 	}
 }
