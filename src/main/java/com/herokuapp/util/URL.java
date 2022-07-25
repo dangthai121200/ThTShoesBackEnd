@@ -40,8 +40,11 @@ public class URL {
 	public static final String LGIAY_HANG_DMUC = "/lgiayhangdanhmuc";
 	
 	public static final String HINH = "/hinh";
+	public static final String HANG = "/hang";
+	public static final String DANH_MUC = "/danhmuc";
 	
 	public static final String BINH_LUAN = "/binhluan";
+	
 	
 
 	public static final String LOGIN = "/login";
