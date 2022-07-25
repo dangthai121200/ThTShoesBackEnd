@@ -1,11 +1,15 @@
 package com.herokuapp.service.khachhang;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.herokuapp.domain.khachhang.BinhLuanKhachHangDomain;
+import com.herokuapp.domain.khachhang.list.ListBinhLuanKhachHang;
 import com.herokuapp.entity.Binhluan;
 import com.herokuapp.entity.Giay;
 import com.herokuapp.entity.Khachhang;
@@ -43,6 +47,21 @@ public class BinhLuanKhachHangServiceImpl implements BinhLuanKhachHangService {
 
 		binhLuanReponsitory.save(binhluan);
 
+	}
+
+	@Override
+	public ListBinhLuanKhachHang getAllBinhLuanByIdGiay(String magiay) {
+		ListBinhLuanKhachHang listBinhLuanKhachHang = new ListBinhLuanKhachHang();
+		List<Binhluan> binhluans = binhLuanReponsitory.getAllBinhLuanByIdGiay(magiay);
+		List<BinhLuanKhachHangDomain> binhLuanKhachHangDomains = new ArrayList<>();
+
+		for (Binhluan binhluan : binhluans) {
+			BinhLuanKhachHangDomain binhLuanKhachHangDomain = new BinhLuanKhachHangDomain();
+			binhLuanKhachHangDomain.converToDomain(binhluan);
+			binhLuanKhachHangDomains.add(binhLuanKhachHangDomain);
+		}
+		listBinhLuanKhachHang.setBinhluans(binhLuanKhachHangDomains);
+		return listBinhLuanKhachHang;
 	}
 
 }
