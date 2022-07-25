@@ -5,7 +5,6 @@ import com.herokuapp.entity.Danhmuc;
 
 public class DanhmucAdminDomain extends AbstractsDomain<Danhmuc> {
 	private String madm;
-
 	private String tendanhmuc;
 
 	public String getMadm() {
