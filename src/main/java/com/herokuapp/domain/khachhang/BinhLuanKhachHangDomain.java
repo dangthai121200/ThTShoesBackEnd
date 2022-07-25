@@ -10,8 +10,6 @@ public class BinhLuanKhachHangDomain extends AbstractsDomain<Binhluan> {
 	private String mabl;
 	private String mota;
 	private Date thoigian;
-
-	@JsonIgnore
 	private String masp;
 	private KhachHangDomain khachHangDomain = new KhachHangDomain();
 
