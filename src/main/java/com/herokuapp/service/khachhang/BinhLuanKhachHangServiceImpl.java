@@ -64,4 +64,19 @@ public class BinhLuanKhachHangServiceImpl implements BinhLuanKhachHangService {
 		return listBinhLuanKhachHang;
 	}
 
+	@Override
+	public ListBinhLuanKhachHang getAllBinhLuanByIdPhuKien(String mapk) {
+		ListBinhLuanKhachHang listBinhLuanKhachHang = new ListBinhLuanKhachHang();
+		List<Binhluan> binhluans = binhLuanReponsitory.getAllBinhLuanByIdPhuKien(mapk);
+		List<BinhLuanKhachHangDomain> binhLuanKhachHangDomains = new ArrayList<>();
+
+		for (Binhluan binhluan : binhluans) {
+			BinhLuanKhachHangDomain binhLuanKhachHangDomain = new BinhLuanKhachHangDomain();
+			binhLuanKhachHangDomain.converToDomain(binhluan);
+			binhLuanKhachHangDomains.add(binhLuanKhachHangDomain);
+		}
+		listBinhLuanKhachHang.setBinhluans(binhLuanKhachHangDomains);
+		return listBinhLuanKhachHang;
+	}
+
 }

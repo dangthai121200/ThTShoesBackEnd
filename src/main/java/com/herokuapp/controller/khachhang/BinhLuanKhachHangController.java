@@ -38,5 +38,11 @@ public class BinhLuanKhachHangController {
 		return binhLuanKhachHangService.getAllBinhLuanByIdGiay(magiay);
 
 	}
+	
+	@GetMapping(value = URL.PHU_KIEN + "/{mapk}")
+	public ListBinhLuanKhachHang getAllBinhLuanByIdPhuKien(@PathVariable(name = "mapk") String mapk) {
+		return binhLuanKhachHangService.getAllBinhLuanByIdPhuKien(mapk);
+
+	}
 
 }

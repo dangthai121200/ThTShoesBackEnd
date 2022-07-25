@@ -8,4 +8,6 @@ public interface BinhLuanKhachHangService {
 
 	ListBinhLuanKhachHang getAllBinhLuanByIdGiay(String magiay);
 
+	ListBinhLuanKhachHang getAllBinhLuanByIdPhuKien(String mapk);
+
 }
