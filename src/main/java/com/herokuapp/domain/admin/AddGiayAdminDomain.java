@@ -17,7 +17,9 @@ public class AddGiayAdminDomain extends AbstractsDomain<Giay> {
 	private String tengiay;
 	private int trongluong;
 	private String urlanh;
-	private int maLgiayHang;
+	private String maLoaiGiay;
+	private String maHang;
+	private String maDanhMuc;
 	private Set<SizeMauAdmin> sizeMaus = new HashSet<>();
 
 	public String getMagiay() {
@@ -92,21 +94,36 @@ public class AddGiayAdminDomain extends AbstractsDomain<Giay> {
 		this.urlanh = urlanh;
 	}
 
-
-	public int getMaLgiayHang() {
-		return maLgiayHang;
-	}
-
-	public void setMaLgiayHang(int maLgiayHang) {
-		this.maLgiayHang = maLgiayHang;
-	}
-
 	public Set<SizeMauAdmin> getSizeMaus() {
 		return sizeMaus;
 	}
 
 	public void setSizeMaus(Set<SizeMauAdmin> sizeMaus) {
 		this.sizeMaus = sizeMaus;
+	}
+
+	public String getMaLoaiGiay() {
+		return maLoaiGiay;
+	}
+
+	public void setMaLoaiGiay(String maLoaiGiay) {
+		this.maLoaiGiay = maLoaiGiay;
+	}
+
+	public String getMaHang() {
+		return maHang;
+	}
+
+	public void setMaHang(String maHang) {
+		this.maHang = maHang;
+	}
+
+	public String getMaDanhMuc() {
+		return maDanhMuc;
+	}
+
+	public void setMaDanhMuc(String maDanhMuc) {
+		this.maDanhMuc = maDanhMuc;
 	}
 
 	@Override
@@ -127,7 +144,6 @@ public class AddGiayAdminDomain extends AbstractsDomain<Giay> {
 		if (this.mota != null) {
 			giay.setMota(this.mota);
 		}
-		giay.setMaLgiayHang(this.maLgiayHang);
 		return giay;
 	}
 

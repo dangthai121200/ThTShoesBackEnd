@@ -17,11 +17,14 @@ import com.herokuapp.domain.admin.list.ListGiayAdmin;
 import com.herokuapp.entity.Giay;
 import com.herokuapp.entity.GiayMauSize;
 import com.herokuapp.entity.GiayMauSizePK;
+import com.herokuapp.entity.LoaigiayHangDanhmuc;
+import com.herokuapp.entity.LoaigiayHangDanhmucPK;
 import com.herokuapp.entity.Mausac;
 import com.herokuapp.entity.SoluongGiay;
 import com.herokuapp.reponsitory.GiayReponsitory;
 import com.herokuapp.reponsitory.GiaySeqReponsitory;
 import com.herokuapp.reponsitory.GiaySizeMauReponsitory;
+import com.herokuapp.reponsitory.LoaigiayHangDanhmucReponsitory;
 import com.herokuapp.reponsitory.MauSacReponsitory;
 import com.herokuapp.reponsitory.SoLuongGiayReponsitory;
 import com.herokuapp.util.PrefixId;
@@ -43,6 +46,9 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 
 	@Autowired
 	public SoLuongGiayReponsitory soLuongGiayReponsitory;
+
+	@Autowired
+	public LoaigiayHangDanhmucReponsitory loaigiayHangDanhmucReponsitory;
 
 	@Override
 	public ListGiayAdmin getAllGiay() {
@@ -67,7 +73,27 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 	@Transactional(rollbackFor = Exception.class)
 	public String addGiay(AddGiayAdminDomain giayAdminDomain) {
 		String idNextGiay = PrefixId.GIAY + giaySeqReponsitory.getIdNext();
+		int idLoaigiayHangDanhmuc;
+		LoaigiayHangDanhmuc loaigiayHangDanhmuc = loaigiayHangDanhmucReponsitory.findByLoaiGiayHangDanhMuc(
+				giayAdminDomain.getMaLoaiGiay(), giayAdminDomain.getMaHang(), giayAdminDomain.getMaDanhMuc());
+		if (loaigiayHangDanhmuc == null) {
+			idLoaigiayHangDanhmuc = loaigiayHangDanhmucReponsitory.getIdNext();
+
+			LoaigiayHangDanhmuc loaigiayHangDanhmucADD = new LoaigiayHangDanhmuc();
+
+			LoaigiayHangDanhmucPK loaigiayHangDanhmucPK = new LoaigiayHangDanhmucPK();
+			loaigiayHangDanhmucPK.setMaloaigiay(giayAdminDomain.getMaLoaiGiay());
+			loaigiayHangDanhmucPK.setMahang(giayAdminDomain.getMaHang());
+			loaigiayHangDanhmucPK.setMadanhmuc(giayAdminDomain.getMaDanhMuc());
+
+			loaigiayHangDanhmucADD.setId(loaigiayHangDanhmucPK);
+			loaigiayHangDanhmucReponsitory.save(loaigiayHangDanhmucADD);
+
+		} else {
+			idLoaigiayHangDanhmuc = loaigiayHangDanhmuc.getId().getMaLgiayHang();
+		}
 		Giay giay = giayAdminDomain.converToEntity();
+		giay.setMaLgiayHang(idLoaigiayHangDanhmuc);
 		giayReponsitory.save(giay);
 		for (SizeMauAdmin sizeMauAdmin : giayAdminDomain.getSizeMaus()) {
 
@@ -79,9 +105,9 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 			GiayMauSize giayMauSize = new GiayMauSize();
 			giayMauSize.setId(giayMauSizePK);
 			giayMauSize.setSoluong(sizeMauAdmin.getSoluong());
-			
+
 			int idNextGiayMauSize = giaySizeMauReponsitory.getIdNext();
-			
+
 			giaySizeMauReponsitory.save(giayMauSize);
 
 			SoluongGiay soluongGiay = new SoluongGiay();
@@ -138,7 +164,7 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 	@Override
 	public void deleteGiay(String magiay) {
 		Giay giay = giayReponsitory.findById(magiay).get();
-		
+
 	}
 
 }

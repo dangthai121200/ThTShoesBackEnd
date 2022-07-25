@@ -28,17 +28,17 @@ public class LoaigiayHangDanhmuc implements Serializable {
 	private LoaigiayHangDanhmucPK id;
 
 	// bi-directional many-to-one association to Danhmuc
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "madanhmuc", nullable = false, insertable = false, updatable = false)
 	private Danhmuc danhmuc;
 
 	// bi-directional many-to-one association to Hang
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "mahang", nullable = false, insertable = false, updatable = false)
 	private Hang hang;
 
 	// bi-directional many-to-one association to Loaigiay
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "maloaigiay", nullable = false, insertable = false, updatable = false)
 	private Loaigiay loaigiay;
 
