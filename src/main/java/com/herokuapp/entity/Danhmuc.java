@@ -32,6 +32,7 @@ public class Danhmuc implements Serializable {
 	private List<LoaigiayHangDanhmuc> loaigiayHangDanhmucs;
 
 	public Danhmuc() {
+		this.madanhmuc = "";
 	}
 
 	public String getMadanhmuc() {
