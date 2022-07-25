@@ -15,6 +15,7 @@ public class PhuKienDomain extends AbstractsDomain<Phukien> {
 	private String urlanh;
 	private List<HinhDomain> hinhs = new ArrayList<>();
 	private LoaiPhuKienDomain loaiPhuKien = new LoaiPhuKienDomain();
+	private List<BinhLuanKhachHangDomain> binhluans = new ArrayList<>();
 
 	public PhuKienDomain() {
 
@@ -82,6 +83,14 @@ public class PhuKienDomain extends AbstractsDomain<Phukien> {
 
 	public void setUrlanh(String urlanh) {
 		this.urlanh = urlanh;
+	}
+
+	public List<BinhLuanKhachHangDomain> getBinhluans() {
+		return binhluans;
+	}
+
+	public void setBinhluans(List<BinhLuanKhachHangDomain> binhluans) {
+		this.binhluans = binhluans;
 	}
 
 	@Override

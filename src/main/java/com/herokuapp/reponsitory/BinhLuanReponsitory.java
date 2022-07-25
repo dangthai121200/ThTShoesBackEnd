@@ -15,4 +15,8 @@ public interface BinhLuanReponsitory extends JpaRepository<Binhluan, String> {
 
 	@Query(value = "Select * from binhluan where magiay = :magiay", nativeQuery = true)
 	List<Binhluan> getAllBinhLuanByIdGiay(String magiay);
+	
+	
+	@Query(value = "Select * from binhluan where mapk = :maphukien", nativeQuery = true)
+	List<Binhluan> getAllBinhLuanByIdPhuKien(String maphukien);
 }
