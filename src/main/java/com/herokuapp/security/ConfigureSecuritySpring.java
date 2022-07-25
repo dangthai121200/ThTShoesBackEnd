@@ -74,19 +74,20 @@ public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
 		// URL NHAN VIEN
 
 		// add nhanvien
-		http.authorizeRequests().antMatchers(HttpMethod.POST, URL.NHAN_VIEN + URL.ADD_NHAN_VIEN)
+		http.authorizeRequests().antMatchers(HttpMethod.POST, URL.NHAN_VIEN + URL.ADD_NHAN_VIEN +"/**")
 				.hasAuthority(Quyen.ADMIN.getName());
 
 		http.authorizeRequests().antMatchers(URL.NHAN_VIEN + URL.GET_BY_ID + "/**").hasAuthority(Quyen.ADMIN.getName());
 
 		// show nhanvien
 		http.authorizeRequests().antMatchers(HttpMethod.GET, URL.NHAN_VIEN).hasAuthority(Quyen.ADMIN.getName());
+		
 		// Info Nhanvien
 		http.authorizeRequests().antMatchers(URL.NHAN_VIEN + URL.INFO_NHAN_VIEN).hasAnyAuthority(Quyen.ADMIN.getName(),
 				Quyen.NHANVIEN.getName());
 
 		// Add Giay
-		http.authorizeRequests().antMatchers(HttpMethod.POST, URL.NHAN_VIEN + URL.GIAY)
+		http.authorizeRequests().antMatchers(HttpMethod.POST, URL.NHAN_VIEN + URL.GIAY + "/**")
 				.hasAuthority(Quyen.ADMIN.getName());
 		// Show giay
 		http.authorizeRequests().antMatchers(HttpMethod.GET, URL.NHAN_VIEN + URL.GIAY)
@@ -146,8 +147,11 @@ public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
 				.hasAnyAuthority(Quyen.ADMIN.getName(), Quyen.NHANVIEN.getName());
 
 		// binhluan
-		http.authorizeRequests().antMatchers(URL.NHAN_VIEN + URL.BINH_LUAN + "/**")
+		http.authorizeRequests().antMatchers(HttpMethod.GET, URL.NHAN_VIEN + URL.BINH_LUAN + "/**")
 				.hasAnyAuthority(Quyen.ADMIN.getName(), Quyen.NHANVIEN.getName());
+
+		http.authorizeRequests().antMatchers(HttpMethod.DELETE, URL.NHAN_VIEN + URL.BINH_LUAN + "/**")
+				.hasAnyAuthority(Quyen.ADMIN.getName());
 
 		http.authorizeRequests().antMatchers("/css/**", "/asssets/**").permitAll();
 
@@ -161,6 +165,7 @@ public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
 
 	}
 
+	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(TaiKhoanServiceImpl()).passwordEncoder(noOpPasswordEncoder());
