@@ -6,12 +6,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.herokuapp.domain.khachhang.BinhLuanKhachHangDomain;
 import com.herokuapp.domain.khachhang.GiayDomain;
 import com.herokuapp.domain.khachhang.MauSacDomain;
 import com.herokuapp.domain.khachhang.SizeDomain;
+import com.herokuapp.entity.Binhluan;
 import com.herokuapp.entity.Giay;
 import com.herokuapp.entity.GiayMauSize;
 import com.herokuapp.entity.Mausac;
+import com.herokuapp.reponsitory.BinhLuanReponsitory;
 import com.herokuapp.reponsitory.GiayReponsitory;
 import com.herokuapp.reponsitory.GiaySizeMauReponsitory;
 import com.herokuapp.reponsitory.MauSacReponsitory;
@@ -30,6 +33,9 @@ public class GiayServiceImpl implements GiayService {
 
 	@Autowired
 	public GiaySizeMauReponsitory giaySizeMauReponsitory;
+
+	@Autowired
+	public BinhLuanReponsitory binhLuanReponsitory;
 
 	@Override
 	public List<GiayDomain> getListLatest(int amount) {
@@ -78,8 +84,18 @@ public class GiayServiceImpl implements GiayService {
 			sizeDomain.setMausacs(convertToListMauSacDomain(mausacs, giayDomain.getMagiay(), sizeDomain.getMasize()));
 			sizeDomains.add(sizeDomain);
 		}
-
 		giayDomain.setSizes(sizeDomains);
+
+		List<Binhluan> binhluans = binhLuanReponsitory.getAllBinhLuanByIdGiay(idGiay);
+		List<BinhLuanKhachHangDomain> binhLuanKhachHangDomains = new ArrayList<>();
+
+		for (Binhluan binhluan : binhluans) {
+			BinhLuanKhachHangDomain binhLuanKhachHangDomain = new BinhLuanKhachHangDomain();
+			binhLuanKhachHangDomain.converToDomain(binhluan);
+			binhLuanKhachHangDomains.add(binhLuanKhachHangDomain);
+		}
+		giayDomain.setBinhluans(binhLuanKhachHangDomains);
+
 		return giayDomain;
 	}
 

@@ -20,6 +20,7 @@ public class GiayDomain extends AbstractsDomain<Giay> {
 	private List<HinhDomain> hinhs = new ArrayList<>();
 	private LoaigiayHangDanhmucDomain loaigiayHangDanhmuc = new LoaigiayHangDanhmucDomain();
 	private List<SizeDomain> sizes = new ArrayList<>();
+	private List<BinhLuanKhachHangDomain> binhluans = new ArrayList<>();
 
 	public String getMagiay() {
 		return magiay;
@@ -28,7 +29,6 @@ public class GiayDomain extends AbstractsDomain<Giay> {
 	public void setMagiay(String magiay) {
 		this.magiay = magiay;
 	}
-	
 
 	public String getChatlieu() {
 		return chatlieu;
@@ -116,6 +116,14 @@ public class GiayDomain extends AbstractsDomain<Giay> {
 
 	public void setSizes(List<SizeDomain> sizes) {
 		this.sizes = sizes;
+	}
+
+	public List<BinhLuanKhachHangDomain> getBinhluans() {
+		return binhluans;
+	}
+
+	public void setBinhluans(List<BinhLuanKhachHangDomain> binhluans) {
+		this.binhluans = binhluans;
 	}
 
 	@Override
