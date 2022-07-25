@@ -41,6 +41,8 @@ public class URL {
 	
 	public static final String HINH = "/hinh";
 	
+	public static final String BINH_LUAN = "/binhluan";
+	
 
 	public static final String LOGIN = "/login";
 	public static final String CHANGE_PASSWORD = "/doimatkhau";

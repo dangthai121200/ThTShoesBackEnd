@@ -1,47 +1,60 @@
 package com.herokuapp.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the binhluan database table.
  * 
  */
 @Entity
-@Table(name="binhluan")
-@NamedQuery(name="Binhluan.findAll", query="SELECT b FROM Binhluan b")
+@Table(name = "binhluan")
+@NamedQuery(name = "Binhluan.findAll", query = "SELECT b FROM Binhluan b")
 public class Binhluan implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(length=10)
+	@Column(length = 10)
 	private String mabl;
 
 	@Lob
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private String mota;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date thoigian;
 
-	//bi-directional many-to-one association to Giay
+	// bi-directional many-to-one association to Giay
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="magiay")
+	@JoinColumn(name = "magiay")
 	private Giay giay;
 
-	//bi-directional many-to-one association to Khachhang
+	// bi-directional many-to-one association to Khachhang
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="makh", nullable=false)
+	@JoinColumn(name = "makh", nullable = false)
 	private Khachhang khachhang;
 
-	//bi-directional many-to-one association to Phukien
+	// bi-directional many-to-one association to Phukien
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="mapk")
+	@JoinColumn(name = "mapk")
 	private Phukien phukien;
 
 	public Binhluan() {
+		this.mabl = "";
+		this.thoigian = new Date();
 	}
 
 	public String getMabl() {
