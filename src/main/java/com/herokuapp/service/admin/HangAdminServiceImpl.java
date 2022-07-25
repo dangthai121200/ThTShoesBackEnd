@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.herokuapp.domain.admin.HangAdminDomain;
 import com.herokuapp.domain.admin.list.ListHangAdminDomain;
 import com.herokuapp.entity.Hang;
+import com.herokuapp.handleexception.ThtShoesException;
 import com.herokuapp.reponsitory.HangReponsitory;
 
 @Service
@@ -29,6 +30,18 @@ public class HangAdminServiceImpl implements HangAdminService {
 		}
 		listHangAdminDomain.setHangs(hangAdminDomains);
 		return listHangAdminDomain;
+	}
+
+	@Override
+	public void addHang(HangAdminDomain hangAdminDomain) throws ThtShoesException {
+		Hang hang = hangReponsitory.getHangByTenHang(hangAdminDomain.getTenhang());
+		if (hang == null) {
+			Hang hangAdd = new Hang();
+			hangAdd.setTenhang(hangAdminDomain.getTenhang());
+			hangReponsitory.save(hangAdd);
+		} else {
+			throw new ThtShoesException("Hãng đã tồn tại");
+		}
 	}
 
 }

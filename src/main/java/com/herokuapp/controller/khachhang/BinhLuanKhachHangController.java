@@ -32,13 +32,13 @@ public class BinhLuanKhachHangController {
 		return ResponseEntity.ok("Bình luận thành công");
 
 	}
-	
+
 	@GetMapping(value = URL.GIAY + "/{magiay}")
 	public ListBinhLuanKhachHang getAllBinhLuanByIdGiay(@PathVariable(name = "magiay") String magiay) {
 		return binhLuanKhachHangService.getAllBinhLuanByIdGiay(magiay);
 
 	}
-	
+
 	@GetMapping(value = URL.PHU_KIEN + "/{mapk}")
 	public ListBinhLuanKhachHang getAllBinhLuanByIdPhuKien(@PathVariable(name = "mapk") String mapk) {
 		return binhLuanKhachHangService.getAllBinhLuanByIdPhuKien(mapk);
