@@ -11,4 +11,6 @@ public interface GiayAdminService {
 	String addGiay(AddGiayAdminDomain giayAdminDomain);
 
 	GiayAdminDomain getGiayById(String idGiay);
+
+	void deleteGiay(String magiay);
 }

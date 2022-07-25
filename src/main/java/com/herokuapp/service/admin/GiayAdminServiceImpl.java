@@ -135,4 +135,10 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 
 	}
 
+	@Override
+	public void deleteGiay(String magiay) {
+		Giay giay = giayReponsitory.findById(magiay).get();
+		
+	}
+
 }
