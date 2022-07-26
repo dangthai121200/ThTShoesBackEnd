@@ -14,4 +14,6 @@ public interface PhuKienAdminService {
 	String addPhuKien(AddPhuKienAdmin addPhuKienAdmin);
 
 	void updatePhuKien(AddPhuKienAdmin addPhuKienAdmin) throws ThtShoesException;
+
+	void deletePhuKien(String mapk) throws ThtShoesException;
 }
