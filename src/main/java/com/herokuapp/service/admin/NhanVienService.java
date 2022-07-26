@@ -14,4 +14,7 @@ public interface NhanVienService {
 	NhanVienAdminDomain getNhanVienyId(String mavn);
 	
 	boolean checkSdt(Long sdt);
+
+	void lockNhanVien(String manv);
+	void unLockNhanVien(String manv);
 }

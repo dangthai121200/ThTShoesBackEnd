@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.herokuapp.domain.admin.AddGiayAdminDomain;
 import com.herokuapp.domain.admin.GiayAdminDomain;
 import com.herokuapp.domain.admin.list.ListGiayAdmin;
+import com.herokuapp.handleexception.ThtShoesException;
 import com.herokuapp.service.admin.GiayAdminService;
 import com.herokuapp.util.URL;
 
@@ -48,13 +49,16 @@ public class GiayAdminController {
 	}
 	
 	@DeleteMapping(value = "/{magiay}")
-	public ResponseEntity<String> deleteGiay(@PathVariable(name = "magiay") String magiay) {
+	public ResponseEntity<String> deleteGiay(@PathVariable(name = "magiay") String magiay) throws ThtShoesException {
 		try {
 			giayService.deleteGiay(magiay);
 			return ResponseEntity.ok(magiay);
-		} catch (Exception ex) {
+		} catch (ThtShoesException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
 			ex.printStackTrace();
-			return ResponseEntity.badRequest().body("Thêm thất bại");
+			return ResponseEntity.badRequest().body("Xóa thất bại");
 		}
 
 	}

@@ -15,7 +15,7 @@ public interface TaiKhoanReponsitory extends CrudRepository<Taikhoan, String> {
 
 	@Query("Select tk from Taikhoan tk where tk.username = :username")
 	Taikhoan getTaiKhoanByUsername(@Param("username") String username);
-	
+
 	@Query("Select tk from Taikhoan tk where tk.email = :email")
 	Taikhoan getTaiKhoanByEmail(@Param("email") String email);
 
@@ -25,6 +25,9 @@ public interface TaiKhoanReponsitory extends CrudRepository<Taikhoan, String> {
 	@Modifying(clearAutomatically = true)
 	@Query("update Taikhoan tk set tk.password = :password where tk.manguoidung = :manguoidung")
 	void changePassword(@Param("password") String newPassowrd, @Param("manguoidung") String manguoidung);
-	
-	
+
+	@Modifying(clearAutomatically = true)
+	@Query("update Taikhoan tk set tk.tinhtrang = :tinhtrang where tk.manguoidung = :manguoidung")
+	void updateTinhTrang(@Param("manguoidung") String manguoidung, @Param("tinhtrang") Byte tinhtrang);
+
 }

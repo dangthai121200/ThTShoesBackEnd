@@ -115,6 +115,8 @@ public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
 				.hasAnyAuthority(Quyen.ADMIN.getName(), Quyen.NHANVIEN.getName());
 		http.authorizeRequests().antMatchers(HttpMethod.POST, URL.NHAN_VIEN + URL.GIAY + "/**")
 				.hasAuthority(Quyen.ADMIN.getName());
+		http.authorizeRequests().antMatchers(HttpMethod.DELETE, URL.NHAN_VIEN + URL.GIAY + "/**")
+				.hasAuthority(Quyen.ADMIN.getName());
 
 		// Hang
 		http.authorizeRequests().antMatchers(HttpMethod.GET, URL.NHAN_VIEN + URL.HANG + "/**")
@@ -165,10 +167,19 @@ public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers(URL.NHAN_VIEN + URL.GET_BY_ID + "/**").hasAuthority(Quyen.ADMIN.getName());
 		http.authorizeRequests().antMatchers(HttpMethod.GET, URL.NHAN_VIEN).hasAuthority(Quyen.ADMIN.getName());
 
+		http.authorizeRequests().antMatchers(HttpMethod.PUT, URL.NHAN_VIEN + URL.LOCK + "/**")
+				.hasAuthority(Quyen.ADMIN.getName());
+		http.authorizeRequests().antMatchers(HttpMethod.PUT, URL.NHAN_VIEN + URL.UNLOCK + "/**")
+				.hasAuthority(Quyen.ADMIN.getName());
+
 		// phukien
 		http.authorizeRequests().antMatchers(HttpMethod.GET, URL.NHAN_VIEN + URL.PHU_KIEN + "/**")
 				.hasAnyAuthority(Quyen.ADMIN.getName(), Quyen.NHANVIEN.getName());
 		http.authorizeRequests().antMatchers(HttpMethod.POST, URL.NHAN_VIEN + URL.PHU_KIEN + "/**")
+				.hasAnyAuthority(Quyen.ADMIN.getName());
+		http.authorizeRequests().antMatchers(HttpMethod.PUT, URL.NHAN_VIEN + URL.PHU_KIEN + "/**")
+				.hasAnyAuthority(Quyen.ADMIN.getName());
+		http.authorizeRequests().antMatchers(HttpMethod.DELETE, URL.NHAN_VIEN + URL.PHU_KIEN + "/**")
 				.hasAnyAuthority(Quyen.ADMIN.getName());
 
 		// size

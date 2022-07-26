@@ -18,10 +18,12 @@ public class GiayAdminDomain extends AbstractsDomain<Giay> {
 	private String tengiay;
 	private int trongluong;
 	private String urlanh;
-	private int soluong;
-	private int maLgiayHang;
+//	private LoaiGiayAdminDomain loaigiay = new LoaiGiayAdminDomain();
+//	private HangAdminDomain hang = new HangAdminDomain();
+//	private DanhmucAdminDomain danhmuc = new DanhmucAdminDomain();
 	private List<SizeAdminDomain> sizes = new ArrayList<>();
 	private List<HinhAdminDomain> hinhs = new ArrayList<>();
+	private int maLgiayHang;
 
 	public GiayAdminDomain() {
 		super();
@@ -99,22 +101,6 @@ public class GiayAdminDomain extends AbstractsDomain<Giay> {
 		this.urlanh = urlanh;
 	}
 
-	public int getSoluong() {
-		return soluong;
-	}
-
-	public void setSoluong(int soluong) {
-		this.soluong = soluong;
-	}
-
-	public int getMaLgiayHang() {
-		return maLgiayHang;
-	}
-
-	public void setMaLgiayHang(int maLgiayHang) {
-		this.maLgiayHang = maLgiayHang;
-	}
-
 	public List<SizeAdminDomain> getSizes() {
 		return sizes;
 	}
@@ -131,6 +117,38 @@ public class GiayAdminDomain extends AbstractsDomain<Giay> {
 		this.hinhs = hinhs;
 	}
 
+//	public LoaiGiayAdminDomain getLoaigiay() {
+//		return loaigiay;
+//	}
+//
+//	public void setLoaigiay(LoaiGiayAdminDomain loaigiay) {
+//		this.loaigiay = loaigiay;
+//	}
+//
+//	public HangAdminDomain getHang() {
+//		return hang;
+//	}
+//
+//	public void setHang(HangAdminDomain hang) {
+//		this.hang = hang;
+//	}
+//
+//	public DanhmucAdminDomain getDanhmuc() {
+//		return danhmuc;
+//	}
+//
+//	public void setDanhmuc(DanhmucAdminDomain danhmuc) {
+//		this.danhmuc = danhmuc;
+//	}
+
+	public int getMaLgiayHang() {
+		return maLgiayHang;
+	}
+
+	public void setMaLgiayHang(int maLgiayHang) {
+		this.maLgiayHang = maLgiayHang;
+	}
+
 	@Override
 	public void converToDomain(Giay giay) {
 
@@ -141,9 +159,9 @@ public class GiayAdminDomain extends AbstractsDomain<Giay> {
 		this.mota = giay.getMota();
 		this.tengiay = giay.getTengiay();
 		this.trongluong = giay.getTrongluong();
-		this.soluong = giay.getSoluong();
 		this.urlanh = giay.getUrlanh();
 		this.ngaythem = giay.getNgaythem();
+		this.maLgiayHang = giay.getMaLgiayHang();
 	}
 
 	@Override
@@ -154,12 +172,10 @@ public class GiayAdminDomain extends AbstractsDomain<Giay> {
 		giay.setGia(this.gia);
 		giay.setKieudang(this.kieudang);
 		giay.setTrongluong(this.trongluong);
-		giay.setSoluong(this.soluong);
 		giay.setUrlanh(this.urlanh);
 		if (this.mota != null) {
 			giay.setMota(this.mota);
 		}
-		giay.setMaLgiayHang(this.maLgiayHang);
 		return giay;
 	}
 

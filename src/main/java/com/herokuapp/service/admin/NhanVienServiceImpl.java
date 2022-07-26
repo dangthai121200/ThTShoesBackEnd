@@ -125,4 +125,14 @@ public class NhanVienServiceImpl implements NhanVienService {
 
 	}
 
+	@Override
+	public void lockNhanVien(String manv) {
+		taiKhoanReponsitory.updateTinhTrang(manv, (byte) 0);
+	}
+
+	@Override
+	public void unLockNhanVien(String manv) {
+		taiKhoanReponsitory.updateTinhTrang(manv, (byte) 1);
+	}
+
 }

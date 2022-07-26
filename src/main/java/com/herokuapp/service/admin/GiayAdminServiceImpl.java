@@ -21,6 +21,8 @@ import com.herokuapp.entity.LoaigiayHangDanhmuc;
 import com.herokuapp.entity.LoaigiayHangDanhmucPK;
 import com.herokuapp.entity.Mausac;
 import com.herokuapp.entity.SoluongGiay;
+import com.herokuapp.handleexception.ThtShoesException;
+import com.herokuapp.reponsitory.GiayDonHangReponsitory;
 import com.herokuapp.reponsitory.GiayReponsitory;
 import com.herokuapp.reponsitory.GiaySeqReponsitory;
 import com.herokuapp.reponsitory.GiaySizeMauReponsitory;
@@ -49,6 +51,9 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 
 	@Autowired
 	public LoaigiayHangDanhmucReponsitory loaigiayHangDanhmucReponsitory;
+
+	@Autowired
+	public GiayDonHangReponsitory giayDonHangReponsitory;
 
 	@Override
 	public ListGiayAdmin getAllGiay() {
@@ -126,6 +131,21 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 		List<SizeAdminDomain> sizeAdminDomains = new ArrayList<>();
 		giayAdminDomain.converToDomain(giay);
 
+//		LoaigiayHangDanhmuc loaigiayHangDanhmuc = loaigiayHangDanhmucReponsitory
+//				.findByMaLgiayHang(giay.getMaLgiayHang());
+//
+//		LoaiGiayAdminDomain loaiGiayAdminDomain = new LoaiGiayAdminDomain();
+//		loaiGiayAdminDomain.converToDomain(loaigiayHangDanhmuc.getLoaigiay());
+//		giayAdminDomain.setLoaigiay(loaiGiayAdminDomain);
+//
+//		HangAdminDomain hangAdminDomain = new HangAdminDomain();
+//		hangAdminDomain.converToDomain(loaigiayHangDanhmuc.getHang());
+//		giayAdminDomain.setHang(hangAdminDomain);
+//
+//		DanhmucAdminDomain danhmucAdminDomain = new DanhmucAdminDomain();
+//		danhmucAdminDomain.converToDomain(loaigiayHangDanhmuc.getDanhmuc());
+//		giayAdminDomain.setDanhmuc(danhmucAdminDomain);
+
 		giay.getHinhs().forEach(hinh -> {
 			HinhAdminDomain hinhDomain = new HinhAdminDomain();
 			hinhDomain.converToDomain(hinh);
@@ -144,6 +164,7 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 					convertToListMauSacDomain(mausacs, giayAdminDomain.getMagiay(), sizeAdminDomain.getMasize()));
 			sizeAdminDomains.add(sizeAdminDomain);
 		}
+
 		giayAdminDomain.setSizes(sizeAdminDomains);
 		return giayAdminDomain;
 	}
@@ -162,9 +183,13 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 	}
 
 	@Override
-	public void deleteGiay(String magiay) {
-		Giay giay = giayReponsitory.findById(magiay).get();
-
+	public void deleteGiay(String magiay) throws ThtShoesException {
+		int checkGiay = giayDonHangReponsitory.countGiayInGiayDonHangByMaGiay(magiay);
+		if (checkGiay > 0) {
+			throw new ThtShoesException("Không thể xóa giày đã có đơn hàng");
+		} else {
+			giayReponsitory.deleteById(magiay);
+		}
 	}
 
 }

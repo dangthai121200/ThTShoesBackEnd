@@ -13,8 +13,10 @@ import com.herokuapp.domain.admin.list.ListPhuKienAdmin;
 import com.herokuapp.entity.Loaiphukien;
 import com.herokuapp.entity.Phukien;
 import com.herokuapp.entity.SoluongPhukien;
+import com.herokuapp.handleexception.ThtShoesException;
 import com.herokuapp.reponsitory.PhuKienReponsitory;
 import com.herokuapp.reponsitory.PhuKienSeqReponsitory;
+import com.herokuapp.reponsitory.PhukienDonhangReponsitory;
 import com.herokuapp.reponsitory.SoLuongPhuKienReponsitory;
 import com.herokuapp.util.PrefixId;
 
@@ -29,6 +31,9 @@ public class PhuKienAdminServiceImpl implements PhuKienAdminService {
 
 	@Autowired
 	public SoLuongPhuKienReponsitory soLuongPhuKienReponsitory;
+
+	@Autowired
+	public PhukienDonhangReponsitory phukienDonhangReponsitory;
 
 	@Override
 	public ListPhuKienAdmin getAllPhuKien() {
@@ -72,6 +77,54 @@ public class PhuKienAdminServiceImpl implements PhuKienAdminService {
 		soLuongPhuKienReponsitory.save(soluongPhukien);
 
 		return idNextPhukien;
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void updatePhuKien(AddPhuKienAdmin addPhuKienAdmin) throws ThtShoesException {
+		Phukien phukien = phuKienReponsitory.findById(addPhuKienAdmin.getMapk()).get();
+
+		int soluongOld = phukien.getSoluong();
+		int soluongNew = addPhuKienAdmin.getSoluong();
+
+		if (soluongNew < 0) {
+			throw new ThtShoesException("Vui lòng nhập số lượng lớn hơn hoặc bằng 0");
+		}
+
+		boolean checkSoLuong = false;
+
+		if (soluongOld == soluongNew) {
+			checkSoLuong = true;
+		}
+
+		phukien.setGia(addPhuKienAdmin.getGia());
+		phukien.setTenpk(addPhuKienAdmin.getTenpk());
+		phukien.setMota(addPhuKienAdmin.getMota());
+		phukien.setSoluong(soluongNew);
+
+		Loaiphukien loaiphukien = new Loaiphukien();
+		loaiphukien.setMaloaipk(addPhuKienAdmin.getMaLoaiPk());
+		phukien.setLoaiphukien(loaiphukien);
+
+		phuKienReponsitory.save(phukien);
+
+		if (!checkSoLuong) {
+			SoluongPhukien soluongPhukien = new SoluongPhukien();
+			soluongPhukien.setPhukien(phukien);
+			soluongPhukien.setSoluong(soluongNew - soluongOld);
+			soluongPhukien.setMota(addPhuKienAdmin.getMotaSoLuong());
+			soLuongPhuKienReponsitory.save(soluongPhukien);
+		}
+
+	}
+
+	@Override
+	public void deletePhuKien(String mapk) throws ThtShoesException {
+		int count = phukienDonhangReponsitory.countPhuKienByIdPk(mapk);
+		if (count > 0) {
+			throw new ThtShoesException("Không thể xóa phụ kiện đã có đơn hàng");
+		}
+		phuKienReponsitory.deleteById(mapk);
 	}
 
 }
