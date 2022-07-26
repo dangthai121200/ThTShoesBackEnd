@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -72,6 +73,28 @@ public class NhanVienAdminController {
 		String idMaNhanvien = ((UserDetailsConfigure) SecurityContextHolder.getContext().getAuthentication()
 				.getPrincipal()).getManguoidung();
 		return nhanVienService.getInfoNhanVien(idMaNhanvien);
+	}
+
+	@PutMapping(value = URL.LOCK + "/{manv}")
+	public ResponseEntity<String> lockNhanVien(@PathVariable(name = "manv") String manv) {
+		try {
+			nhanVienService.lockNhanVien(manv);
+			return ResponseEntity.ok("Lock nhân viên thành công");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ResponseEntity.badRequest().body("Lock nhân viên thất bại");
+		}
+	}
+
+	@PutMapping(value = URL.UNLOCK + "/{manv}")
+	public ResponseEntity<String> unLockNhanVien(@PathVariable(name = "manv") String manv) {
+		try {
+			nhanVienService.unLockNhanVien(manv);
+			return ResponseEntity.ok("UnLock nhân viên thành công");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ResponseEntity.badRequest().body("UnLock nhân viên thất bại");
+		}
 	}
 
 }
