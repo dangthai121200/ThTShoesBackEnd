@@ -8,11 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.herokuapp.domain.admin.AddGiayAdminDomain;
-import com.herokuapp.domain.admin.DanhmucAdminDomain;
 import com.herokuapp.domain.admin.GiayAdminDomain;
-import com.herokuapp.domain.admin.HangAdminDomain;
 import com.herokuapp.domain.admin.HinhAdminDomain;
-import com.herokuapp.domain.admin.LoaiGiayAdminDomain;
 import com.herokuapp.domain.admin.MauSacAdminDomain;
 import com.herokuapp.domain.admin.SizeAdminDomain;
 import com.herokuapp.domain.admin.SizeMauAdmin;
@@ -24,6 +21,8 @@ import com.herokuapp.entity.LoaigiayHangDanhmuc;
 import com.herokuapp.entity.LoaigiayHangDanhmucPK;
 import com.herokuapp.entity.Mausac;
 import com.herokuapp.entity.SoluongGiay;
+import com.herokuapp.handleexception.ThtShoesException;
+import com.herokuapp.reponsitory.GiayDonHangReponsitory;
 import com.herokuapp.reponsitory.GiayReponsitory;
 import com.herokuapp.reponsitory.GiaySeqReponsitory;
 import com.herokuapp.reponsitory.GiaySizeMauReponsitory;
@@ -52,6 +51,9 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 
 	@Autowired
 	public LoaigiayHangDanhmucReponsitory loaigiayHangDanhmucReponsitory;
+
+	@Autowired
+	public GiayDonHangReponsitory giayDonHangReponsitory;
 
 	@Override
 	public ListGiayAdmin getAllGiay() {
@@ -181,9 +183,13 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 	}
 
 	@Override
-	public void deleteGiay(String magiay) {
-		Giay giay = giayReponsitory.findById(magiay).get();
-
+	public void deleteGiay(String magiay) throws ThtShoesException {
+		int checkGiay = giayDonHangReponsitory.countGiayInGiayDonHangByMaGiay(magiay);
+		if (checkGiay > 0) {
+			throw new ThtShoesException("Không thể xóa giày đã có đơn hàng");
+		} else {
+			giayReponsitory.deleteById(magiay);
+		}
 	}
 
 }
