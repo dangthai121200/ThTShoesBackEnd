@@ -129,20 +129,20 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 		List<SizeAdminDomain> sizeAdminDomains = new ArrayList<>();
 		giayAdminDomain.converToDomain(giay);
 
-		LoaigiayHangDanhmuc loaigiayHangDanhmuc = loaigiayHangDanhmucReponsitory
-				.findByMaLgiayHang(giay.getMaLgiayHang());
-
-		LoaiGiayAdminDomain loaiGiayAdminDomain = new LoaiGiayAdminDomain();
-		loaiGiayAdminDomain.converToDomain(loaigiayHangDanhmuc.getLoaigiay());
-		giayAdminDomain.setLoaigiay(loaiGiayAdminDomain);
-
-		HangAdminDomain hangAdminDomain = new HangAdminDomain();
-		hangAdminDomain.converToDomain(loaigiayHangDanhmuc.getHang());
-		giayAdminDomain.setHang(hangAdminDomain);
-
-		DanhmucAdminDomain danhmucAdminDomain = new DanhmucAdminDomain();
-		danhmucAdminDomain.converToDomain(loaigiayHangDanhmuc.getDanhmuc());
-		giayAdminDomain.setDanhmuc(danhmucAdminDomain);
+//		LoaigiayHangDanhmuc loaigiayHangDanhmuc = loaigiayHangDanhmucReponsitory
+//				.findByMaLgiayHang(giay.getMaLgiayHang());
+//
+//		LoaiGiayAdminDomain loaiGiayAdminDomain = new LoaiGiayAdminDomain();
+//		loaiGiayAdminDomain.converToDomain(loaigiayHangDanhmuc.getLoaigiay());
+//		giayAdminDomain.setLoaigiay(loaiGiayAdminDomain);
+//
+//		HangAdminDomain hangAdminDomain = new HangAdminDomain();
+//		hangAdminDomain.converToDomain(loaigiayHangDanhmuc.getHang());
+//		giayAdminDomain.setHang(hangAdminDomain);
+//
+//		DanhmucAdminDomain danhmucAdminDomain = new DanhmucAdminDomain();
+//		danhmucAdminDomain.converToDomain(loaigiayHangDanhmuc.getDanhmuc());
+//		giayAdminDomain.setDanhmuc(danhmucAdminDomain);
 
 		giay.getHinhs().forEach(hinh -> {
 			HinhAdminDomain hinhDomain = new HinhAdminDomain();

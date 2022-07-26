@@ -5,12 +5,14 @@ import com.herokuapp.entity.Phukien;
 
 public class AddPhuKienAdmin extends AbstractsDomain<Phukien> {
 
+	private String mapk;
 	private String tenpk;
 	private int gia;
 	private int soluong;
 	private String maLoaiPk;
 	private String mota;
-	
+	private String motaSoLuong;
+
 	public AddPhuKienAdmin() {
 
 	}
@@ -55,10 +57,26 @@ public class AddPhuKienAdmin extends AbstractsDomain<Phukien> {
 		this.maLoaiPk = maLoaiPk;
 	}
 
+	public String getMapk() {
+		return mapk;
+	}
+
+	public void setMapk(String mapk) {
+		this.mapk = mapk;
+	}
+
 	@Override
 	public void converToDomain(Phukien object) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public String getMotaSoLuong() {
+		return motaSoLuong;
+	}
+
+	public void setMotaSoLuong(String motaSoLuong) {
+		this.motaSoLuong = motaSoLuong;
 	}
 
 	@Override
