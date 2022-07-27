@@ -6,12 +6,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.herokuapp.domain.admin.AddGiayAdminDomain;
 import com.herokuapp.domain.admin.GiayAdminDomain;
+import com.herokuapp.domain.admin.LoaigiayHangDanhmucAdminDomain;
 import com.herokuapp.domain.admin.list.ListGiayAdmin;
 import com.herokuapp.handleexception.ThtShoesException;
 import com.herokuapp.service.admin.GiayAdminService;
@@ -28,12 +30,12 @@ public class GiayAdminController {
 	public ListGiayAdmin getAllGiay() {
 		return giayService.getAllGiay();
 	}
-	
+
 	@GetMapping(value = "/{idGiay}")
 	public GiayAdminDomain getGiayById(@PathVariable(name = "idGiay") String idGiay) {
 		GiayAdminDomain giayAdminDomain = giayService.getGiayById(idGiay);
 		return giayAdminDomain;
-		
+
 	}
 
 	@PostMapping
@@ -47,7 +49,7 @@ public class GiayAdminController {
 		}
 
 	}
-	
+
 	@DeleteMapping(value = "/{magiay}")
 	public ResponseEntity<String> deleteGiay(@PathVariable(name = "magiay") String magiay) throws ThtShoesException {
 		try {
@@ -55,13 +57,24 @@ public class GiayAdminController {
 			return ResponseEntity.ok(magiay);
 		} catch (ThtShoesException ex) {
 			throw ex;
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			return ResponseEntity.badRequest().body("Xóa thất bại");
 		}
-
 	}
-	
-	
+
+	@PutMapping(value = URL.LGIAY_HANG_DMUC + "/{magiay}")
+	public ResponseEntity<String> changeLGiayHangDanhMucOfGiay(@PathVariable(name = "magiay") String magiay,
+			@RequestBody LoaigiayHangDanhmucAdminDomain loaigiayHangDanhmucAdminDomain) throws ThtShoesException {
+		try {
+			giayService.changeLGiayHangDanhMucOfGiay(magiay, loaigiayHangDanhmucAdminDomain);
+			return ResponseEntity.ok(magiay);
+		} catch (ThtShoesException ex) {
+			throw ex;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ResponseEntity.badRequest().body("Thay đổi thất bại");
+		}
+	}
+
 }

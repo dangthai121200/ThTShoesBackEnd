@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.herokuapp.domain.admin.AddGiayAdminDomain;
 import com.herokuapp.domain.admin.GiayAdminDomain;
 import com.herokuapp.domain.admin.HinhAdminDomain;
+import com.herokuapp.domain.admin.LoaigiayHangDanhmucAdminDomain;
 import com.herokuapp.domain.admin.MauSacAdminDomain;
 import com.herokuapp.domain.admin.SizeAdminDomain;
 import com.herokuapp.domain.admin.SizeMauAdmin;
@@ -183,6 +184,7 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void deleteGiay(String magiay) throws ThtShoesException {
 		int checkGiay = giayDonHangReponsitory.countGiayInGiayDonHangByMaGiay(magiay);
 		if (checkGiay > 0) {
@@ -190,6 +192,43 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 		} else {
 			giayReponsitory.deleteById(magiay);
 		}
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void changeLGiayHangDanhMucOfGiay(String magiay,
+			LoaigiayHangDanhmucAdminDomain loaigiayHangDanhmucAdminDomain) throws ThtShoesException {
+
+		int idLoaigiayHangDanhmuc;
+
+		String maLoaiGiay = loaigiayHangDanhmucAdminDomain.getLoaigiay().getMaloaigiay();
+		String maHang = loaigiayHangDanhmucAdminDomain.getHang().getMahang();
+		String maDanhmuc = loaigiayHangDanhmucAdminDomain.getDanhmuc().getMadm();
+
+		LoaigiayHangDanhmuc loaigiayHangDanhmuc = loaigiayHangDanhmucReponsitory.findByLoaiGiayHangDanhMuc(maLoaiGiay,
+				maHang, maDanhmuc);
+
+		if (loaigiayHangDanhmuc == null) {
+			idLoaigiayHangDanhmuc = loaigiayHangDanhmucReponsitory.getIdNext();
+
+			LoaigiayHangDanhmuc loaigiayHangDanhmucADD = new LoaigiayHangDanhmuc();
+
+			LoaigiayHangDanhmucPK loaigiayHangDanhmucPK = new LoaigiayHangDanhmucPK();
+			loaigiayHangDanhmucPK.setMaloaigiay(maLoaiGiay);
+			loaigiayHangDanhmucPK.setMahang(maHang);
+			loaigiayHangDanhmucPK.setMadanhmuc(maDanhmuc);
+
+			loaigiayHangDanhmucADD.setId(loaigiayHangDanhmucPK);
+			loaigiayHangDanhmucReponsitory.save(loaigiayHangDanhmucADD);
+
+		} else {
+			idLoaigiayHangDanhmuc = loaigiayHangDanhmuc.getId().getMaLgiayHang();
+		}
+
+		Giay giay = giayReponsitory.findById(magiay).get();
+		giay.setMaLgiayHang(idLoaigiayHangDanhmuc);
+		giayReponsitory.save(giay);
+
 	}
 
 }
