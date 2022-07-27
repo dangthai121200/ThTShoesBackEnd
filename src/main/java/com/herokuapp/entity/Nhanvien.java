@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+
+
 /**
  * The persistent class for the nhanvien database table.
  * 
@@ -59,6 +61,10 @@ public class Nhanvien implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "manv", nullable = false, insertable = false, updatable = false)
 	private Taikhoan taikhoan;
+	
+	//bi-directional many-to-one association to Binhluan
+		@OneToMany(mappedBy="nhanvien")
+		private List<Binhluan> binhluans;
 
 	public Nhanvien() {
 	}
@@ -139,6 +145,28 @@ public class Nhanvien implements Serializable {
 
 	public void setTaikhoan(Taikhoan taikhoan) {
 		this.taikhoan = taikhoan;
+	}
+	
+	public List<Binhluan> getBinhluans() {
+		return this.binhluans;
+	}
+
+	public void setBinhluans(List<Binhluan> binhluans) {
+		this.binhluans = binhluans;
+	}
+
+	public Binhluan addBinhluan(Binhluan binhluan) {
+		getBinhluans().add(binhluan);
+		binhluan.setNhanvien(this);
+
+		return binhluan;
+	}
+
+	public Binhluan removeBinhluan(Binhluan binhluan) {
+		getBinhluans().remove(binhluan);
+		binhluan.setNhanvien(null);
+
+		return binhluan;
 	}
 
 }
