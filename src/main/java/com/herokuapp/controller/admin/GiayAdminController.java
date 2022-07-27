@@ -1,6 +1,7 @@
 package com.herokuapp.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.herokuapp.domain.admin.AddGiayAdminDomain;
 import com.herokuapp.domain.admin.AddGiayMauSizeAdmin;
@@ -18,7 +20,6 @@ import com.herokuapp.domain.admin.LoaigiayHangDanhmucAdminDomain;
 import com.herokuapp.domain.admin.SoLuongGiaySizeMau;
 import com.herokuapp.domain.admin.list.ListGiayAdmin;
 import com.herokuapp.domain.admin.list.ListGiaySizeMauAdmin;
-import com.herokuapp.domain.admin.list.ListSizeAdmin;
 import com.herokuapp.handleexception.ThtShoesException;
 import com.herokuapp.service.admin.GiayAdminService;
 import com.herokuapp.util.URL;
@@ -74,6 +75,23 @@ public class GiayAdminController {
 		}
 	}
 
+	@PutMapping
+	public ResponseEntity<String> updateGiay(@RequestBody GiayAdminDomain giayAdminDomain) {
+		try {
+			if (giayAdminDomain.getMagiay() == null) {
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Thiếu mã giày");
+			}
+			giayService.updateGiay(giayAdminDomain);
+			return ResponseEntity.ok("Cập nhật thành công");
+		} catch (ResponseStatusException ex) {
+			throw ex;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ResponseEntity.badRequest().body("Cập nhật thất bại");
+		}
+
+	}
+
 	@PutMapping(value = URL.LGIAY_HANG_DMUC + "/{magiay}")
 	public ResponseEntity<String> changeLGiayHangDanhMucOfGiay(@PathVariable(name = "magiay") String magiay,
 			@RequestBody LoaigiayHangDanhmucAdminDomain loaigiayHangDanhmucAdminDomain) throws ThtShoesException {
@@ -114,7 +132,7 @@ public class GiayAdminController {
 			return ResponseEntity.badRequest().body("Xóa thất bại");
 		}
 	}
-	
+
 	@DeleteMapping(value = URL.GIAY_SIZE_MAU + "/{idGiaySizemau}")
 	public ResponseEntity<String> deleteGiaySizeMauOfGiay(@PathVariable(name = "idGiaySizemau") int idGiaySizemau)
 			throws ThtShoesException {

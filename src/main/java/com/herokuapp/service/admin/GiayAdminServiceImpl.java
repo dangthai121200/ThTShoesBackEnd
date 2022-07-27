@@ -293,4 +293,20 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 		giaySizeMauReponsitory.deleteById(idGiaySizemau);
 	}
 
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void updateGiay(GiayAdminDomain giayAdminDomain) {
+		Giay giay = giayReponsitory.findById(giayAdminDomain.getMagiay()).get();
+		giay.setTengiay(giayAdminDomain.getTengiay());
+		giay.setChatlieu(giayAdminDomain.getChatlieu());
+		giay.setGia(giayAdminDomain.getGia());
+		giay.setKieudang(giayAdminDomain.getKieudang());
+		giay.setTrongluong(giayAdminDomain.getTrongluong());
+		if (giayAdminDomain.getMota() != null) {
+			giay.setMota(giayAdminDomain.getMota());
+		}
+
+		giayReponsitory.save(giay);
+	}
+
 }

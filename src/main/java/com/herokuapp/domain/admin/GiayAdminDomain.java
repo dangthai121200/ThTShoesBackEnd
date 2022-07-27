@@ -167,12 +167,12 @@ public class GiayAdminDomain extends AbstractsDomain<Giay> {
 	@Override
 	public Giay converToEntity() {
 		Giay giay = new Giay();
+		giay.setMagiay(this.magiay);
 		giay.setTengiay(this.tengiay);
 		giay.setChatlieu(this.chatlieu);
 		giay.setGia(this.gia);
 		giay.setKieudang(this.kieudang);
 		giay.setTrongluong(this.trongluong);
-		giay.setUrlanh(this.urlanh);
 		if (this.mota != null) {
 			giay.setMota(this.mota);
 		}
