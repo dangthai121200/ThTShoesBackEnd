@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.herokuapp.domain.admin.HangAdminDomain;
 import com.herokuapp.domain.admin.list.ListHangAdminDomain;
@@ -33,6 +34,7 @@ public class HangAdminServiceImpl implements HangAdminService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void addHang(HangAdminDomain hangAdminDomain) throws ThtShoesException {
 		Hang hang = hangReponsitory.getHangByTenHang(hangAdminDomain.getTenhang());
 		if (hang == null) {

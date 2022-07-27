@@ -55,7 +55,7 @@ public class Binhluan implements Serializable {
 
 	// bi-directional many-to-one association to Khachhang
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "makh", nullable = false)
+	@JoinColumn(name = "makh")
 	private Khachhang khachhang;
 
 	// bi-directional many-to-one association to Nhanvien

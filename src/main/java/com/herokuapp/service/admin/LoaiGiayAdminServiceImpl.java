@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.herokuapp.domain.admin.LoaiGiayAdminDomain;
 import com.herokuapp.domain.admin.list.ListLoaiGiayAdmin;
@@ -33,6 +34,7 @@ public class LoaiGiayAdminServiceImpl implements LoaiGiayAdminService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void addLoaiGiay(LoaiGiayAdminDomain loaiGiayAdminDomain) throws ThtShoesException {
 		Loaigiay loaigiay = loaiGiayReponsitory.findByTenloai(loaiGiayAdminDomain.getTenloai());
 		if (loaigiay != null) {

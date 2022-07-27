@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.herokuapp.domain.admin.DanhmucAdminDomain;
 import com.herokuapp.domain.admin.list.ListDanhMucAdminDomain;
@@ -34,6 +35,7 @@ public class DanhMucAdminServiceImpl implements DanhMucAdminService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void addDanhMuc(DanhmucAdminDomain danhmucAdminDomain) throws ThtShoesException {
 		String tendanhmuc = StringUtils.capitalize(danhmucAdminDomain.getTendanhmuc());
 		Danhmuc danhmuc = danhMucReponsitory.getDanhMucByTen(tendanhmuc);

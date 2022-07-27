@@ -49,6 +49,7 @@ public class HinhAdminServiceImpl implements HinhAdminService {
 	@Autowired
 	public KhuyenMaiReponsitory khuyenMaiReponsitory;
 
+	@Override
 	@Transactional(noRollbackFor = Exception.class)
 	public List<String> uploadImage(FormUploadImageProduct formUploadImage)
 			throws JsonMappingException, JsonProcessingException {
@@ -93,7 +94,9 @@ public class HinhAdminServiceImpl implements HinhAdminService {
 		}
 		return listUrlImage;
 	}
-
+	
+	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public String setAvatarForGiay(String magiay, MultipartFile image)
 			throws JsonMappingException, JsonProcessingException {
 		String body = uploadImageToImgbb(image, magiay).getBody();
@@ -102,6 +105,8 @@ public class HinhAdminServiceImpl implements HinhAdminService {
 		return urlImage;
 	}
 
+	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public String setAvatarForPhuKien(String maphukien, MultipartFile image)
 			throws JsonMappingException, JsonProcessingException {
 		String body = uploadImageToImgbb(image, maphukien).getBody();
@@ -148,6 +153,7 @@ public class HinhAdminServiceImpl implements HinhAdminService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public String setAvatarForKhuyenMai(String makm, MultipartFile image)
 			throws JsonMappingException, JsonProcessingException {
 		Dskhuyenmai dskhuyenmai = khuyenMaiReponsitory.findById(makm).get();

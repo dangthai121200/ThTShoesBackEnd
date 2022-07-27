@@ -97,6 +97,8 @@ public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
 		// binhluan
 		http.authorizeRequests().antMatchers(HttpMethod.GET, URL.NHAN_VIEN + URL.BINH_LUAN + "/**")
 				.hasAnyAuthority(Quyen.ADMIN.getName(), Quyen.NHANVIEN.getName());
+		http.authorizeRequests().antMatchers(HttpMethod.POST, URL.NHAN_VIEN + URL.BINH_LUAN + "/**")
+				.hasAnyAuthority(Quyen.ADMIN.getName(), Quyen.NHANVIEN.getName());
 		http.authorizeRequests().antMatchers(HttpMethod.DELETE, URL.NHAN_VIEN + URL.BINH_LUAN + "/**")
 				.hasAnyAuthority(Quyen.ADMIN.getName());
 
@@ -153,7 +155,7 @@ public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
 				.hasAnyAuthority(Quyen.ADMIN.getName(), Quyen.NHANVIEN.getName());
 		http.authorizeRequests().antMatchers(HttpMethod.POST, URL.NHAN_VIEN + URL.LOAI_GIAY + "/**")
 				.hasAnyAuthority(Quyen.ADMIN.getName());
-		
+
 		// Loai PhuKien
 		http.authorizeRequests().antMatchers(HttpMethod.GET, URL.NHAN_VIEN + URL.LOAI_PHU_KIEN + "/**")
 				.hasAnyAuthority(Quyen.ADMIN.getName(), Quyen.NHANVIEN.getName());

@@ -119,6 +119,7 @@ public class PhuKienAdminServiceImpl implements PhuKienAdminService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void deletePhuKien(String mapk) throws ThtShoesException {
 		int count = phukienDonhangReponsitory.countPhuKienByIdPk(mapk);
 		if (count > 0) {

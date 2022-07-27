@@ -126,11 +126,13 @@ public class NhanVienServiceImpl implements NhanVienService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void lockNhanVien(String manv) {
 		taiKhoanReponsitory.updateTinhTrang(manv, (byte) 0);
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void unLockNhanVien(String manv) {
 		taiKhoanReponsitory.updateTinhTrang(manv, (byte) 1);
 	}

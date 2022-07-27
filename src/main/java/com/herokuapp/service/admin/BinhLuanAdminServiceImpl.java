@@ -5,14 +5,18 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.herokuapp.domain.admin.BinhLuanAdminDomain;
 import com.herokuapp.domain.admin.GiayAdminDomain;
 import com.herokuapp.domain.admin.KhachHangAdminDomain;
 import com.herokuapp.domain.admin.NhanVienAdminDomain;
 import com.herokuapp.domain.admin.PhuKienAdminDomain;
+import com.herokuapp.domain.admin.TraLoiBinhLuanAdminDomain;
 import com.herokuapp.domain.admin.list.ListBinhLuanAdmin;
 import com.herokuapp.entity.Binhluan;
+import com.herokuapp.entity.Nhanvien;
+import com.herokuapp.handleexception.ThtShoesException;
 import com.herokuapp.reponsitory.BinhLuanReponsitory;
 
 @Service
@@ -55,6 +59,7 @@ public class BinhLuanAdminServiceImpl implements BinhLuanAdminService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void deleteBinhLuan(String mabl) {
 		binhLuanReponsitory.deleteById(mabl);
 	}
@@ -104,6 +109,31 @@ public class BinhLuanAdminServiceImpl implements BinhLuanAdminService {
 		binhLuanAdminDomain.setBinhluans(binhLuanAdminDomainTraLois);
 
 		return binhLuanAdminDomain;
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void traLoiBinhLuan(String manv, TraLoiBinhLuanAdminDomain traLoiBinhLuanAdminDomain) throws ThtShoesException {
+		
+		Binhluan checkBinhLuan = binhLuanReponsitory.findById(traLoiBinhLuanAdminDomain.getMablTraloi()).get();
+		
+		if(checkBinhLuan.getKhachhang() == null || (checkBinhLuan.getGiay() == null && checkBinhLuan.getPhukien() == null) || checkBinhLuan.getNhanvien() != null) {
+			throw new ThtShoesException("Không thể trả lời bình luận này");
+		}
+		
+		Binhluan binhluanSave = new Binhluan();
+
+		Nhanvien nhanvien = new Nhanvien();
+		nhanvien.setManv(manv);
+		binhluanSave.setNhanvien(nhanvien);
+
+		Binhluan binhluanTraLoi = new Binhluan();
+		binhluanTraLoi.setMabl(traLoiBinhLuanAdminDomain.getMablTraloi());
+
+		binhluanSave.setBinhluan(binhluanTraLoi);
+		binhluanSave.setMota(traLoiBinhLuanAdminDomain.getMota());
+		
+		binhLuanReponsitory.save(binhluanSave);
 	}
 
 }
