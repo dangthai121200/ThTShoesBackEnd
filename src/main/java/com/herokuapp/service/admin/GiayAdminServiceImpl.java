@@ -14,11 +14,10 @@ import com.herokuapp.domain.admin.GiaySizeMauAdminDomain;
 import com.herokuapp.domain.admin.HinhAdminDomain;
 import com.herokuapp.domain.admin.LoaigiayHangDanhmucAdminDomain;
 import com.herokuapp.domain.admin.MauSacAdminDomain;
-import com.herokuapp.domain.admin.SizeAdminDomain;
 import com.herokuapp.domain.admin.SizeMauAdmin;
 import com.herokuapp.domain.admin.SoLuongGiaySizeMau;
 import com.herokuapp.domain.admin.list.ListGiayAdmin;
-import com.herokuapp.domain.admin.list.ListSizeAdmin;
+import com.herokuapp.domain.admin.list.ListGiaySizeMauAdmin;
 import com.herokuapp.entity.Giay;
 import com.herokuapp.entity.GiayMauSize;
 import com.herokuapp.entity.GiayMauSizePK;
@@ -214,23 +213,18 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 	}
 
 	@Override
-	public ListSizeAdmin getAllGiaySizeMauOfGiay(String idGiay) {
-		ListSizeAdmin listSizeAdmin = new ListSizeAdmin();
-		List<SizeAdminDomain> sizeAdminDomains = new ArrayList<>();
+	public ListGiaySizeMauAdmin getAllGiaySizeMauOfGiay(String idGiay) {
+		ListGiaySizeMauAdmin listGiaySizeMauAdmin = new ListGiaySizeMauAdmin();
+		List<GiaySizeMauAdminDomain> sizeMauAdminDomains = new ArrayList<>();
 		List<GiayMauSize> giayMauSizes = giaySizeMauReponsitory.getGiayMauSizeByMaGiay(idGiay);
 
 		for (GiayMauSize giayMauSize : giayMauSizes) {
-			SizeAdminDomain sizeAdminDomain = new SizeAdminDomain();
-			sizeAdminDomain.converToDomain(giayMauSize.getSize());
-			if (sizeAdminDomains.contains(sizeAdminDomain)) {
-				continue;
-			}
-			List<Mausac> mausacs = mauSacReponsitory.getMauSacByIdGiayAndIdSize(idGiay, sizeAdminDomain.getMasize());
-			sizeAdminDomain.setMausacs(convertToListMauSacDomain(mausacs, idGiay, sizeAdminDomain.getMasize()));
-			sizeAdminDomains.add(sizeAdminDomain);
+			GiaySizeMauAdminDomain giaySizeMauAdminDomain = new GiaySizeMauAdminDomain();
+			giaySizeMauAdminDomain.converToDomain(giayMauSize);
+			sizeMauAdminDomains.add(giaySizeMauAdminDomain);
 		}
-		listSizeAdmin.setSizes(sizeAdminDomains);
-		return listSizeAdmin;
+		listGiaySizeMauAdmin.setGiaySizeMau(sizeMauAdminDomains);
+		return listGiaySizeMauAdmin;
 	}
 
 	@Override
