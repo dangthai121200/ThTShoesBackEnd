@@ -1,8 +1,8 @@
 package com.herokuapp.domain.khachhang;
 
 import java.util.Date;
+import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.herokuapp.abstracts.AbstractsDomain;
 import com.herokuapp.entity.Binhluan;
 
@@ -11,7 +11,9 @@ public class BinhLuanKhachHangDomain extends AbstractsDomain<Binhluan> {
 	private String mota;
 	private Date thoigian;
 	private String masp;
-	private KhachHangDomain khachHangDomain = new KhachHangDomain();
+	private KhachHangDomain khachHangDomain;
+	private NhanVienKhachHangDomain nhanvien;
+	private List<BinhLuanKhachHangDomain> binhluans;
 
 	public BinhLuanKhachHangDomain() {
 
@@ -57,12 +59,27 @@ public class BinhLuanKhachHangDomain extends AbstractsDomain<Binhluan> {
 		this.khachHangDomain = khachHangDomain;
 	}
 
+	public NhanVienKhachHangDomain getNhanvien() {
+		return nhanvien;
+	}
+
+	public void setNhanvien(NhanVienKhachHangDomain nhanvien) {
+		this.nhanvien = nhanvien;
+	}
+
+	public List<BinhLuanKhachHangDomain> getBinhluans() {
+		return binhluans;
+	}
+
+	public void setBinhluans(List<BinhLuanKhachHangDomain> binhluans) {
+		this.binhluans = binhluans;
+	}
+
 	@Override
 	public void converToDomain(Binhluan binhluan) {
 		this.mabl = binhluan.getMabl();
 		this.thoigian = binhluan.getThoigian();
 		this.mota = binhluan.getMota();
-		khachHangDomain.converToDomain(binhluan.getKhachhang());
 	}
 
 	@Override

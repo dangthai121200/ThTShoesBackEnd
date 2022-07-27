@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.herokuapp.domain.khachhang.BinhLuanKhachHangDomain;
 import com.herokuapp.domain.khachhang.GiayDomain;
+import com.herokuapp.domain.khachhang.KhachHangDomain;
 import com.herokuapp.domain.khachhang.MauSacDomain;
+import com.herokuapp.domain.khachhang.NhanVienKhachHangDomain;
 import com.herokuapp.domain.khachhang.SizeDomain;
 import com.herokuapp.entity.Binhluan;
 import com.herokuapp.entity.Giay;
@@ -67,12 +69,16 @@ public class GiayServiceImpl implements GiayService {
 
 	@Override
 	public GiayDomain getGiayById(String idGiay) {
+		
+		// get info of giay
 		Giay giay = giayReponsitory.findById(idGiay).get();
 		GiayDomain giayDomain = new GiayDomain();
 		List<SizeDomain> sizeDomains = new ArrayList<>();
 		giayDomain.setLoaigiayHangDanhmuc(loaigiayHangDanhmucService.findByMaLgiayHang(giay.getMaLgiayHang()));
 		giayDomain.converToDomain(giay);
 
+		// get size and mausac of giay
+		
 		for (GiayMauSize giayMauSize : giay.getGiayMauSizes()) {
 			SizeDomain sizeDomain = new SizeDomain();
 			sizeDomain.converToDomain(giayMauSize.getSize());
@@ -86,14 +92,35 @@ public class GiayServiceImpl implements GiayService {
 		}
 		giayDomain.setSizes(sizeDomains);
 
+		// get binhluan of giay
 		List<Binhluan> binhluans = binhLuanReponsitory.getAllBinhLuanByIdGiay(idGiay);
 		List<BinhLuanKhachHangDomain> binhLuanKhachHangDomains = new ArrayList<>();
 
 		for (Binhluan binhluan : binhluans) {
 			BinhLuanKhachHangDomain binhLuanKhachHangDomain = new BinhLuanKhachHangDomain();
 			binhLuanKhachHangDomain.converToDomain(binhluan);
+			
+			if(binhluan.getKhachhang() != null) {
+				KhachHangDomain khachHangDomain = new KhachHangDomain();
+				khachHangDomain.converToDomain(binhluan.getKhachhang());
+				binhLuanKhachHangDomain.setKhachHangDomain(khachHangDomain);
+			}
+			
+			// get response binhluan
+			List<BinhLuanKhachHangDomain> binhLuanTraLois = new ArrayList<>();
+			for (Binhluan binhLuanTraLoi : binhluan.getBinhluans()) {
+				BinhLuanKhachHangDomain binhLuanTraLoiDoamin = new BinhLuanKhachHangDomain();
+				binhLuanTraLoiDoamin.converToDomain(binhLuanTraLoi);
+				NhanVienKhachHangDomain nhanVienKhachHangDomain = new NhanVienKhachHangDomain();
+				nhanVienKhachHangDomain.converToDomain(binhLuanTraLoi.getNhanvien());
+				binhLuanTraLoiDoamin.setNhanvien(nhanVienKhachHangDomain);
+				binhLuanTraLois.add(binhLuanTraLoiDoamin);
+			}
+			binhLuanKhachHangDomain.setBinhluans(binhLuanTraLois);
+			
 			binhLuanKhachHangDomains.add(binhLuanKhachHangDomain);
 		}
+		
 		giayDomain.setBinhluans(binhLuanKhachHangDomains);
 
 		return giayDomain;

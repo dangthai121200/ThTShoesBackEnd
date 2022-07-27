@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.herokuapp.domain.khachhang.BinhLuanKhachHangDomain;
+import com.herokuapp.domain.khachhang.NhanVienKhachHangDomain;
 import com.herokuapp.domain.khachhang.list.ListBinhLuanKhachHang;
 import com.herokuapp.entity.Binhluan;
 import com.herokuapp.entity.Giay;
@@ -59,6 +60,18 @@ public class BinhLuanKhachHangServiceImpl implements BinhLuanKhachHangService {
 			BinhLuanKhachHangDomain binhLuanKhachHangDomain = new BinhLuanKhachHangDomain();
 			binhLuanKhachHangDomain.converToDomain(binhluan);
 			binhLuanKhachHangDomains.add(binhLuanKhachHangDomain);
+			
+			List<BinhLuanKhachHangDomain> binhLuanTraLois = new ArrayList<>();
+			for (Binhluan binhLuanTraLoi : binhluan.getBinhluans()) {
+				BinhLuanKhachHangDomain binhLuanTraLoiDoamin = new BinhLuanKhachHangDomain();
+				binhLuanTraLoiDoamin.converToDomain(binhLuanTraLoi);
+				NhanVienKhachHangDomain nhanVienKhachHangDomain = new NhanVienKhachHangDomain();
+				nhanVienKhachHangDomain.converToDomain(binhLuanTraLoi.getNhanvien());
+				binhLuanTraLoiDoamin.setNhanvien(nhanVienKhachHangDomain);
+				binhLuanTraLois.add(binhLuanTraLoiDoamin);
+			}
+			binhLuanKhachHangDomain.setBinhluans(binhLuanTraLois);
+			
 		}
 		listBinhLuanKhachHang.setBinhluans(binhLuanKhachHangDomains);
 		return listBinhLuanKhachHang;
@@ -74,6 +87,18 @@ public class BinhLuanKhachHangServiceImpl implements BinhLuanKhachHangService {
 			BinhLuanKhachHangDomain binhLuanKhachHangDomain = new BinhLuanKhachHangDomain();
 			binhLuanKhachHangDomain.converToDomain(binhluan);
 			binhLuanKhachHangDomains.add(binhLuanKhachHangDomain);
+			
+			List<BinhLuanKhachHangDomain> binhLuanTraLois = new ArrayList<>();
+			for (Binhluan binhLuanTraLoi : binhluan.getBinhluans()) {
+				BinhLuanKhachHangDomain binhLuanTraLoiDoamin = new BinhLuanKhachHangDomain();
+				binhLuanTraLoiDoamin.converToDomain(binhLuanTraLoi);
+				NhanVienKhachHangDomain nhanVienKhachHangDomain = new NhanVienKhachHangDomain();
+				nhanVienKhachHangDomain.converToDomain(binhLuanTraLoi.getNhanvien());
+				binhLuanTraLoiDoamin.setNhanvien(nhanVienKhachHangDomain);
+				binhLuanTraLois.add(binhLuanTraLoiDoamin);
+			}
+			binhLuanKhachHangDomain.setBinhluans(binhLuanTraLois);
+			
 		}
 		listBinhLuanKhachHang.setBinhluans(binhLuanKhachHangDomains);
 		return listBinhLuanKhachHang;
