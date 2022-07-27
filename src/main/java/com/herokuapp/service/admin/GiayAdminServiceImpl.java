@@ -10,11 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.herokuapp.domain.admin.AddGiayAdminDomain;
 import com.herokuapp.domain.admin.AddGiayMauSizeAdmin;
 import com.herokuapp.domain.admin.GiayAdminDomain;
+import com.herokuapp.domain.admin.GiaySizeMauAdminDomain;
 import com.herokuapp.domain.admin.HinhAdminDomain;
 import com.herokuapp.domain.admin.LoaigiayHangDanhmucAdminDomain;
 import com.herokuapp.domain.admin.MauSacAdminDomain;
 import com.herokuapp.domain.admin.SizeAdminDomain;
 import com.herokuapp.domain.admin.SizeMauAdmin;
+import com.herokuapp.domain.admin.SoLuongGiaySizeMau;
 import com.herokuapp.domain.admin.list.ListGiayAdmin;
 import com.herokuapp.domain.admin.list.ListSizeAdmin;
 import com.herokuapp.entity.Giay;
@@ -131,23 +133,8 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 	public GiayAdminDomain getGiayById(String idGiay) {
 		Giay giay = giayReponsitory.findById(idGiay).get();
 		GiayAdminDomain giayAdminDomain = new GiayAdminDomain();
-		List<SizeAdminDomain> sizeAdminDomains = new ArrayList<>();
+		List<GiaySizeMauAdminDomain> giaySizeMauAdminDomains = new ArrayList<>();
 		giayAdminDomain.converToDomain(giay);
-
-//		LoaigiayHangDanhmuc loaigiayHangDanhmuc = loaigiayHangDanhmucReponsitory
-//				.findByMaLgiayHang(giay.getMaLgiayHang());
-//
-//		LoaiGiayAdminDomain loaiGiayAdminDomain = new LoaiGiayAdminDomain();
-//		loaiGiayAdminDomain.converToDomain(loaigiayHangDanhmuc.getLoaigiay());
-//		giayAdminDomain.setLoaigiay(loaiGiayAdminDomain);
-//
-//		HangAdminDomain hangAdminDomain = new HangAdminDomain();
-//		hangAdminDomain.converToDomain(loaigiayHangDanhmuc.getHang());
-//		giayAdminDomain.setHang(hangAdminDomain);
-//
-//		DanhmucAdminDomain danhmucAdminDomain = new DanhmucAdminDomain();
-//		danhmucAdminDomain.converToDomain(loaigiayHangDanhmuc.getDanhmuc());
-//		giayAdminDomain.setDanhmuc(danhmucAdminDomain);
 
 		giay.getHinhs().forEach(hinh -> {
 			HinhAdminDomain hinhDomain = new HinhAdminDomain();
@@ -156,19 +143,12 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 		});
 
 		for (GiayMauSize giayMauSize : giay.getGiayMauSizes()) {
-			SizeAdminDomain sizeAdminDomain = new SizeAdminDomain();
-			sizeAdminDomain.converToDomain(giayMauSize.getSize());
-			if (sizeAdminDomains.contains(sizeAdminDomain)) {
-				continue;
-			}
-			List<Mausac> mausacs = mauSacReponsitory.getMauSacByIdGiayAndIdSize(giayAdminDomain.getMagiay(),
-					sizeAdminDomain.getMasize());
-			sizeAdminDomain.setMausacs(
-					convertToListMauSacDomain(mausacs, giayAdminDomain.getMagiay(), sizeAdminDomain.getMasize()));
-			sizeAdminDomains.add(sizeAdminDomain);
+			GiaySizeMauAdminDomain sizeMauAdminDomain = new GiaySizeMauAdminDomain();
+			sizeMauAdminDomain.converToDomain(giayMauSize);
+			giaySizeMauAdminDomains.add(sizeMauAdminDomain);
 		}
 
-		giayAdminDomain.setSizes(sizeAdminDomains);
+		giayAdminDomain.setGiaySizeMau(giaySizeMauAdminDomains);
 		return giayAdminDomain;
 	}
 
@@ -283,6 +263,30 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 		soluongGiay.setIdGiaySizeMau(idNextGiayMauSize);
 		soluongGiay.setMota("Thêm màu size mới");
 		soLuongGiayReponsitory.save(soluongGiay);
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void updateSoLuongGiaySizeMauOfGiay(SoLuongGiaySizeMau soLuongGiaySizeMau) throws ThtShoesException {
+
+		GiayMauSize giayMauSize = giaySizeMauReponsitory.getGiayMauSizeById(String.valueOf(soLuongGiaySizeMau.getId()));
+		int oldSoLuong = giayMauSize.getSoluong();
+		int newSoLuong = soLuongGiaySizeMau.getSoluong();
+
+		if (oldSoLuong != newSoLuong) {
+			giaySizeMauReponsitory.updateSoLuong(soLuongGiaySizeMau.getId(), soLuongGiaySizeMau.getSoluong());
+			SoluongGiay soluongGiay = new SoluongGiay();
+			soluongGiay.setIdGiaySizeMau(giayMauSize.getId().getId());
+			soluongGiay.setSoluongthem(newSoLuong - oldSoLuong);
+			if (soluongGiay.getMota() != null) {
+				soluongGiay.setMota(soLuongGiaySizeMau.getNote());
+			} else {
+				soluongGiay.setMota("Nhập thêm hàng mới");
+			}
+			soLuongGiayReponsitory.save(soluongGiay);
+		} else {
+			throw new ThtShoesException("Vui lòng nhập số lượng mới");
+		}
 	}
 
 }

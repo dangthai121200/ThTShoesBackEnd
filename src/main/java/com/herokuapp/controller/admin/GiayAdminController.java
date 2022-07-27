@@ -15,6 +15,7 @@ import com.herokuapp.domain.admin.AddGiayAdminDomain;
 import com.herokuapp.domain.admin.AddGiayMauSizeAdmin;
 import com.herokuapp.domain.admin.GiayAdminDomain;
 import com.herokuapp.domain.admin.LoaigiayHangDanhmucAdminDomain;
+import com.herokuapp.domain.admin.SoLuongGiaySizeMau;
 import com.herokuapp.domain.admin.list.ListGiayAdmin;
 import com.herokuapp.domain.admin.list.ListSizeAdmin;
 import com.herokuapp.handleexception.ThtShoesException;
@@ -59,8 +60,8 @@ public class GiayAdminController {
 	}
 
 	@PostMapping(value = URL.GIAY_SIZE_MAU)
-	public ResponseEntity<String> addGiaySizeMauOfGiay(
-			@RequestBody AddGiayMauSizeAdmin addGiayMauSizeAdmin) throws ThtShoesException {
+	public ResponseEntity<String> addGiaySizeMauOfGiay(@RequestBody AddGiayMauSizeAdmin addGiayMauSizeAdmin)
+			throws ThtShoesException {
 		try {
 			giayService.addGiaySizeMauOfGiay(addGiayMauSizeAdmin);
 			return ResponseEntity.ok("Thêm thành công");
@@ -83,6 +84,20 @@ public class GiayAdminController {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return ResponseEntity.badRequest().body("Thay đổi thất bại");
+		}
+	}
+
+	@PutMapping(value = URL.GIAY_SIZE_MAU)
+	public ResponseEntity<String> updateSoLuongGiaySizeMauOfGiay(@RequestBody SoLuongGiaySizeMau soLuongGiaySizeMau)
+			throws ThtShoesException {
+		try {
+			giayService.updateSoLuongGiaySizeMauOfGiay(soLuongGiaySizeMau);
+			return ResponseEntity.ok("Cập nhật thành công");
+		} catch (ThtShoesException ex) {
+			throw ex;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ResponseEntity.badRequest().body("Cập nhật thất bại");
 		}
 	}
 

@@ -21,7 +21,7 @@ public class GiayAdminDomain extends AbstractsDomain<Giay> {
 //	private LoaiGiayAdminDomain loaigiay = new LoaiGiayAdminDomain();
 //	private HangAdminDomain hang = new HangAdminDomain();
 //	private DanhmucAdminDomain danhmuc = new DanhmucAdminDomain();
-	private List<SizeAdminDomain> sizes = new ArrayList<>();
+	private List<GiaySizeMauAdminDomain> giaySizeMau = new ArrayList<>();
 	private List<HinhAdminDomain> hinhs = new ArrayList<>();
 	private int maLgiayHang;
 
@@ -101,12 +101,12 @@ public class GiayAdminDomain extends AbstractsDomain<Giay> {
 		this.urlanh = urlanh;
 	}
 
-	public List<SizeAdminDomain> getSizes() {
-		return sizes;
+	public List<GiaySizeMauAdminDomain> getGiaySizeMau() {
+		return giaySizeMau;
 	}
 
-	public void setSizes(List<SizeAdminDomain> sizes) {
-		this.sizes = sizes;
+	public void setGiaySizeMau(List<GiaySizeMauAdminDomain> giaySizeMau) {
+		this.giaySizeMau = giaySizeMau;
 	}
 
 	public List<HinhAdminDomain> getHinhs() {
