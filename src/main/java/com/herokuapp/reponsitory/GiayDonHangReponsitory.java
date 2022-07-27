@@ -23,4 +23,7 @@ public interface GiayDonHangReponsitory extends JpaRepository<GiayDonhang, GiayD
 
 	@Query(value = COUNT_GIAY, nativeQuery = true)
 	int countGiayInGiayDonHangByMaGiay(@Param("magiay") String magiay);
+
+	@Query(value = "Select count(*) from giay_donhang where id_giay_mau_size = :id_giay_mau_size", nativeQuery = true)
+	int countGiaySizeMauInGiayDonHangByMaGiaySizeMau(@Param("id_giay_mau_size") int id);
 }

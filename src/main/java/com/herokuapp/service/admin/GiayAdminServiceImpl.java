@@ -289,4 +289,13 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 		}
 	}
 
+	@Override
+	public void deleteGiaySizeMauOfGiay(int idGiaySizemau) throws ThtShoesException {
+		int checkDonHang = giayDonHangReponsitory.countGiaySizeMauInGiayDonHangByMaGiaySizeMau(idGiaySizemau);
+		if (checkDonHang > 0) {
+			throw new ThtShoesException("Size và màu đã có trong đơn hàng");
+		}
+		giaySizeMauReponsitory.deleteById(idGiaySizemau);
+	}
+
 }

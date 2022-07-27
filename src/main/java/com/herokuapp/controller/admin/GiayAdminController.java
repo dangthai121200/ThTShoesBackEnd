@@ -113,5 +113,19 @@ public class GiayAdminController {
 			return ResponseEntity.badRequest().body("Xóa thất bại");
 		}
 	}
+	
+	@DeleteMapping(value = URL.GIAY_SIZE_MAU + "/{idGiaySizemau}")
+	public ResponseEntity<String> deleteGiaySizeMauOfGiay(@PathVariable(name = "idGiaySizemau") int idGiaySizemau)
+			throws ThtShoesException {
+		try {
+			giayService.deleteGiaySizeMauOfGiay(idGiaySizemau);
+			return ResponseEntity.ok("Xóa thành công");
+		} catch (ThtShoesException ex) {
+			throw ex;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ResponseEntity.badRequest().body("Xóa thất bại");
+		}
+	}
 
 }

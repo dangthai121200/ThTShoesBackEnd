@@ -37,4 +37,8 @@ public interface GiaySizeMauReponsitory extends JpaRepository<GiayMauSize, GiayM
 	@Query(value = "Update giay_mau_size set soluong = :soluong where id = :id ", nativeQuery = true)
 	void updateSoLuong(@Param(value = "id") int id, @Param(value = "soluong") int soluong);
 
+	@Modifying(clearAutomatically = true)
+	@Query(value = "Delete from giay_mau_size where id = :id ", nativeQuery = true)
+	void deleteById(int id);
+
 }

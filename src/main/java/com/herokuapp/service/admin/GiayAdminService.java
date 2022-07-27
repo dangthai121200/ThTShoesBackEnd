@@ -25,5 +25,7 @@ public interface GiayAdminService {
 
 	void addGiaySizeMauOfGiay(AddGiayMauSizeAdmin addGiayMauSizeAdmin) throws ThtShoesException;
 
-	void updateSoLuongGiaySizeMauOfGiay(SoLuongGiaySizeMau soLuongGiaySizeMau) throws ThtShoesException;;
+	void updateSoLuongGiaySizeMauOfGiay(SoLuongGiaySizeMau soLuongGiaySizeMau) throws ThtShoesException;
+
+	void deleteGiaySizeMauOfGiay(int idGiaySizemau) throws ThtShoesException;;
 }
