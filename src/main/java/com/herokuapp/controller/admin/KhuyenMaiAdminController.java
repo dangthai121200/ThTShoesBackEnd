@@ -2,6 +2,7 @@ package com.herokuapp.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,6 +50,20 @@ public class KhuyenMaiAdminController {
 	public String updateKhuyenMai(@RequestBody AddKhuyenMaiAdminDomain addKhuyenMaiAdminDomain)
 			throws ThtShoesException {
 		return khuyenMaiAdminService.updateKhuyenMai(addKhuyenMaiAdminDomain);
+	}
+
+	@DeleteMapping(value = "/{makm}")
+	public ResponseEntity<String> deleteKhuyenMai(@PathVariable("makm") String makm) throws ThtShoesException {
+		try {
+			khuyenMaiAdminService.deleteKhuyenMai(makm);
+			return ResponseEntity.ok("Xóa thành công");
+		} catch (ThtShoesException ex) {
+			throw ex;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ResponseEntity.badRequest().body("Xóa thất bại");
+
+		}
 	}
 
 }

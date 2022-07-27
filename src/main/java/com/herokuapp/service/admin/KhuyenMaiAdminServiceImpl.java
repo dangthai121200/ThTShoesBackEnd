@@ -16,6 +16,7 @@ import com.herokuapp.domain.admin.list.ListKhuyenMaiAdmin;
 import com.herokuapp.entity.Dskhuyenmai;
 import com.herokuapp.entity.Nhanvien;
 import com.herokuapp.handleexception.ThtShoesException;
+import com.herokuapp.reponsitory.DonHangReponsitory;
 import com.herokuapp.reponsitory.KhuyenMaiReponsitory;
 import com.herokuapp.reponsitory.KhuyenMaiSeqReponsitory;
 import com.herokuapp.security.UserDetailsConfigure;
@@ -26,9 +27,12 @@ public class KhuyenMaiAdminServiceImpl implements KhuyenMaiAdminService {
 
 	@Autowired
 	public KhuyenMaiReponsitory khuyenMaiReponsitory;
-	
+
 	@Autowired
 	public KhuyenMaiSeqReponsitory khuyenMaiSeqReponsitory;
+
+	@Autowired
+	public DonHangReponsitory donHangReponsitory;
 
 	@Override
 	public ListKhuyenMaiAdmin getAllKhuyenMai() {
@@ -85,6 +89,17 @@ public class KhuyenMaiAdminServiceImpl implements KhuyenMaiAdminService {
 
 		khuyenMaiReponsitory.save(dskhuyenmai);
 		return addKhuyenMaiAdminDomain.getMakm();
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void deleteKhuyenMai(String makm) throws ThtShoesException {
+		int checkKhuyenMaiInDonHang = donHangReponsitory.countKhuyenMaiInDonHang(makm);
+		if (checkKhuyenMaiInDonHang > 0) {
+			throw new ThtShoesException("Khuyến mãi đã có trong đơn hàng");
+		}
+
+		khuyenMaiReponsitory.deleteById(makm);
 	}
 
 }

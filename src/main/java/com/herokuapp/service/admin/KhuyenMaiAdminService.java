@@ -13,4 +13,6 @@ public interface KhuyenMaiAdminService {
 	String addKhuyenMai(AddKhuyenMaiAdminDomain addKhuyenMaiAdminDomain);
 
 	String updateKhuyenMai(AddKhuyenMaiAdminDomain addKhuyenMaiAdminDomain) throws ThtShoesException;
+
+	void deleteKhuyenMai(String makm) throws ThtShoesException;
 }

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.herokuapp.entity.Donhang;
-import com.herokuapp.enums.TinhTrang;
 
 @Repository
 @Transactional(rollbackFor = Exception.class)
@@ -18,4 +17,7 @@ public interface DonHangReponsitory extends JpaRepository<Donhang, String> {
 	@Query(value = "Update donhang set tinhtrang = :tinhtrang where madon = :madon ", nativeQuery = true)
 	public void updateStatusForDonhang(@Param(value = "madon") String madonghang,
 			@Param(value = "tinhtrang") String tinhtrang);
+
+	@Query(value = "Select count(*) from donhang where makm = :makm", nativeQuery = true)
+	int countKhuyenMaiInDonHang(@Param(value = "makm") String makm);
 }

@@ -284,6 +284,7 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void deleteGiaySizeMauOfGiay(int idGiaySizemau) throws ThtShoesException {
 		int checkDonHang = giayDonHangReponsitory.countGiaySizeMauInGiayDonHangByMaGiaySizeMau(idGiaySizemau);
 		if (checkDonHang > 0) {
