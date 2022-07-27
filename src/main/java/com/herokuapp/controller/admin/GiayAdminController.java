@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.herokuapp.domain.admin.AddGiayAdminDomain;
+import com.herokuapp.domain.admin.AddGiayMauSizeAdmin;
 import com.herokuapp.domain.admin.GiayAdminDomain;
 import com.herokuapp.domain.admin.LoaigiayHangDanhmucAdminDomain;
 import com.herokuapp.domain.admin.list.ListGiayAdmin;
@@ -43,7 +44,6 @@ public class GiayAdminController {
 	public ListSizeAdmin getAllGiaySizeMauOfGiay(@PathVariable(name = "idGiay") String idGiay) {
 		ListSizeAdmin listSizeAdmin = giayService.getAllGiaySizeMauOfGiay(idGiay);
 		return listSizeAdmin;
-
 	}
 
 	@PostMapping
@@ -56,6 +56,20 @@ public class GiayAdminController {
 			return ResponseEntity.badRequest().body("Thêm thất bại");
 		}
 
+	}
+
+	@PostMapping(value = URL.GIAY_SIZE_MAU)
+	public ResponseEntity<String> addGiaySizeMauOfGiay(
+			@RequestBody AddGiayMauSizeAdmin addGiayMauSizeAdmin) throws ThtShoesException {
+		try {
+			giayService.addGiaySizeMauOfGiay(addGiayMauSizeAdmin);
+			return ResponseEntity.ok("Thêm thành công");
+		} catch (ThtShoesException ex) {
+			throw ex;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ResponseEntity.badRequest().body("Thay đổi thất bại");
+		}
 	}
 
 	@PutMapping(value = URL.LGIAY_HANG_DMUC + "/{magiay}")

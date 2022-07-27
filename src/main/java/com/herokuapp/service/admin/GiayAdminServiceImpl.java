@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.herokuapp.domain.admin.AddGiayAdminDomain;
+import com.herokuapp.domain.admin.AddGiayMauSizeAdmin;
 import com.herokuapp.domain.admin.GiayAdminDomain;
 import com.herokuapp.domain.admin.HinhAdminDomain;
 import com.herokuapp.domain.admin.LoaigiayHangDanhmucAdminDomain;
@@ -250,6 +251,38 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 		}
 		listSizeAdmin.setSizes(sizeAdminDomains);
 		return listSizeAdmin;
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void addGiaySizeMauOfGiay(AddGiayMauSizeAdmin addGiayMauSizeAdmin) throws ThtShoesException {
+
+		String magiay = addGiayMauSizeAdmin.getMagiay();
+		String masize = addGiayMauSizeAdmin.getMasize();
+		String mamau = addGiayMauSizeAdmin.getMamau();
+
+		String idGiaySizeMau = giaySizeMauReponsitory.getIdByIdGiayIdSizeIdMau(magiay, masize, mamau);
+		if (idGiaySizeMau != null) {
+			throw new ThtShoesException("Giày đã có size và màu này");
+		}
+
+		int soluong = addGiayMauSizeAdmin.getSoluong();
+		int idNextGiayMauSize = giaySizeMauReponsitory.getIdNext();
+
+		GiayMauSize giayMauSize = new GiayMauSize();
+		GiayMauSizePK giayMauSizePK = new GiayMauSizePK();
+		giayMauSizePK.setMagiay(magiay);
+		giayMauSizePK.setMasize(masize);
+		giayMauSizePK.setMamau(mamau);
+		giayMauSize.setId(giayMauSizePK);
+		giayMauSize.setSoluong(soluong);
+		giaySizeMauReponsitory.save(giayMauSize);
+
+		SoluongGiay soluongGiay = new SoluongGiay();
+		soluongGiay.setSoluongthem(soluong);
+		soluongGiay.setIdGiaySizeMau(idNextGiayMauSize);
+		soluongGiay.setMota("Thêm màu size mới");
+		soLuongGiayReponsitory.save(soluongGiay);
 	}
 
 }
