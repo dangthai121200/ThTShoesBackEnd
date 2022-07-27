@@ -9,9 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.herokuapp.domain.admin.AddGiayAdminDomain;
 import com.herokuapp.domain.admin.AddGiayMauSizeAdmin;
+import com.herokuapp.domain.admin.DanhmucAdminDomain;
 import com.herokuapp.domain.admin.GiayAdminDomain;
 import com.herokuapp.domain.admin.GiaySizeMauAdminDomain;
+import com.herokuapp.domain.admin.HangAdminDomain;
 import com.herokuapp.domain.admin.HinhAdminDomain;
+import com.herokuapp.domain.admin.LoaiGiayAdminDomain;
 import com.herokuapp.domain.admin.LoaigiayHangDanhmucAdminDomain;
 import com.herokuapp.domain.admin.MauSacAdminDomain;
 import com.herokuapp.domain.admin.SizeMauAdmin;
@@ -132,8 +135,23 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 	public GiayAdminDomain getGiayById(String idGiay) {
 		Giay giay = giayReponsitory.findById(idGiay).get();
 		GiayAdminDomain giayAdminDomain = new GiayAdminDomain();
-		List<GiaySizeMauAdminDomain> giaySizeMauAdminDomains = new ArrayList<>();
 		giayAdminDomain.converToDomain(giay);
+		List<GiaySizeMauAdminDomain> giaySizeMauAdminDomains = new ArrayList<>();
+
+		LoaigiayHangDanhmuc loaigiayHangDanhmuc = loaigiayHangDanhmucReponsitory
+				.findByMaLgiayHang(giay.getMaLgiayHang());
+
+		LoaiGiayAdminDomain loaiGiayAdminDomain = new LoaiGiayAdminDomain();
+		loaiGiayAdminDomain.converToDomain(loaigiayHangDanhmuc.getLoaigiay());
+		giayAdminDomain.setLoaigiay(loaiGiayAdminDomain);
+
+		HangAdminDomain hangAdminDomain = new HangAdminDomain();
+		hangAdminDomain.converToDomain(loaigiayHangDanhmuc.getHang());
+		giayAdminDomain.setHang(hangAdminDomain);
+
+		DanhmucAdminDomain danhmucAdminDomain = new DanhmucAdminDomain();
+		danhmucAdminDomain.converToDomain(loaigiayHangDanhmuc.getDanhmuc());
+		giayAdminDomain.setDanhmuc(danhmucAdminDomain);
 
 		giay.getHinhs().forEach(hinh -> {
 			HinhAdminDomain hinhDomain = new HinhAdminDomain();

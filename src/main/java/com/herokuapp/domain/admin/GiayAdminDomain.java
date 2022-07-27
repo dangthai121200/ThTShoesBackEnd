@@ -18,12 +18,13 @@ public class GiayAdminDomain extends AbstractsDomain<Giay> {
 	private String tengiay;
 	private int trongluong;
 	private String urlanh;
-//	private LoaiGiayAdminDomain loaigiay = new LoaiGiayAdminDomain();
-//	private HangAdminDomain hang = new HangAdminDomain();
-//	private DanhmucAdminDomain danhmuc = new DanhmucAdminDomain();
+	private LoaiGiayAdminDomain loaigiay = new LoaiGiayAdminDomain();
+	private HangAdminDomain hang = new HangAdminDomain();
+	private DanhmucAdminDomain danhmuc = new DanhmucAdminDomain();
+	private int maLgiayHang;
 	private List<GiaySizeMauAdminDomain> giaySizeMau = new ArrayList<>();
 	private List<HinhAdminDomain> hinhs = new ArrayList<>();
-	private int maLgiayHang;
+
 
 	public GiayAdminDomain() {
 		super();
@@ -117,29 +118,29 @@ public class GiayAdminDomain extends AbstractsDomain<Giay> {
 		this.hinhs = hinhs;
 	}
 
-//	public LoaiGiayAdminDomain getLoaigiay() {
-//		return loaigiay;
-//	}
-//
-//	public void setLoaigiay(LoaiGiayAdminDomain loaigiay) {
-//		this.loaigiay = loaigiay;
-//	}
-//
-//	public HangAdminDomain getHang() {
-//		return hang;
-//	}
-//
-//	public void setHang(HangAdminDomain hang) {
-//		this.hang = hang;
-//	}
-//
-//	public DanhmucAdminDomain getDanhmuc() {
-//		return danhmuc;
-//	}
-//
-//	public void setDanhmuc(DanhmucAdminDomain danhmuc) {
-//		this.danhmuc = danhmuc;
-//	}
+	public LoaiGiayAdminDomain getLoaigiay() {
+		return loaigiay;
+	}
+
+	public void setLoaigiay(LoaiGiayAdminDomain loaigiay) {
+		this.loaigiay = loaigiay;
+	}
+
+	public HangAdminDomain getHang() {
+		return hang;
+	}
+
+	public void setHang(HangAdminDomain hang) {
+		this.hang = hang;
+	}
+
+	public DanhmucAdminDomain getDanhmuc() {
+		return danhmuc;
+	}
+
+	public void setDanhmuc(DanhmucAdminDomain danhmuc) {
+		this.danhmuc = danhmuc;
+	}
 
 	public int getMaLgiayHang() {
 		return maLgiayHang;
