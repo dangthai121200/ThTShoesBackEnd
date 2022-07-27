@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.herokuapp.domain.admin.BinhLuanAdminDomain;
 import com.herokuapp.domain.admin.list.ListBinhLuanAdmin;
 import com.herokuapp.service.admin.BinhLuanAdminService;
 import com.herokuapp.util.URL;
@@ -21,6 +22,12 @@ public class BinhLuanAdminController {
 	@GetMapping
 	public ListBinhLuanAdmin getAllBinhLuan() {
 		return binhLuanAdminService.getAllBinhLuan();
+
+	}
+
+	@GetMapping(value = "/{mabl}")
+	public BinhLuanAdminDomain getBinhLuanbyId(@PathVariable(name = "mabl") String mabl) {
+		return binhLuanAdminService.getBinhLuanbyId(mabl);
 
 	}
 

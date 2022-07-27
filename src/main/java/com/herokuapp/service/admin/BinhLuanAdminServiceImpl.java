@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.herokuapp.domain.admin.BinhLuanAdminDomain;
 import com.herokuapp.domain.admin.GiayAdminDomain;
 import com.herokuapp.domain.admin.KhachHangAdminDomain;
+import com.herokuapp.domain.admin.NhanVienAdminDomain;
 import com.herokuapp.domain.admin.PhuKienAdminDomain;
 import com.herokuapp.domain.admin.list.ListBinhLuanAdmin;
 import com.herokuapp.entity.Binhluan;
@@ -56,6 +57,53 @@ public class BinhLuanAdminServiceImpl implements BinhLuanAdminService {
 	@Override
 	public void deleteBinhLuan(String mabl) {
 		binhLuanReponsitory.deleteById(mabl);
+	}
+
+	@Override
+	public BinhLuanAdminDomain getBinhLuanbyId(String mabl) {
+
+		// get a binhluan of khachhang
+		Binhluan binhluanGet = binhLuanReponsitory.findById(mabl).get();
+		BinhLuanAdminDomain binhLuanAdminDomain = new BinhLuanAdminDomain();
+
+		binhLuanAdminDomain.converToDomain(binhluanGet);
+
+		if (binhluanGet.getKhachhang() != null) {
+			KhachHangAdminDomain khachHangAdminDomain = new KhachHangAdminDomain();
+			khachHangAdminDomain.converToDomain(binhluanGet.getKhachhang());
+			binhLuanAdminDomain.setKhachhang(khachHangAdminDomain);
+		}
+		if (binhluanGet.getPhukien() != null) {
+			PhuKienAdminDomain phuKienAdminDomain = new PhuKienAdminDomain();
+			phuKienAdminDomain.converToDomain(binhluanGet.getPhukien());
+			binhLuanAdminDomain.setPhukien(phuKienAdminDomain);
+		}
+
+		if (binhluanGet.getGiay() != null) {
+			GiayAdminDomain giayAdminDomain = new GiayAdminDomain();
+			giayAdminDomain.converToDomain(binhluanGet.getGiay());
+			binhLuanAdminDomain.setGiay(giayAdminDomain);
+		}
+
+		// get list binhluan response of nhanvien
+		List<BinhLuanAdminDomain> binhLuanAdminDomainTraLois = new ArrayList<>();
+
+		for (Binhluan binhluan : binhluanGet.getBinhluans()) {
+
+			BinhLuanAdminDomain binhLuanAdminDomainTraLoi = new BinhLuanAdminDomain();
+			binhLuanAdminDomainTraLoi.converToDomain(binhluan);
+
+			if (binhluan.getNhanvien() != null) {
+				NhanVienAdminDomain nhanVienAdminDomain = new NhanVienAdminDomain();
+				nhanVienAdminDomain.converToDomain(binhluan.getNhanvien());
+				binhLuanAdminDomainTraLoi.setNhanvien(nhanVienAdminDomain);
+			}
+			binhLuanAdminDomainTraLois.add(binhLuanAdminDomainTraLoi);
+
+		}
+		binhLuanAdminDomain.setBinhluans(binhLuanAdminDomainTraLois);
+
+		return binhLuanAdminDomain;
 	}
 
 }

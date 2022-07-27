@@ -1,6 +1,7 @@
 package com.herokuapp.domain.admin;
 
 import java.util.Date;
+import java.util.List;
 
 import com.herokuapp.abstracts.AbstractsDomain;
 import com.herokuapp.entity.Binhluan;
@@ -13,6 +14,8 @@ public class BinhLuanAdminDomain extends AbstractsDomain<Binhluan> {
 	private GiayAdminDomain giay;
 	private PhuKienAdminDomain phukien;
 	private KhachHangAdminDomain khachhang;
+	private NhanVienAdminDomain nhanvien;
+	private List<BinhLuanAdminDomain> binhluans;
 
 	public BinhLuanAdminDomain() {
 
@@ -64,6 +67,22 @@ public class BinhLuanAdminDomain extends AbstractsDomain<Binhluan> {
 
 	public void setKhachhang(KhachHangAdminDomain khachhang) {
 		this.khachhang = khachhang;
+	}
+
+	public NhanVienAdminDomain getNhanvien() {
+		return nhanvien;
+	}
+
+	public void setNhanvien(NhanVienAdminDomain nhanvien) {
+		this.nhanvien = nhanvien;
+	}
+
+	public List<BinhLuanAdminDomain> getBinhluans() {
+		return binhluans;
+	}
+
+	public void setBinhluans(List<BinhLuanAdminDomain> binhluans) {
+		this.binhluans = binhluans;
 	}
 
 	@Override
