@@ -37,6 +37,7 @@ public class URL {
 	public static final String MAU_SAC = "/mausac";
 
 	public static final String LGIAY_HANG_DMUC = "/lgiayhangdanhmuc";
+	public static final String GIAY_SIZE_MAU = "/giaysizemau";
 
 	public static final String HINH = "/hinh";
 	public static final String HANG = "/hang";

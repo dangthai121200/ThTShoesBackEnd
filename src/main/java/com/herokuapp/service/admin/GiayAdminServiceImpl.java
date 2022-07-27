@@ -15,6 +15,7 @@ import com.herokuapp.domain.admin.MauSacAdminDomain;
 import com.herokuapp.domain.admin.SizeAdminDomain;
 import com.herokuapp.domain.admin.SizeMauAdmin;
 import com.herokuapp.domain.admin.list.ListGiayAdmin;
+import com.herokuapp.domain.admin.list.ListSizeAdmin;
 import com.herokuapp.entity.Giay;
 import com.herokuapp.entity.GiayMauSize;
 import com.herokuapp.entity.GiayMauSizePK;
@@ -229,6 +230,26 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 		giay.setMaLgiayHang(idLoaigiayHangDanhmuc);
 		giayReponsitory.save(giay);
 
+	}
+
+	@Override
+	public ListSizeAdmin getAllGiaySizeMauOfGiay(String idGiay) {
+		ListSizeAdmin listSizeAdmin = new ListSizeAdmin();
+		List<SizeAdminDomain> sizeAdminDomains = new ArrayList<>();
+		List<GiayMauSize> giayMauSizes = giaySizeMauReponsitory.getGiayMauSizeByMaGiay(idGiay);
+
+		for (GiayMauSize giayMauSize : giayMauSizes) {
+			SizeAdminDomain sizeAdminDomain = new SizeAdminDomain();
+			sizeAdminDomain.converToDomain(giayMauSize.getSize());
+			if (sizeAdminDomains.contains(sizeAdminDomain)) {
+				continue;
+			}
+			List<Mausac> mausacs = mauSacReponsitory.getMauSacByIdGiayAndIdSize(idGiay, sizeAdminDomain.getMasize());
+			sizeAdminDomain.setMausacs(convertToListMauSacDomain(mausacs, idGiay, sizeAdminDomain.getMasize()));
+			sizeAdminDomains.add(sizeAdminDomain);
+		}
+		listSizeAdmin.setSizes(sizeAdminDomains);
+		return listSizeAdmin;
 	}
 
 }

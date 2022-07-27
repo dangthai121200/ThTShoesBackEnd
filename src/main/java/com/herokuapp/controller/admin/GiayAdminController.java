@@ -15,6 +15,7 @@ import com.herokuapp.domain.admin.AddGiayAdminDomain;
 import com.herokuapp.domain.admin.GiayAdminDomain;
 import com.herokuapp.domain.admin.LoaigiayHangDanhmucAdminDomain;
 import com.herokuapp.domain.admin.list.ListGiayAdmin;
+import com.herokuapp.domain.admin.list.ListSizeAdmin;
 import com.herokuapp.handleexception.ThtShoesException;
 import com.herokuapp.service.admin.GiayAdminService;
 import com.herokuapp.util.URL;
@@ -38,6 +39,13 @@ public class GiayAdminController {
 
 	}
 
+	@GetMapping(value = URL.GIAY_SIZE_MAU + "/{idGiay}")
+	public ListSizeAdmin getAllGiaySizeMauOfGiay(@PathVariable(name = "idGiay") String idGiay) {
+		ListSizeAdmin listSizeAdmin = giayService.getAllGiaySizeMauOfGiay(idGiay);
+		return listSizeAdmin;
+
+	}
+
 	@PostMapping
 	public ResponseEntity<String> addGiay(@RequestBody AddGiayAdminDomain giayAdminDomain) {
 		try {
@@ -48,19 +56,6 @@ public class GiayAdminController {
 			return ResponseEntity.badRequest().body("Thêm thất bại");
 		}
 
-	}
-
-	@DeleteMapping(value = "/{magiay}")
-	public ResponseEntity<String> deleteGiay(@PathVariable(name = "magiay") String magiay) throws ThtShoesException {
-		try {
-			giayService.deleteGiay(magiay);
-			return ResponseEntity.ok(magiay);
-		} catch (ThtShoesException ex) {
-			throw ex;
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			return ResponseEntity.badRequest().body("Xóa thất bại");
-		}
 	}
 
 	@PutMapping(value = URL.LGIAY_HANG_DMUC + "/{magiay}")
@@ -74,6 +69,19 @@ public class GiayAdminController {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return ResponseEntity.badRequest().body("Thay đổi thất bại");
+		}
+	}
+
+	@DeleteMapping(value = "/{magiay}")
+	public ResponseEntity<String> deleteGiay(@PathVariable(name = "magiay") String magiay) throws ThtShoesException {
+		try {
+			giayService.deleteGiay(magiay);
+			return ResponseEntity.ok(magiay);
+		} catch (ThtShoesException ex) {
+			throw ex;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ResponseEntity.badRequest().body("Xóa thất bại");
 		}
 	}
 
