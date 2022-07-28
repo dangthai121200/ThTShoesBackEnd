@@ -24,7 +24,7 @@ public class GiayAdminDomain extends AbstractsDomain<Giay> {
 	private int maLgiayHang;
 	private List<GiaySizeMauAdminDomain> giaySizeMau = new ArrayList<>();
 	private List<HinhAdminDomain> hinhs = new ArrayList<>();
-
+	private List<SoLuongGiayAdminDomain> soluonggiay = new ArrayList<>();
 
 	public GiayAdminDomain() {
 		super();
@@ -148,6 +148,14 @@ public class GiayAdminDomain extends AbstractsDomain<Giay> {
 
 	public void setMaLgiayHang(int maLgiayHang) {
 		this.maLgiayHang = maLgiayHang;
+	}
+
+	public List<SoLuongGiayAdminDomain> getSoluonggiay() {
+		return soluonggiay;
+	}
+
+	public void setSoluonggiay(List<SoLuongGiayAdminDomain> soluonggiay) {
+		this.soluonggiay = soluonggiay;
 	}
 
 	@Override

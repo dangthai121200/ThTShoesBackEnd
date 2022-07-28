@@ -38,5 +38,7 @@ public class LoaiGiayAdminController {
 			return ResponseEntity.badRequest().body("Thêm loại giày thất bại");
 		}
 	}
+	
+	
 
 }

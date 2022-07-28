@@ -17,7 +17,9 @@ import com.herokuapp.domain.admin.HinhAdminDomain;
 import com.herokuapp.domain.admin.LoaiGiayAdminDomain;
 import com.herokuapp.domain.admin.LoaigiayHangDanhmucAdminDomain;
 import com.herokuapp.domain.admin.MauSacAdminDomain;
+import com.herokuapp.domain.admin.SizeAdminDomain;
 import com.herokuapp.domain.admin.SizeMauAdmin;
+import com.herokuapp.domain.admin.SoLuongGiayAdminDomain;
 import com.herokuapp.domain.admin.SoLuongGiaySizeMau;
 import com.herokuapp.domain.admin.list.ListGiayAdmin;
 import com.herokuapp.domain.admin.list.ListGiaySizeMauAdmin;
@@ -136,8 +138,8 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 		Giay giay = giayReponsitory.findById(idGiay).get();
 		GiayAdminDomain giayAdminDomain = new GiayAdminDomain();
 		giayAdminDomain.converToDomain(giay);
-		List<GiaySizeMauAdminDomain> giaySizeMauAdminDomains = new ArrayList<>();
 
+		// gte loaigiay, hang, danhmuc
 		LoaigiayHangDanhmuc loaigiayHangDanhmuc = loaigiayHangDanhmucReponsitory
 				.findByMaLgiayHang(giay.getMaLgiayHang());
 
@@ -153,19 +155,44 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 		danhmucAdminDomain.converToDomain(loaigiayHangDanhmuc.getDanhmuc());
 		giayAdminDomain.setDanhmuc(danhmucAdminDomain);
 
+		// get hinh
 		giay.getHinhs().forEach(hinh -> {
 			HinhAdminDomain hinhDomain = new HinhAdminDomain();
 			hinhDomain.converToDomain(hinh);
 			giayAdminDomain.getHinhs().add(hinhDomain);
 		});
 
+		// get size, mausac
+		List<GiaySizeMauAdminDomain> giaySizeMauAdminDomains = new ArrayList<>();
+		List<SoLuongGiayAdminDomain> soLuongGiayAdminDomains = new ArrayList<>();
 		for (GiayMauSize giayMauSize : giay.getGiayMauSizes()) {
+
 			GiaySizeMauAdminDomain sizeMauAdminDomain = new GiaySizeMauAdminDomain();
 			sizeMauAdminDomain.converToDomain(giayMauSize);
 			giaySizeMauAdminDomains.add(sizeMauAdminDomain);
-		}
 
+			// get soluong add of giay
+			List<SoluongGiay> soluongGiays = soLuongGiayReponsitory.findByidGiaySizeMau(giayMauSize.getId().getId());
+			for (SoluongGiay soluongGiay : soluongGiays) {
+
+				SoLuongGiayAdminDomain soLuongGiayAdminDomain = new SoLuongGiayAdminDomain();
+				soLuongGiayAdminDomain.converToDomain(soluongGiay);
+
+				SizeAdminDomain sizeAdminDomain = new SizeAdminDomain();
+				sizeAdminDomain.converToDomain(giayMauSize.getSize());
+				soLuongGiayAdminDomain.setSize(sizeAdminDomain);
+
+				MauSacAdminDomain mauSacAdminDomain = new MauSacAdminDomain();
+				mauSacAdminDomain.converToDomain(giayMauSize.getMausac());
+				soLuongGiayAdminDomain.setMau(mauSacAdminDomain);
+
+				soLuongGiayAdminDomains.add(soLuongGiayAdminDomain);
+			}
+
+		}
 		giayAdminDomain.setGiaySizeMau(giaySizeMauAdminDomains);
+		giayAdminDomain.setSoluonggiay(soLuongGiayAdminDomains);
+
 		return giayAdminDomain;
 	}
 
