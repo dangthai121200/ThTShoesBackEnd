@@ -14,8 +14,19 @@ import com.herokuapp.entity.Giay;
 @Repository
 @Transactional(rollbackFor = Exception.class)
 public interface GiayReponsitory extends JpaRepository<Giay, String> {
+	
+	
+	String GIAY_BEST_SELL = " SELECT g.*, dh.tinhtrang, sum( gdh.soluong) as tongban FROM  giay g "
+			+ " JOIN giay_mau_size gms ON g.magiay = gms.magiay "
+			+ " JOIN giay_donhang gdh ON gdh.id_giay_mau_size = gms.id "
+			+ " JOIN donhang dh ON gdh.madon = dh.madon "
+			+ " WHERE dh.tinhtrang = 'DAGIAO' "
+			+ " GROUP BY g.magiay "
+			+ " ORDER BY tongban DESC "
+			+ " LIMIT :amount ";
 
-	// public List<Giay> getListBestSell(int sum);
+	@Query(value = GIAY_BEST_SELL, nativeQuery = true)
+	public List<Giay> getListBestSell(@Param("amount") int amount);
 
 	@Query(value = "Select g.* from Giay g ORDER BY g.ngaythem DESC LIMIT :amount", nativeQuery = true)
 	public List<Giay> getListLatest(@Param("amount") int amount);

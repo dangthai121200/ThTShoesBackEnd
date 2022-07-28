@@ -42,13 +42,21 @@ public class GiayServiceImpl implements GiayService {
 	@Override
 	public List<GiayDomain> getListLatest(int amount) {
 		List<Giay> listGiayEntity = giayReponsitory.getListLatest(amount);
+		return convertToListGiayDomain(listGiayEntity);
+	}
+
+	@Override
+	public List<GiayDomain> getListBestSell(int amount) {
+		List<Giay> listGiayEntity = giayReponsitory.getListBestSell(amount);
+		return convertToListGiayDomain(listGiayEntity);
+	}
+
+	private List<GiayDomain> convertToListGiayDomain(List<Giay> giays) {
 		List<GiayDomain> giayDomains = new ArrayList<>();
-		if (listGiayEntity.size() > 0) {
-			listGiayEntity.forEach(giay -> {
-				GiayDomain giayDomain = new GiayDomain();
-				giayDomain.converToDomain(giay);
-				giayDomains.add(giayDomain);
-			});
+		for (Giay giay : giays) {
+			GiayDomain giayDomain = new GiayDomain();
+			giayDomain.converToDomain(giay);
+			giayDomains.add(giayDomain);
 		}
 		return giayDomains;
 	}
@@ -69,7 +77,7 @@ public class GiayServiceImpl implements GiayService {
 
 	@Override
 	public GiayDomain getGiayById(String idGiay) {
-		
+
 		// get info of giay
 		Giay giay = giayReponsitory.findById(idGiay).get();
 		GiayDomain giayDomain = new GiayDomain();
@@ -78,7 +86,7 @@ public class GiayServiceImpl implements GiayService {
 		giayDomain.converToDomain(giay);
 
 		// get size and mausac of giay
-		
+
 		for (GiayMauSize giayMauSize : giay.getGiayMauSizes()) {
 			SizeDomain sizeDomain = new SizeDomain();
 			sizeDomain.converToDomain(giayMauSize.getSize());
@@ -99,13 +107,13 @@ public class GiayServiceImpl implements GiayService {
 		for (Binhluan binhluan : binhluans) {
 			BinhLuanKhachHangDomain binhLuanKhachHangDomain = new BinhLuanKhachHangDomain();
 			binhLuanKhachHangDomain.converToDomain(binhluan);
-			
-			if(binhluan.getKhachhang() != null) {
+
+			if (binhluan.getKhachhang() != null) {
 				KhachHangDomain khachHangDomain = new KhachHangDomain();
 				khachHangDomain.converToDomain(binhluan.getKhachhang());
 				binhLuanKhachHangDomain.setKhachHangDomain(khachHangDomain);
 			}
-			
+
 			// get response binhluan
 			List<BinhLuanKhachHangDomain> binhLuanTraLois = new ArrayList<>();
 			for (Binhluan binhLuanTraLoi : binhluan.getBinhluans()) {
@@ -117,10 +125,10 @@ public class GiayServiceImpl implements GiayService {
 				binhLuanTraLois.add(binhLuanTraLoiDoamin);
 			}
 			binhLuanKhachHangDomain.setBinhluans(binhLuanTraLois);
-			
+
 			binhLuanKhachHangDomains.add(binhLuanKhachHangDomain);
 		}
-		
+
 		giayDomain.setBinhluans(binhLuanKhachHangDomains);
 
 		return giayDomain;
