@@ -22,6 +22,7 @@ public class URL {
 	public static final String DAT_HANG = "/dathang";
 	public static final String DON_HANG = "/donhang";
 	public static final String TINH_TRANG = "/tinhtrang";
+	public static final String HUY_DON_HANG = "/huydonhang";
 
 	public static final String KHACH_VANG_LAI = "/khachvanglai";
 

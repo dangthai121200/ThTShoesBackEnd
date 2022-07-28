@@ -36,6 +36,7 @@ import com.herokuapp.entity.PhukienDonhang;
 import com.herokuapp.entity.PhukienDonhangPK;
 import com.herokuapp.entity.Phuongthucthanhtoan;
 import com.herokuapp.entity.Size;
+import com.herokuapp.enums.TinhTrang;
 import com.herokuapp.handleexception.ThtShoesException;
 import com.herokuapp.reponsitory.DonHangReponsitory;
 import com.herokuapp.reponsitory.DonHangSeqReponsitory;
@@ -402,6 +403,23 @@ public class DonHangServiceImpl implements DonHangService {
 		}
 
 		return donHangDomain;
+	}
+
+	@Override
+	public void huyDonHangOfKhachHang(String mdh, String makh) throws ThtShoesException {
+
+		Donhang donhang = donHangReponsitory.findByMadhAndMakh(mdh, makh);
+
+		if (donhang == null) {
+			throw new ThtShoesException("Đơn hàng không tồn tại");
+		}
+		if (donhang.getTinhtrang() != TinhTrang.CHODUYET) {
+			throw new ThtShoesException("Đơn hàng không thể hủy");
+		}
+
+		donhang.setTinhtrang(TinhTrang.TUCHOI);
+		donHangReponsitory.updateStatusForDonhang(mdh, TinhTrang.HUY.getValue());
+
 	}
 
 }

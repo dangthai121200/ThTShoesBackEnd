@@ -14,4 +14,6 @@ public interface DonHangService {
 	ListDonHang getLichSuDonHangByKhachHangId(String makh);
 
 	ListDonHangVangLai getLichSuDonHangByKhachVangLaiId(String idKVL);
+
+	void huyDonHangOfKhachHang(String madh, String makh) throws ThtShoesException;
 }

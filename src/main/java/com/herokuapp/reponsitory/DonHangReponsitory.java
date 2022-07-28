@@ -20,4 +20,7 @@ public interface DonHangReponsitory extends JpaRepository<Donhang, String> {
 
 	@Query(value = "Select count(*) from donhang where makm = :makm", nativeQuery = true)
 	int countKhuyenMaiInDonHang(@Param(value = "makm") String makm);
+
+	@Query(value = "Select * from donhang where madon= :madon and makh = :makh", nativeQuery = true)
+	Donhang findByMadhAndMakh(@Param(value = "madon") String madon, @Param(value = "makh") String makh);
 }

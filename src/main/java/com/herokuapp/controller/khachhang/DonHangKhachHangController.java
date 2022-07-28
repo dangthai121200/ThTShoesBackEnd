@@ -63,7 +63,7 @@ public class DonHangKhachHangController {
 			return ResponseEntity.ok("Thêm thành công");
 		} catch (ThtShoesException ex) {
 			throw ex;
-		}catch (Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			return ResponseEntity.badRequest().body("Có lỗi xảy ra vùi lòng thử lại");
 		}
@@ -71,14 +71,31 @@ public class DonHangKhachHangController {
 	}
 
 	@RequestMapping(value = URL.KHACH_VANG_LAI, method = RequestMethod.POST)
-	public ResponseEntity<String> addDonHangKhachVanglai(@RequestBody AddDonHangVangLai donHangVangLai) throws ThtShoesException {
+	public ResponseEntity<String> addDonHangKhachVanglai(@RequestBody AddDonHangVangLai donHangVangLai)
+			throws ThtShoesException {
 		try {
 			String idKHVL = donHangService.addDonHangKhachVangLai(donHangVangLai);
 			return ResponseEntity.ok(idKHVL);
 		} catch (ThtShoesException ex) {
 			throw ex;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ResponseEntity.badRequest().body("Có lỗi xảy ra vùi lòng thử lại");
 		}
-		catch (Exception ex) {
+
+	}
+
+	@RequestMapping(value = URL.HUY_DON_HANG + "/{madh}", method = RequestMethod.PUT)
+	public ResponseEntity<String> huyDonHangOfKhachHang(@PathVariable(name = "madh") String madh)
+			throws ThtShoesException {
+		try {
+			String makh = ((UserDetailsConfigure) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+					.getManguoidung();
+			donHangService.huyDonHangOfKhachHang(madh, makh);
+			return ResponseEntity.badRequest().body("Hủy thành công");
+		} catch (ThtShoesException ex) {
+			throw ex;
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			return ResponseEntity.badRequest().body("Có lỗi xảy ra vùi lòng thử lại");
 		}

@@ -65,6 +65,9 @@ public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.DAT_HANG).hasAuthority(Quyen.KHACHHANG.getName());
 		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.DAT_HANG + URL.KHACH_VANG_LAI + "/**").permitAll();
 
+		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.DAT_HANG + URL.HUY_DON_HANG + "/**")
+				.hasAnyAuthority(Quyen.KHACHHANG.getName());
+
 		// giay
 		http.authorizeRequests().antMatchers(URL.KHACH_HANG + URL.GIAY + "/**").permitAll();
 
