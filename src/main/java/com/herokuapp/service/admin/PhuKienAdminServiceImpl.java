@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.herokuapp.domain.admin.AddPhuKienAdmin;
 import com.herokuapp.domain.admin.PhuKienAdminDomain;
+import com.herokuapp.domain.admin.SoLuongPhuKienAdminDoamin;
 import com.herokuapp.domain.admin.list.ListPhuKienAdmin;
 import com.herokuapp.entity.Loaiphukien;
 import com.herokuapp.entity.Phukien;
@@ -55,6 +56,16 @@ public class PhuKienAdminServiceImpl implements PhuKienAdminService {
 		PhuKienAdminDomain phuKienAdminDomain = new PhuKienAdminDomain();
 		Phukien phukien = phuKienReponsitory.findById(idPhuKien).get();
 		phuKienAdminDomain.converToDomain(phukien);
+
+		// get soluong add of phukien
+		List<SoLuongPhuKienAdminDoamin> soLuongPhuKienAdminDoamins = new ArrayList<>();
+		for (SoluongPhukien soluongPhukien : phukien.getSoluongPhukiens()) {
+			SoLuongPhuKienAdminDoamin soLuongPhuKienAdminDoamin = new SoLuongPhuKienAdminDoamin();
+			soLuongPhuKienAdminDoamin.converToDomain(soluongPhukien);
+			soLuongPhuKienAdminDoamins.add(soLuongPhuKienAdminDoamin);
+		}
+		phuKienAdminDomain.setSoluongphukiens(soLuongPhuKienAdminDoamins);
+
 		return phuKienAdminDomain;
 	}
 

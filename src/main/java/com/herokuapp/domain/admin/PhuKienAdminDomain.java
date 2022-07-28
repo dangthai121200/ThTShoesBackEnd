@@ -15,6 +15,7 @@ public class PhuKienAdminDomain extends AbstractsDomain<Phukien> {
 	private String urlanh;
 	private List<HinhAdminDomain> hinhs = new ArrayList<>();
 	private LoaiPhuKienAdminDomain loaiPhuKien = new LoaiPhuKienAdminDomain();
+	private List<SoLuongPhuKienAdminDoamin> soluongphukiens = new ArrayList<>();
 
 	public PhuKienAdminDomain() {
 
@@ -82,6 +83,16 @@ public class PhuKienAdminDomain extends AbstractsDomain<Phukien> {
 
 	public void setLoaiPhuKien(LoaiPhuKienAdminDomain loaiPhuKien) {
 		this.loaiPhuKien = loaiPhuKien;
+	}
+	
+	
+
+	public List<SoLuongPhuKienAdminDoamin> getSoluongphukiens() {
+		return soluongphukiens;
+	}
+
+	public void setSoluongphukiens(List<SoLuongPhuKienAdminDoamin> soluongphukiens) {
+		this.soluongphukiens = soluongphukiens;
 	}
 
 	@Override
