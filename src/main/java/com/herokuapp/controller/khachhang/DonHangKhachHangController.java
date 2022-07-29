@@ -92,7 +92,7 @@ public class DonHangKhachHangController {
 			String makh = ((UserDetailsConfigure) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
 					.getManguoidung();
 			donHangService.huyDonHangOfKhachHang(madh, makh);
-			return ResponseEntity.badRequest().body("Hủy thành công");
+			return ResponseEntity.ok("Hủy thành công");
 		} catch (ThtShoesException ex) {
 			throw ex;
 		} catch (Exception ex) {
