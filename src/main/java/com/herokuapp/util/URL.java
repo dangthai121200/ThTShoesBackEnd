@@ -45,6 +45,8 @@ public class URL {
 	public static final String DANH_MUC = "/danhmuc";
 
 	public static final String BINH_LUAN = "/binhluan";
+	
+	public static final String THONG_KE = "/thongke";
 
 	public static final String LOCK = "/lock";
 	public static final String UNLOCK = "/unlock";

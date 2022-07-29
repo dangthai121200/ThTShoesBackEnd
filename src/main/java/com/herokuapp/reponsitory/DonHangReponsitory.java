@@ -1,5 +1,8 @@
 package com.herokuapp.reponsitory;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,4 +26,7 @@ public interface DonHangReponsitory extends JpaRepository<Donhang, String> {
 
 	@Query(value = "Select * from donhang where madon= :madon and makh = :makh", nativeQuery = true)
 	Donhang findByMadhAndMakh(@Param(value = "madon") String madon, @Param(value = "makh") String makh);
+	
+	List<Donhang> findByngaytaoBetween(Date ngaybd, Date ngaykt);
+	
 }

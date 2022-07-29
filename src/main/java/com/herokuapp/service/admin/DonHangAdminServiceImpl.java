@@ -14,6 +14,7 @@ import com.herokuapp.domain.admin.MauSacAdminDomain;
 import com.herokuapp.domain.admin.PhukienDonhangAdminDomain;
 import com.herokuapp.domain.admin.SizeAdminDomain;
 import com.herokuapp.domain.admin.list.ListDonHangAdmin;
+import com.herokuapp.domain.thongke.admin.ByDate;
 import com.herokuapp.entity.Donhang;
 import com.herokuapp.entity.Dskhuyenmai;
 import com.herokuapp.entity.Giay;
@@ -233,6 +234,21 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 		}
 		donHangAdminDomain.setPhukienDonhangs(phukienDonhangs);
 		return donHangAdminDomain;
+	}
+
+	@Override
+	public ListDonHangAdmin getDonHangByDate(ByDate byDate) {
+		ListDonHangAdmin listDonHangAdmin = new ListDonHangAdmin();
+		List<DonHangAdminDomain> donHangAdminDomains = new ArrayList<>();
+		List<Donhang> donhangs = donHangReponsitory.findByngaytaoBetween(byDate.getNgayBd(), byDate.getNgayKt());
+		donhangs.forEach(donhang -> {
+			DonHangAdminDomain donHangAdminDomain = new DonHangAdminDomain();
+			donHangAdminDomain.converToDomain(donhang);
+			donHangAdminDomains.add(donHangAdminDomain);
+		});
+
+		listDonHangAdmin.setDonHangs(donHangAdminDomains);
+		return listDonHangAdmin;
 	}
 
 }
