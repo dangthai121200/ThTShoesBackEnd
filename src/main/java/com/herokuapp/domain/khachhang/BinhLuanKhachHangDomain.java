@@ -3,16 +3,31 @@ package com.herokuapp.domain.khachhang;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
 import com.herokuapp.abstracts.AbstractsDomain;
 import com.herokuapp.entity.Binhluan;
+import com.herokuapp.util.ThtShoesMess;
 
 public class BinhLuanKhachHangDomain extends AbstractsDomain<Binhluan> {
+	
 	private String mabl;
+	
+	@NotEmpty(message = ThtShoesMess.BINH_LUAN)
 	private String mota;
+	
 	private Date thoigian;
+	
+	@NotEmpty(message = ThtShoesMess.BINH_LUAN_MA_SP)
+	@Length(max = 10, message = ThtShoesMess.MAX_LENGHT + "của masp là 10")
 	private String masp;
+	
 	private KhachHangDomain khachHangDomain;
+	
 	private NhanVienKhachHangDomain nhanvien;
+	
 	private List<BinhLuanKhachHangDomain> binhluans;
 
 	public BinhLuanKhachHangDomain() {

@@ -1,5 +1,7 @@
 package com.herokuapp.controller.admin;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +52,7 @@ public class GiayAdminController {
 	}
 
 	@PostMapping
-	public ResponseEntity<String> addGiay(@RequestBody AddGiayAdminDomain giayAdminDomain) {
+	public ResponseEntity<String> addGiay(@RequestBody @Valid AddGiayAdminDomain giayAdminDomain) {
 		try {
 			String idGiay = giayService.addGiay(giayAdminDomain);
 			return ResponseEntity.ok(idGiay);
@@ -62,7 +64,7 @@ public class GiayAdminController {
 	}
 
 	@PostMapping(value = URL.GIAY_SIZE_MAU)
-	public ResponseEntity<String> addGiaySizeMauOfGiay(@RequestBody AddGiayMauSizeAdmin addGiayMauSizeAdmin)
+	public ResponseEntity<String> addGiaySizeMauOfGiay(@RequestBody @Valid AddGiayMauSizeAdmin addGiayMauSizeAdmin)
 			throws ThtShoesException {
 		try {
 			giayService.addGiaySizeMauOfGiay(addGiayMauSizeAdmin);
@@ -76,7 +78,7 @@ public class GiayAdminController {
 	}
 
 	@PutMapping
-	public ResponseEntity<String> updateGiay(@RequestBody GiayAdminDomain giayAdminDomain) {
+	public ResponseEntity<String> updateGiay(@RequestBody @Valid GiayAdminDomain giayAdminDomain) {
 		try {
 			if (giayAdminDomain.getMagiay() == null) {
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Thiếu mã giày");

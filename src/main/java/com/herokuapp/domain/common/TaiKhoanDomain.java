@@ -1,17 +1,31 @@
 package com.herokuapp.domain.common;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+
 import com.herokuapp.abstracts.AbstractsDomain;
 import com.herokuapp.entity.Taikhoan;
 import com.herokuapp.enums.Quyen;
+import com.herokuapp.util.Regex;
+import com.herokuapp.util.ThtShoesMess;
 
 public class TaiKhoanDomain extends AbstractsDomain<Taikhoan> {
 
 	private String manguoidung;
+
+	@NotEmpty(message = ThtShoesMess.EMAIL)
+	@Email(message = ThtShoesMess.EMAIL_SAI)
 	private String email;
+
+	@NotEmpty(message = ThtShoesMess.USERNAME)
 	private String username;
+
+	@Pattern(regexp = Regex.PASSWORD, message = ThtShoesMess.PASSWORD)
 	private String password;
 
 	private Quyen quyen;
+
 	private byte tinhtrang = 0;
 
 	public TaiKhoanDomain() {

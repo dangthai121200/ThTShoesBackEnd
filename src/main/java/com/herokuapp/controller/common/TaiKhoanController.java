@@ -1,5 +1,7 @@
 package com.herokuapp.controller.common;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,12 +13,12 @@ import com.herokuapp.util.URL;
 
 @RestController
 public class TaiKhoanController {
-	
+
 	@Autowired
 	public TaiKhoanService taiKhoanService;
 
 	@PutMapping(value = URL.CHANGE_PASSWORD)
-	public void changePassword(@RequestBody ChangePasswordDomain changePasswordDomain) {
+	public void changePassword(@RequestBody @Valid ChangePasswordDomain changePasswordDomain) {
 		taiKhoanService.changePassword(changePasswordDomain);
 	}
 }

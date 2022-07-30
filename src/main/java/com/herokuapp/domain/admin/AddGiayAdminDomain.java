@@ -4,22 +4,56 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+
 import com.herokuapp.abstracts.AbstractsDomain;
 import com.herokuapp.entity.Giay;
+import com.herokuapp.util.ThtShoesMess;
 
 public class AddGiayAdminDomain extends AbstractsDomain<Giay> {
+
 	private String magiay;
+
+	@NotEmpty(message = ThtShoesMess.GIAY_CHAT_LIEU)
+	@Length(max = 40, message = ThtShoesMess.MAX_LENGHT + "của chất liệu là 40")
 	private String chatlieu;
+
+	@NotNull(message = ThtShoesMess.GIAY_GIA)
+	@Max(value = 99999999999L)
 	private int gia;
+
+	@NotEmpty(message = ThtShoesMess.GIAY_KIEU_DANG)
+	@Length(max = 30, message = ThtShoesMess.MAX_LENGHT + "của kiểu dáng là 30")
 	private String kieudang;
+
 	private Date ngaythem;
+
 	private String mota;
+
+	@NotEmpty(message = ThtShoesMess.GIAY_TEN)
+	@Length(max = 50, message = ThtShoesMess.MAX_LENGHT + "của tên giày là 50")
 	private String tengiay;
+
+	@NotNull(message = ThtShoesMess.GIAY_TRONG_LUONG)
 	private int trongluong;
+
 	private String urlanh;
+
+	@NotEmpty(message = ThtShoesMess.MA_LOAI_GIAY)
 	private String maLoaiGiay;
+
+	@NotEmpty(message = ThtShoesMess.MA_HANG)
 	private String maHang;
+
+	@NotEmpty(message = ThtShoesMess.MA_DANH_MUC)
 	private String maDanhMuc;
+
+	@Valid
 	private Set<SizeMauAdmin> sizeMaus = new HashSet<>();
 
 	public String getMagiay() {

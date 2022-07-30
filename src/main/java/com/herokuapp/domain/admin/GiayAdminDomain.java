@@ -4,26 +4,57 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+
 import com.herokuapp.abstracts.AbstractsDomain;
 import com.herokuapp.entity.Giay;
+import com.herokuapp.util.ThtShoesMess;
 
 public class GiayAdminDomain extends AbstractsDomain<Giay> {
 
 	private String magiay;
+	
+	@NotEmpty(message = ThtShoesMess.GIAY_CHAT_LIEU)
+	@Length(max = 40, message = ThtShoesMess.MAX_LENGHT + "của chất liệu là 40")
 	private String chatlieu;
+	
+	@NotNull(message = ThtShoesMess.GIAY_GIA)
+	@Max(value = 99999999999L)
 	private int gia;
+	
+	@NotEmpty(message = ThtShoesMess.GIAY_KIEU_DANG)
+	@Length(max = 30, message = ThtShoesMess.MAX_LENGHT + "của kiểu dáng là 30")
 	private String kieudang;
+	
 	private Date ngaythem;
+	
 	private String mota;
+	
+	@NotEmpty(message = ThtShoesMess.GIAY_TEN)
+	@Length(max = 50, message = ThtShoesMess.MAX_LENGHT + "của tên giày là 50")
 	private String tengiay;
+	
+	@NotNull(message = ThtShoesMess.GIAY_TRONG_LUONG)
 	private int trongluong;
+	
 	private String urlanh;
+	
 	private LoaiGiayAdminDomain loaigiay = new LoaiGiayAdminDomain();
+	
 	private HangAdminDomain hang = new HangAdminDomain();
+	
 	private DanhmucAdminDomain danhmuc = new DanhmucAdminDomain();
+	
 	private int maLgiayHang;
+	
 	private List<GiaySizeMauAdminDomain> giaySizeMau = new ArrayList<>();
+	
 	private List<HinhAdminDomain> hinhs = new ArrayList<>();
+	
 	private List<SoLuongGiayAdminDomain> soluonggiay = new ArrayList<>();
 
 	public GiayAdminDomain() {

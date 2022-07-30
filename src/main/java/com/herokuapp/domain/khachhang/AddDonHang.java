@@ -5,14 +5,27 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.validation.constraints.NotEmpty;
+
+import com.herokuapp.util.ThtShoesMess;
+
 public class AddDonHang {
 
+	@NotEmpty(message = ThtShoesMess.NGUOI_NHAN)
 	private String nguoinhan;
+	
+	@NotEmpty(message = ThtShoesMess.DIACHI)
 	private String diachi;
+	
 	private String ghichu;
+	
+	@NotEmpty(message = ThtShoesMess.MA_LOAI_THANH_TOAN)
 	private String maloaithanhtoan;
+	
 	private String maKhuyenMai;
+	
 	private Set<InfoGiayDonHang> giays = new HashSet<InfoGiayDonHang>();
+	
 	private Map<String, Integer> phukiens = new HashMap<String, Integer>();
 
 	public String getNguoinhan() {

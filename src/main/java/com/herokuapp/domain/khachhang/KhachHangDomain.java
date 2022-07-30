@@ -1,14 +1,31 @@
 package com.herokuapp.domain.khachhang;
 
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
 import com.herokuapp.abstracts.AbstractsDomain;
 import com.herokuapp.entity.Khachhang;
+import com.herokuapp.util.ThtShoesMess;
 
 public class KhachHangDomain extends AbstractsDomain<Khachhang> {
+
 	private String makh;
+
+	@NotEmpty(message = ThtShoesMess.DIACHI)
 	private String diachi;
+
+	@NotEmpty(message = ThtShoesMess.HO)
+	@Length(max = 10, message = ThtShoesMess.MAX_LENGHT + "của họ là 10")
 	private String ho;
-	private String sdt;
+
+	@NotEmpty(message = ThtShoesMess.TEN)
+	@Length(max = 30, message = ThtShoesMess.MAX_LENGHT + "của tên là 30")
 	private String ten;
+
+	@NotEmpty(message = ThtShoesMess.SDT)
+	@Length(min = 10, max = 10, message = ThtShoesMess.SDT_SAI)
+	private String sdt;
 
 	public KhachHangDomain() {
 	}

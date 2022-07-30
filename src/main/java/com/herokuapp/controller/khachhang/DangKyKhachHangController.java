@@ -1,5 +1,7 @@
 package com.herokuapp.controller.khachhang;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.herokuapp.domain.khachhang.InfoKhachHangDangKy;
+import com.herokuapp.handleexception.ThtShoesException;
 import com.herokuapp.service.common.TaiKhoanService;
 import com.herokuapp.service.khachhang.DangKyService;
 import com.herokuapp.service.khachhang.KhachHangService;
@@ -27,11 +30,18 @@ public class DangKyKhachHangController {
 	private KhachHangService khachHangService;
 
 	@RequestMapping(value = URL.DANG_KY, method = RequestMethod.POST)
-	public ResponseEntity<String> dangKyKhachHang(@RequestBody InfoKhachHangDangKy infoKhachHangDangKy) {
+	public ResponseEntity<String> dangKyKhachHang(@RequestBody @Valid InfoKhachHangDangKy infoKhachHangDangKy)
+			throws ThtShoesException {
 		StringBuilder messError = new StringBuilder();
 		Boolean checkUsername = taiKhoanService.checkUsername(infoKhachHangDangKy.getTaiKhoan().getUsername());
 		Boolean checkEmail = taiKhoanService.checkEmail(infoKhachHangDangKy.getTaiKhoan().getEmail());
 		Boolean checkSdt = khachHangService.checkSdt(infoKhachHangDangKy.getKhachHang().getSdt());
+
+		try {
+			Integer.parseInt(infoKhachHangDangKy.getKhachHang().getSdt());
+		} catch (NumberFormatException ex) {
+			throw new ThtShoesException("Số điện thoại sai định dạng");
+		}
 		if (checkUsername) {
 			messError.append("Username đã tồn tại, ");
 		}

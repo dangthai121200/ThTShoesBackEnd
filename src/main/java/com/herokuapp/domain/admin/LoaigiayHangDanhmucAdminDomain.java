@@ -1,5 +1,7 @@
 package com.herokuapp.domain.admin;
 
+import javax.validation.Valid;
+
 import com.herokuapp.abstracts.AbstractsDomain;
 import com.herokuapp.entity.LoaigiayHangDanhmuc;
 

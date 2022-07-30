@@ -1,5 +1,7 @@
 package com.herokuapp.controller.admin;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,7 +28,7 @@ public class DonHangAdminController {
 	public DonHangAdminService donHangAdminService;
 
 	@PutMapping(value = URL.TINH_TRANG)
-	public ResponseEntity<String> updateStatusForDonhang(@RequestBody UpdateTinhTrangDonHang updateTinhTrangDonHang)
+	public ResponseEntity<String> updateStatusForDonhang(@RequestBody @Valid UpdateTinhTrangDonHang updateTinhTrangDonHang)
 			throws ThtShoesException {
 		String manhanvien = ((UserDetailsConfigure) SecurityContextHolder.getContext().getAuthentication()
 				.getPrincipal()).getManguoidung();

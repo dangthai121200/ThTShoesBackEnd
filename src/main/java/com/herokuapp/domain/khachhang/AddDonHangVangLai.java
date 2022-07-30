@@ -5,17 +5,41 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.herokuapp.util.ThtShoesMess;
+
 public class AddDonHangVangLai {
+
+	@NotEmpty(message = ThtShoesMess.HO)
+	@Length(max = 10, message = ThtShoesMess.MAX_LENGHT + "của họ là 10")
 	private String ho;
+
+	@NotEmpty(message = ThtShoesMess.TEN)
+	@Length(max = 10, message = ThtShoesMess.MAX_LENGHT + "của tên là 30")
 	private String ten;
+
+	@NotEmpty(message = ThtShoesMess.SDT)
+	@Length(max = 10, min = 10, message = ThtShoesMess.SDT_SAI)
 	private String sdt;
+
 	private String diachi;
+
+	@Email(message = ThtShoesMess.EMAIL_SAI)
 	private String email;
+
 	private String ghichu;
+
 	private String makhuyenmai;
+
+	@NotEmpty(message = ThtShoesMess.MA_LOAI_THANH_TOAN)
 	private String maloaithanhtoan;
 
 	private Set<InfoGiayDonHang> giays = new HashSet<InfoGiayDonHang>();
+	
 	private Map<String, Integer> phukiens = new HashMap<String, Integer>();
 
 	public AddDonHangVangLai() {
@@ -100,6 +124,5 @@ public class AddDonHangVangLai {
 	public void setMaloaithanhtoan(String maloaithanhtoan) {
 		this.maloaithanhtoan = maloaithanhtoan;
 	}
-	
 
 }

@@ -1,9 +1,15 @@
 package com.herokuapp.domain.admin;
 
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
 import com.herokuapp.abstracts.AbstractsDomain;
 import com.herokuapp.entity.Danhmuc;
+import com.herokuapp.util.ThtShoesMess;
 
 public class DanhmucAdminDomain extends AbstractsDomain<Danhmuc> {
+	
 	private String madm;
 	private String tendanhmuc;
 

@@ -1,5 +1,7 @@
 package com.herokuapp.controller.admin;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +29,7 @@ public class DanhMucAdminController {
 	}
 
 	@PostMapping
-	public ResponseEntity<String> addDanhMuc(@RequestBody DanhmucAdminDomain danhmucAdminDomain)
+	public ResponseEntity<String> addDanhMuc(@RequestBody @Valid DanhmucAdminDomain danhmucAdminDomain)
 			throws ThtShoesException {
 		try {
 			danhMucAdminService.addDanhMuc(danhmucAdminDomain);

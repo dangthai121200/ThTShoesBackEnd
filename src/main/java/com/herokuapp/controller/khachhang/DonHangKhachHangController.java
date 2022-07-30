@@ -2,6 +2,8 @@ package com.herokuapp.controller.khachhang;
 
 import java.util.NoSuchElementException;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -57,8 +59,14 @@ public class DonHangKhachHangController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<String> addDonHang(@RequestBody AddDonHang addDonHang) throws ThtShoesException {
+	public ResponseEntity<String> addDonHang(@RequestBody @Valid AddDonHang addDonHang) throws ThtShoesException {
 		try {
+
+			if ((addDonHang.getGiays() == null && addDonHang.getPhukiens() == null)
+					|| (addDonHang.getGiays().size() == 0 && addDonHang.getPhukiens().size() == 0)) {
+				throw new ThtShoesException("Đơn hàng rỗng");
+			}
+
 			donHangService.addDonHang(addDonHang);
 			return ResponseEntity.ok("Thêm thành công");
 		} catch (ThtShoesException ex) {
@@ -71,9 +79,20 @@ public class DonHangKhachHangController {
 	}
 
 	@RequestMapping(value = URL.KHACH_VANG_LAI, method = RequestMethod.POST)
-	public ResponseEntity<String> addDonHangKhachVanglai(@RequestBody AddDonHangVangLai donHangVangLai)
+	public ResponseEntity<String> addDonHangKhachVanglai(@RequestBody @Valid AddDonHangVangLai donHangVangLai)
 			throws ThtShoesException {
+
 		try {
+			Integer.parseInt(donHangVangLai.getSdt());
+		} catch (NumberFormatException ex) {
+			throw new ThtShoesException("Số điện thoại sai định dạng");
+		}
+
+		try {
+			if ((donHangVangLai.getGiays() == null && donHangVangLai.getPhukiens() == null)
+					|| (donHangVangLai.getGiays().size() == 0 && donHangVangLai.getPhukiens().size() == 0)) {
+				throw new ThtShoesException("Đơn hàng rỗng");
+			}
 			String idKHVL = donHangService.addDonHangKhachVangLai(donHangVangLai);
 			return ResponseEntity.ok(idKHVL);
 		} catch (ThtShoesException ex) {

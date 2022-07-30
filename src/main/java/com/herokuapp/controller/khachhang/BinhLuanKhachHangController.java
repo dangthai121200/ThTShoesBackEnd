@@ -1,5 +1,7 @@
 package com.herokuapp.controller.khachhang;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,7 +26,7 @@ public class BinhLuanKhachHangController {
 	public BinhLuanKhachHangService binhLuanKhachHangService;
 
 	@PostMapping
-	public ResponseEntity<String> binhLuanSanPham(@RequestBody BinhLuanKhachHangDomain binhLuanKhachHangDomain) {
+	public ResponseEntity<String> binhLuanSanPham(@RequestBody @Valid BinhLuanKhachHangDomain binhLuanKhachHangDomain) {
 
 		String makh = ((UserDetailsConfigure) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
 				.getManguoidung();
@@ -34,13 +36,13 @@ public class BinhLuanKhachHangController {
 	}
 
 	@GetMapping(value = URL.GIAY + "/{magiay}")
-	public ListBinhLuanKhachHang getAllBinhLuanByIdGiay(@PathVariable(name = "magiay") String magiay) {
+	public ListBinhLuanKhachHang getAllBinhLuanByIdGiay(@PathVariable(name = "magiay", required = true) String magiay) {
 		return binhLuanKhachHangService.getAllBinhLuanByIdGiay(magiay);
 
 	}
 
 	@GetMapping(value = URL.PHU_KIEN + "/{mapk}")
-	public ListBinhLuanKhachHang getAllBinhLuanByIdPhuKien(@PathVariable(name = "mapk") String mapk) {
+	public ListBinhLuanKhachHang getAllBinhLuanByIdPhuKien(@PathVariable(name = "mapk", required = true) String mapk) {
 		return binhLuanKhachHangService.getAllBinhLuanByIdPhuKien(mapk);
 
 	}

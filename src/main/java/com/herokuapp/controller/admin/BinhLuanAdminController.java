@@ -1,5 +1,7 @@
 package com.herokuapp.controller.admin;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -38,7 +40,7 @@ public class BinhLuanAdminController {
 	}
 
 	@PostMapping
-	public ResponseEntity<String> traLoiBinhLuan(@RequestBody TraLoiBinhLuanAdminDomain traLoiBinhLuanAdminDomain)
+	public ResponseEntity<String> traLoiBinhLuan(@RequestBody @Valid TraLoiBinhLuanAdminDomain traLoiBinhLuanAdminDomain)
 			throws ThtShoesException {
 		try {
 			String manv = ((UserDetailsConfigure) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
