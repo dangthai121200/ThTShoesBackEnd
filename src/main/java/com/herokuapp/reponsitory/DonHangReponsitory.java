@@ -26,7 +26,9 @@ public interface DonHangReponsitory extends JpaRepository<Donhang, String> {
 
 	@Query(value = "Select * from donhang where madon= :madon and makh = :makh", nativeQuery = true)
 	Donhang findByMadhAndMakh(@Param(value = "madon") String madon, @Param(value = "makh") String makh);
-	
+
 	List<Donhang> findByngaytaoBetween(Date ngaybd, Date ngaykt);
-	
+
+	@Query(value = "SELECT sum(dh.tonggia) as doanhthu FROM donhang dh WHERE dh.ngaytao BETWEEN :ngaybd AND :ngaykt", nativeQuery = true)
+	int thongKeDoanhThu(@Param(value = "ngaybd") Date ngaybd, @Param(value = "ngaykt") Date ngaykt);
 }

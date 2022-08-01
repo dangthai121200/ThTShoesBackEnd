@@ -135,7 +135,6 @@ public class GiayDomain extends AbstractsDomain<Giay> {
 		this.kieudang = giay.getKieudang();
 		this.mota = giay.getMota();
 		this.trongluong = giay.getTrongluong();
-		this.soluong = giay.getSoluong();
 		this.urlanh = giay.getUrlanh();
 
 		giay.getHinhs().forEach(hinh -> {

@@ -7,7 +7,7 @@ import com.herokuapp.domain.admin.LoaigiayHangDanhmucAdminDomain;
 import com.herokuapp.domain.admin.SoLuongGiaySizeMau;
 import com.herokuapp.domain.admin.list.ListGiayAdmin;
 import com.herokuapp.domain.admin.list.ListGiaySizeMauAdmin;
-import com.herokuapp.domain.admin.list.ListSizeAdmin;
+import com.herokuapp.domain.thongke.admin.ByDate;
 import com.herokuapp.handleexception.ThtShoesException;
 
 public interface GiayAdminService {
@@ -30,5 +30,7 @@ public interface GiayAdminService {
 
 	void deleteGiaySizeMauOfGiay(int idGiaySizemau) throws ThtShoesException;
 
-	void updateGiay(GiayAdminDomain giayAdminDomain);;
+	void updateGiay(GiayAdminDomain giayAdminDomain);
+
+	ListGiayAdmin thongKeGiayByThoiGian(ByDate byDate);;
 }

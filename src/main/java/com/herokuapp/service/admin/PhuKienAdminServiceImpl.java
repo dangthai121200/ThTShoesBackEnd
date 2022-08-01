@@ -11,6 +11,7 @@ import com.herokuapp.domain.admin.AddPhuKienAdmin;
 import com.herokuapp.domain.admin.PhuKienAdminDomain;
 import com.herokuapp.domain.admin.SoLuongPhuKienAdminDoamin;
 import com.herokuapp.domain.admin.list.ListPhuKienAdmin;
+import com.herokuapp.domain.thongke.admin.ByDate;
 import com.herokuapp.entity.Loaiphukien;
 import com.herokuapp.entity.Phukien;
 import com.herokuapp.entity.SoluongPhukien;
@@ -137,6 +138,21 @@ public class PhuKienAdminServiceImpl implements PhuKienAdminService {
 			throw new ThtShoesException("Không thể xóa phụ kiện đã có đơn hàng");
 		}
 		phuKienReponsitory.deleteById(mapk);
+	}
+
+	@Override
+	public ListPhuKienAdmin thongKePhuKienByThoiGian(ByDate byDate) {
+		ListPhuKienAdmin listPhuKienAdmin = new ListPhuKienAdmin();
+		List<PhuKienAdminDomain> phuKienAdminDomains = new ArrayList<>();
+		List<Phukien> phukiens = phuKienReponsitory.findByngaythemBetween(byDate.getNgayBd(), byDate.getNgayKt());
+		phukiens.forEach(phukien -> {
+			PhuKienAdminDomain phukienAdminDomain = new PhuKienAdminDomain();
+			phukienAdminDomain.converToDomain(phukien);
+			phuKienAdminDomains.add(phukienAdminDomain);
+
+		});
+		listPhuKienAdmin.setPhuKiens(phuKienAdminDomains);
+		return listPhuKienAdmin;
 	}
 
 }

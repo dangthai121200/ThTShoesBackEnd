@@ -23,6 +23,7 @@ import com.herokuapp.domain.admin.SoLuongGiayAdminDomain;
 import com.herokuapp.domain.admin.SoLuongGiaySizeMau;
 import com.herokuapp.domain.admin.list.ListGiayAdmin;
 import com.herokuapp.domain.admin.list.ListGiaySizeMauAdmin;
+import com.herokuapp.domain.thongke.admin.ByDate;
 import com.herokuapp.entity.Giay;
 import com.herokuapp.entity.GiayMauSize;
 import com.herokuapp.entity.GiayMauSizePK;
@@ -352,6 +353,26 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 		}
 
 		giayReponsitory.save(giay);
+	}
+
+	@Override
+	public ListGiayAdmin thongKeGiayByThoiGian(ByDate byDate) {
+
+		ListGiayAdmin listGiay = new ListGiayAdmin();
+		List<Giay> giayEntitys = giayReponsitory.findByngaythemBetween(byDate.getNgayBd(), byDate.getNgayKt());
+		giayEntitys.forEach(giay -> {
+
+			GiayAdminDomain giayAdminDomain = new GiayAdminDomain();
+			giayAdminDomain.converToDomain(giay);
+
+			giay.getHinhs().forEach(hinh -> {
+				HinhAdminDomain hinhDomain = new HinhAdminDomain();
+				hinhDomain.converToDomain(hinh);
+				giayAdminDomain.getHinhs().add(hinhDomain);
+			});
+			listGiay.getGiays().add(giayAdminDomain);
+		});
+		return listGiay;
 	}
 
 }

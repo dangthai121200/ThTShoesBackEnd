@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.herokuapp.domain.admin.DoanhThuAdmin;
 import com.herokuapp.domain.admin.DonHangAdminDomain;
 import com.herokuapp.domain.admin.GiayAdminDomain;
 import com.herokuapp.domain.admin.GiayDonhangAdminDomain;
@@ -251,4 +252,11 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 		return listDonHangAdmin;
 	}
 
+	@Override
+	public DoanhThuAdmin thongKeDoanhThu(ByDate byDate) {
+		DoanhThuAdmin doanhThuAdmin = new DoanhThuAdmin();
+		int doanhthu = donHangReponsitory.thongKeDoanhThu(byDate.getNgayBd(), byDate.getNgayKt());
+		doanhThuAdmin.setTongdoanhthu(doanhthu);
+		return doanhThuAdmin;
+	}
 }
