@@ -51,8 +51,6 @@ public class Giay implements Serializable {
 
 	private String urlanh;
 
-	private int soluong;
-
 	@Column(name = "ma_lgiay_hang")
 	private int maLgiayHang;
 
@@ -143,14 +141,6 @@ public class Giay implements Serializable {
 
 	public void setTrongluong(int trongluong) {
 		this.trongluong = trongluong;
-	}
-
-	public int getSoluong() {
-		return soluong;
-	}
-
-	public void setSoluong(int soluong) {
-		this.soluong = soluong;
 	}
 
 	public List<Binhluan> getBinhluans() {
