@@ -58,6 +58,11 @@ public class URL {
 	
 	public static final String SO_LUONG = "/soluong";
 	
+	//websocket
+	public static final String THTSHOES_APP = "/thtshoesapp";
+	public static final String THTSHOES_WS = "/thtshoesws";
+	public static final String THONGBAO = "/thongbao";
+	
 
 	// URL host save image
 	public static final String API_UPLOAD_IMAGE = "https://api.imgbb.com/1/upload";

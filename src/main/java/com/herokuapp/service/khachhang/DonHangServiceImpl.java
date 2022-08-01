@@ -52,6 +52,7 @@ import com.herokuapp.reponsitory.PhuKienReponsitory;
 import com.herokuapp.reponsitory.PhukienDonhangReponsitory;
 import com.herokuapp.reponsitory.SizeReponsitory;
 import com.herokuapp.security.UserDetailsConfigure;
+import com.herokuapp.service.websocket.ThtShoesWSService;
 import com.herokuapp.util.PrefixId;
 
 @Service
@@ -95,6 +96,9 @@ public class DonHangServiceImpl implements DonHangService {
 
 	@Autowired
 	public MauSacReponsitory mauSacReponsitory;
+
+	@Autowired
+	public ThtShoesWSService thtShoesWSService;
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -308,6 +312,7 @@ public class DonHangServiceImpl implements DonHangService {
 		if (dskhuyenmai != null) {
 			khuyenMaiReponsitory.save(dskhuyenmai);
 		}
+		thtShoesWSService.guiTongBaoCoDonHangMoi("Có đơn hàng mới");
 		return idNextKhachVanglai;
 	}
 

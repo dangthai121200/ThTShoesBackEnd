@@ -205,7 +205,7 @@ public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
 
 //		********************************************************************************************************************************
 
-		http.authorizeRequests().antMatchers("/css/**", "/asssets/**").permitAll();
+		http.authorizeRequests().antMatchers("/css/**", "/asssets/**", "/**").permitAll();
 
 		http.authorizeRequests().anyRequest().authenticated();
 
