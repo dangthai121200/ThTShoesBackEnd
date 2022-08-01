@@ -23,6 +23,7 @@ import com.herokuapp.domain.admin.SoLuongGiayAdminDomain;
 import com.herokuapp.domain.admin.SoLuongGiaySizeMau;
 import com.herokuapp.domain.admin.list.ListGiayAdmin;
 import com.herokuapp.domain.admin.list.ListGiaySizeMauAdmin;
+import com.herokuapp.domain.admin.list.ListSoLuongGiayAdmin;
 import com.herokuapp.domain.thongke.admin.ByDate;
 import com.herokuapp.entity.Giay;
 import com.herokuapp.entity.GiayMauSize;
@@ -373,6 +374,37 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 			listGiay.getGiays().add(giayAdminDomain);
 		});
 		return listGiay;
+	}
+
+	@Override
+	public ListSoLuongGiayAdmin getAllSoLuongGiayByIdGiay(String idGiay) {
+		ListSoLuongGiayAdmin listSoLuongGiayAdmin = new ListSoLuongGiayAdmin();
+		List<SoLuongGiayAdminDomain> soluonggiays = new ArrayList<>();
+
+		// get all mau and size of giay
+		List<GiayMauSize> giayMauSizes = giaySizeMauReponsitory.getGiayMauSizeByMaGiay(idGiay);
+
+		// convert to list id giay mau size
+		List<Integer> idGiayMauSize = convertToListIdGiayMauSizeString(giayMauSizes);
+
+		// get all list soluonggiay of giay size mau
+		List<SoluongGiay> soluongGiays = soLuongGiayReponsitory.findByidGiaySizeMauIn(idGiayMauSize);
+
+		for (SoluongGiay soluongGiay : soluongGiays) {
+			SoLuongGiayAdminDomain soLuongGiayAdminDomain = new SoLuongGiayAdminDomain();
+			soLuongGiayAdminDomain.converToDomain(soluongGiay);
+			soluonggiays.add(soLuongGiayAdminDomain);
+		}
+		listSoLuongGiayAdmin.setSoluonggiays(soluonggiays);
+		return listSoLuongGiayAdmin;
+	}
+
+	private List<Integer> convertToListIdGiayMauSizeString(List<GiayMauSize> giayMauSizes) {
+		List<Integer> listId = new ArrayList<>();
+		for (GiayMauSize giayMauSize : giayMauSizes) {
+			listId.add(giayMauSize.getId().getId());
+		}
+		return listId;
 	}
 
 }

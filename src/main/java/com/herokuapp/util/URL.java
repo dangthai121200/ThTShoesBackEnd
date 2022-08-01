@@ -55,6 +55,9 @@ public class URL {
 
 	public static final String LOGIN = "/login";
 	public static final String CHANGE_PASSWORD = "/doimatkhau";
+	
+	public static final String SO_LUONG = "/soluong";
+	
 
 	// URL host save image
 	public static final String API_UPLOAD_IMAGE = "https://api.imgbb.com/1/upload";

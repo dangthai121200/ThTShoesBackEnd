@@ -22,6 +22,7 @@ import com.herokuapp.domain.admin.LoaigiayHangDanhmucAdminDomain;
 import com.herokuapp.domain.admin.SoLuongGiaySizeMau;
 import com.herokuapp.domain.admin.list.ListGiayAdmin;
 import com.herokuapp.domain.admin.list.ListGiaySizeMauAdmin;
+import com.herokuapp.domain.admin.list.ListSoLuongGiayAdmin;
 import com.herokuapp.handleexception.ThtShoesException;
 import com.herokuapp.service.admin.GiayAdminService;
 import com.herokuapp.util.URL;
@@ -49,6 +50,12 @@ public class GiayAdminController {
 	public ListGiaySizeMauAdmin getAllGiaySizeMauOfGiay(@PathVariable(name = "idGiay") String idGiay) {
 		ListGiaySizeMauAdmin listGiaySizeMauAdmin = giayService.getAllGiaySizeMauOfGiay(idGiay);
 		return listGiaySizeMauAdmin;
+	}
+
+	@GetMapping(value = URL.SO_LUONG + "/{idGiay}")
+	public ListSoLuongGiayAdmin getAllSoLuongGiayByIdGiay(@PathVariable(name = "idGiay") String idGiay) {
+		return giayService.getAllSoLuongGiayByIdGiay(idGiay);
+
 	}
 
 	@PostMapping

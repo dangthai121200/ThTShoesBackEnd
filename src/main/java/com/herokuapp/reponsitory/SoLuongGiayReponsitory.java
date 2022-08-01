@@ -11,5 +11,8 @@ import com.herokuapp.entity.SoluongGiay;
 @Repository
 @Transactional(rollbackFor = Exception.class)
 public interface SoLuongGiayReponsitory extends JpaRepository<SoluongGiay, Integer> {
+
 	List<SoluongGiay> findByidGiaySizeMau(int idGiaySizeMau);
+
+	List<SoluongGiay> findByidGiaySizeMauIn(List<Integer> idGiayMauSizes);
 }

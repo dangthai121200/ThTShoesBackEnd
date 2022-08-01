@@ -7,6 +7,7 @@ import com.herokuapp.domain.admin.LoaigiayHangDanhmucAdminDomain;
 import com.herokuapp.domain.admin.SoLuongGiaySizeMau;
 import com.herokuapp.domain.admin.list.ListGiayAdmin;
 import com.herokuapp.domain.admin.list.ListGiaySizeMauAdmin;
+import com.herokuapp.domain.admin.list.ListSoLuongGiayAdmin;
 import com.herokuapp.domain.thongke.admin.ByDate;
 import com.herokuapp.handleexception.ThtShoesException;
 
@@ -32,5 +33,7 @@ public interface GiayAdminService {
 
 	void updateGiay(GiayAdminDomain giayAdminDomain);
 
-	ListGiayAdmin thongKeGiayByThoiGian(ByDate byDate);;
+	ListGiayAdmin thongKeGiayByThoiGian(ByDate byDate);
+
+	ListSoLuongGiayAdmin getAllSoLuongGiayByIdGiay(String idGiay);;
 }
