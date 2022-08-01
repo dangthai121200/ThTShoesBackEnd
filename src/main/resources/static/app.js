@@ -13,13 +13,13 @@ function setConnected(connected) {
 }
 
 function connect() {
-	var socket = new SockJS('/thtshoesws');
+	var socket = new SockJS("/thtshoesws");
 	stompClient = Stomp.over(socket);
 	stompClient.connect({}, function(frame) {
 		setConnected(true);
 		console.log('Connected: ' + frame);
-		stompClient.subscribe('/thtshoesapp/thongbao', function(greeting) {
-			showGreeting(JSON.parse(greeting.body).content);
+		stompClient.subscribe("/thongbao/donhang", function(greeting) {
+			showGreeting(JSON.parse(greeting.body));
 		});
 	});
 }
@@ -33,11 +33,15 @@ function disconnect() {
 }
 
 function sendName() {
-	stompClient.send("app/chat.sendMessage", {}, JSON.stringify({ 'name': $("#name").val() }));
+	stompClient.send("/thtshoesapp/chat.sendMessage", {}, JSON.stringify({ 'name': $("#name").val() }));
 }
 
 function showGreeting(message) {
-	$("#greetings").append("<tr><td>" + message + "</td></tr>");
+	$("#greetings").append(
+	"<tr>"
+	+ "<td>" + message.tieude + "</td>"
+	+ "<td>" + message.noidung + "</td>"
+	+ "</tr>");
 }
 
 $(function() {

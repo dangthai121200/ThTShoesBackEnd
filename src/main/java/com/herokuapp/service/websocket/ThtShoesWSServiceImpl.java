@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
+import com.herokuapp.domain.admin.ThongBaoAdminDomain;
 import com.herokuapp.util.URL;
 
 @Service
@@ -13,8 +14,9 @@ public class ThtShoesWSServiceImpl implements ThtShoesWSService {
 	private SimpMessagingTemplate simpMessagingTemplate;
 
 	@Override
-	public void guiTongBaoCoDonHangMoi(String message) {
-		simpMessagingTemplate.convertAndSend(URL.THTSHOES_APP + URL.THONGBAO, message);
+	public void guiTongBaoCoDonHangMoi(String tieude, String noidung) {
+		ThongBaoAdminDomain thongBaoAdminDomain = new ThongBaoAdminDomain(tieude, noidung);
+		simpMessagingTemplate.convertAndSend(URL.THONGBAO + URL.DON_HANG, thongBaoAdminDomain);
 	}
 
 }

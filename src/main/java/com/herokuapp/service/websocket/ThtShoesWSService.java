@@ -1,5 +1,5 @@
 package com.herokuapp.service.websocket;
 
 public interface ThtShoesWSService {
-	void guiTongBaoCoDonHangMoi(String message);
+	void guiTongBaoCoDonHangMoi(String tieude, String noidung);
 }

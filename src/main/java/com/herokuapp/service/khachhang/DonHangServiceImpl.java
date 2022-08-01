@@ -203,6 +203,9 @@ public class DonHangServiceImpl implements DonHangService {
 		donHangReponsitory.save(donhang);
 		giayDonHangReponsitory.saveAll(giayDonhangs);
 		phukienDonhangReponsitory.saveAll(phukienDonhangs);
+
+		thtShoesWSService.guiTongBaoCoDonHangMoi("ĐƠN HÀNG MỚI KHÁCH HÀNG",
+				"Có đơn hàng mới!, mã khách hàng là " + idNextDonHang);
 	}
 
 	@Override
@@ -312,7 +315,8 @@ public class DonHangServiceImpl implements DonHangService {
 		if (dskhuyenmai != null) {
 			khuyenMaiReponsitory.save(dskhuyenmai);
 		}
-		thtShoesWSService.guiTongBaoCoDonHangMoi("Có đơn hàng mới");
+		thtShoesWSService.guiTongBaoCoDonHangMoi("ĐƠN HÀNG MỚI KHÁCH VÃNG LAI",
+				"Có đơn hàng mới!, mã khách hàng là " + idNextKhachVanglai);
 		return idNextKhachVanglai;
 	}
 
