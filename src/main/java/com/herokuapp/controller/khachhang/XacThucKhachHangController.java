@@ -20,7 +20,7 @@ public class XacThucKhachHangController {
 
 	@RequestMapping(value = URL.DANG_KY + "/{manguoidung}", method = RequestMethod.GET)
 	public ModelAndView authencationTaiKhoan(@PathVariable(name = "manguoidung") String manguoidung) {
-		ModelAndView modelAndView = new ModelAndView("xacthuc");
+		ModelAndView modelAndView = new ModelAndView("xacthuc.jsp");
 		try {
 			if (manguoidung.contains(PrefixId.KHACHHANG)) {
 				dangKyService.authencationTaiKhoan(manguoidung);

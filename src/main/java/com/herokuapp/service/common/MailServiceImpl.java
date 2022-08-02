@@ -1,6 +1,7 @@
 package com.herokuapp.service.common;
 
 import java.io.File;
+import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -12,6 +13,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 
 @Service
 public class MailServiceImpl implements EmailService {
@@ -21,6 +24,9 @@ public class MailServiceImpl implements EmailService {
 
 	@Autowired
 	private Environment environment;
+
+	@Autowired
+	private SpringTemplateEngine templateEngine;
 
 	@Override
 	public void sendSimpleMessage(String to, String subject, String text) {
@@ -37,18 +43,28 @@ public class MailServiceImpl implements EmailService {
 			throws MessagingException {
 		MimeMessage message = emailSender.createMimeMessage();
 
-		MimeMessageHelper helper = new MimeMessageHelper(message, true);
+		MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
 
 		helper.setFrom(environment.getProperty("spring.mail.username"));
 		helper.setTo(to);
 		helper.setSubject(subject);
-		helper.setText(text);
+		helper.setText(text, true);
 
-		FileSystemResource file = new FileSystemResource(new File(pathToAttachment));
-		helper.addAttachment("Invoice", file);
+		if (pathToAttachment != null) {
+			FileSystemResource file = new FileSystemResource(new File(pathToAttachment));
+			helper.addAttachment("Invoice", file);
+		}
 
 		emailSender.send(message);
 
+	}
+
+	@Override
+	public String convertToTemplateHtmlEmail(Map<String, Object> props, String templateName) {
+		Context context = new Context();
+		context.setVariables(props);
+		String html = templateEngine.process(templateName, context);
+		return html;
 	}
 
 }

@@ -1,5 +1,10 @@
 package com.herokuapp.service.khachhang;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,7 +43,7 @@ public class DangKyServiceImpl implements DangKyService {
 
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public void dangKyKhachHang(InfoKhachHangDangKy infoDangKy) {
+	public void dangKyKhachHang(InfoKhachHangDangKy infoDangKy) throws MessagingException {
 
 		String maNguoiDung = PrefixId.KHACHHANG + getTaiKhoanIdSeq();
 
@@ -55,7 +60,11 @@ public class DangKyServiceImpl implements DangKyService {
 		if (infoDangKy.getTaiKhoan().getEmail() != null) {
 			String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
 			String url = baseUrl + URL.KHACH_HANG + URL.DANG_KY + "/" + maNguoiDung;
-			emailService.sendSimpleMessage(infoDangKy.getTaiKhoan().getEmail(), "Thông Báo Xác Thực Tài Khoản", url);
+			Map<String, Object> props = new HashMap<String, Object>();
+			props.put("url", url);
+			String html = emailService.convertToTemplateHtmlEmail(props, "xacthuc-mail");
+			emailService.sendMessageWithAttachment(infoDangKy.getTaiKhoan().getEmail(), "Thông Báo Xác Thực Tài Khoản",
+					html, null);
 		}
 	}
 
