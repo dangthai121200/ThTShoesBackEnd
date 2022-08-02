@@ -28,6 +28,8 @@ public class DangKyKhachHangController {
 
 	@Autowired
 	private KhachHangService khachHangService;
+	
+
 
 	@RequestMapping(value = URL.DANG_KY, method = RequestMethod.POST)
 	public ResponseEntity<String> dangKyKhachHang(@RequestBody @Valid InfoKhachHangDangKy infoKhachHangDangKy)

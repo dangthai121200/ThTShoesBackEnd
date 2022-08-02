@@ -3,9 +3,12 @@ package com.herokuapp.service.khachhang;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import com.herokuapp.domain.common.ItemDonhangEmail;
 import com.herokuapp.domain.khachhang.AddDonHang;
 import com.herokuapp.domain.khachhang.AddDonHangVangLai;
 import com.herokuapp.domain.khachhang.DonHangDomain;
@@ -52,6 +56,7 @@ import com.herokuapp.reponsitory.PhuKienReponsitory;
 import com.herokuapp.reponsitory.PhukienDonhangReponsitory;
 import com.herokuapp.reponsitory.SizeReponsitory;
 import com.herokuapp.security.UserDetailsConfigure;
+import com.herokuapp.service.common.EmailService;
 import com.herokuapp.service.websocket.ThtShoesWSService;
 import com.herokuapp.util.PrefixId;
 
@@ -99,6 +104,9 @@ public class DonHangServiceImpl implements DonHangService {
 
 	@Autowired
 	public ThtShoesWSService thtShoesWSService;
+
+	@Autowired
+	public EmailService emailService;
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -210,7 +218,8 @@ public class DonHangServiceImpl implements DonHangService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public String addDonHangKhachVangLai(AddDonHangVangLai addDonHangVangLai) throws ThtShoesException {
+	public String addDonHangKhachVangLai(AddDonHangVangLai addDonHangVangLai)
+			throws ThtShoesException, MessagingException {
 
 		StringBuilder errorMessageGiay = checkListCoTheMuaGiay(addDonHangVangLai.getGiays());
 		StringBuilder errorMessagePhuKien = checkListCoTheMuaPhuKien(addDonHangVangLai.getPhukiens());
@@ -244,7 +253,6 @@ public class DonHangServiceImpl implements DonHangService {
 		// End create new khachvanglai
 
 		// Create new donhang
-
 		Khachvanglai khachvanglaiSetDonHang = new Khachvanglai();
 		khachvanglaiSetDonHang.setMakh(idNextKhachVanglai);
 		donhang.setKhachvanglai(khachvanglaiSetDonHang);
@@ -265,6 +273,9 @@ public class DonHangServiceImpl implements DonHangService {
 		donhang.getPhuongthucthanhtoan().setMaloaithanhtoan(addDonHangVangLai.getMaloaithanhtoan());
 		// End create new donhang
 
+		// list use for send mail when create donahng
+		List<ItemDonhangEmail> itemDonhangEmails = new ArrayList<>();
+
 		// Create list giay_donghang
 		for (InfoGiayDonHang item : addDonHangVangLai.getGiays()) {
 			// key is magiay
@@ -280,8 +291,22 @@ public class DonHangServiceImpl implements DonHangService {
 			giayDonhang.setSoluong(item.getSoluong());
 			int tongGiaGiay = giay.getGia() * item.getSoluong();
 			giayDonhang.setTonggia(tongGiaGiay);
+
+			// add list ItemDonHangEmail
+			ItemDonhangEmail itemDonhangEmail = new ItemDonhangEmail();
+			itemDonhangEmail.setUrlAnh(giay.getUrlanh());
+			itemDonhangEmail.setTen(giay.getTengiay());
+			itemDonhangEmail.setGia(String.valueOf(giay.getGia()));
+			GiayMauSize giayMauSize = giaySizeMauReponsitory.getGiayMauSizeById(idGiayMauSize);
+			itemDonhangEmail.setSize(giayMauSize.getSize().getTensize());
+			itemDonhangEmail.setMausac(giayMauSize.getMausac().getTenmau());
+			itemDonhangEmail.setSoluong(String.valueOf(item.getSoluong()));
+			itemDonhangEmails.add(itemDonhangEmail);
+
+			// use for donhang
 			tonggia += tongGiaGiay;
 			soluong += item.getSoluong();
+
 			giayDonhangs.add(giayDonhang);
 		}
 		// End create list giay_donghang
@@ -297,6 +322,15 @@ public class DonHangServiceImpl implements DonHangService {
 			phukienDonhang.setSoluong(item.getValue());
 			int tongGiaPhuKien = item.getValue() * phukien.getGia();
 			phukienDonhang.setTonggia(tongGiaPhuKien);
+
+			ItemDonhangEmail itemDonhangEmail = new ItemDonhangEmail();
+			itemDonhangEmail.setUrlAnh(phukien.getUrlAnh());
+			itemDonhangEmail.setTen(phukien.getTenpk());
+			itemDonhangEmail.setGia(String.valueOf(phukien.getGia()));
+			itemDonhangEmail.setSoluong(String.valueOf(item.getValue()));
+			itemDonhangEmails.add(itemDonhangEmail);
+
+			// use for donhang
 			tonggia += tongGiaPhuKien;
 			soluong += item.getValue();
 			phukienDonhangs.add(phukienDonhang);
@@ -315,8 +349,23 @@ public class DonHangServiceImpl implements DonHangService {
 		if (dskhuyenmai != null) {
 			khuyenMaiReponsitory.save(dskhuyenmai);
 		}
+
+		// send thông báo for admin
 		thtShoesWSService.guiTongBaoCoDonHangMoi("ĐƠN HÀNG MỚI KHÁCH VÃNG LAI",
 				"Có đơn hàng mới!, mã khách hàng là " + idNextKhachVanglai);
+
+		if (!StringUtils.isEmpty(addDonHangVangLai.getEmail())) {
+			Map<String, Object> props = new HashMap<String, Object>();
+			props.put("items", itemDonhangEmails);
+			props.put("soluong", soluong);
+			props.put("giabandau", tonggia);
+			props.put("khuyenmai", phanTramGiam);
+			props.put("giagiam", tongGiaDonHang);
+			String html = emailService.convertToTemplateHtmlEmail(props, "taodonhang");
+			emailService.sendMessageWithAttachment(addDonHangVangLai.getEmail(), "Thông Báo Tạo Đơn Hàng từ ThtShoes",
+					html, null);
+		}
+
 		return idNextKhachVanglai;
 	}
 
