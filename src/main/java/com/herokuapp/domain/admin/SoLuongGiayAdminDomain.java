@@ -24,12 +24,12 @@ public class SoLuongGiayAdminDomain extends AbstractsDomain<SoluongGiay> {
 		this.id = id;
 	}
 
-	public int getSoluongthem() {
+	public int getSoluong() {
 		return soluong;
 	}
 
-	public void setSoluongthem(int soluongthem) {
-		this.soluong = soluongthem;
+	public void setSoluong(int soluong) {
+		this.soluong = soluong;
 	}
 
 	public Date getNgaythem() {
