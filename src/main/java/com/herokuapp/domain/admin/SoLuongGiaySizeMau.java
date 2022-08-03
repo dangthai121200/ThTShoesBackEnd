@@ -9,7 +9,7 @@ import com.herokuapp.util.ThtShoesMess;
 
 public class SoLuongGiaySizeMau {
 	
-	@NotEmpty
+	@NotNull
 	@Min(value = 0L, message = ThtShoesMess.MIN_NUMBER + "của id là 0")
 	@Max(value = 9999999999L, message = ThtShoesMess.MAX_NUMBER + "của id là 9999999999")
 	private int id;
