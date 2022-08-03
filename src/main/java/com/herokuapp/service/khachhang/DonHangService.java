@@ -9,7 +9,7 @@ import com.herokuapp.domain.khachhang.list.ListDonHangVangLai;
 import com.herokuapp.handleexception.ThtShoesException;
 
 public interface DonHangService {
-	void addDonHang(AddDonHang addDonHang) throws ThtShoesException;
+	void addDonHang(AddDonHang addDonHang) throws ThtShoesException, MessagingException;
 	
 	String addDonHangKhachVangLai(AddDonHangVangLai addDonHangVangLai) throws ThtShoesException, MessagingException;
 
