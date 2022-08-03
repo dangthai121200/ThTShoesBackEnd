@@ -2,6 +2,7 @@ package com.herokuapp.service.admin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -311,6 +312,11 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 	public void updateSoLuongGiaySizeMauOfGiay(SoLuongGiaySizeMau soLuongGiaySizeMau) throws ThtShoesException {
 
 		GiayMauSize giayMauSize = giaySizeMauReponsitory.getGiayMauSizeById(String.valueOf(soLuongGiaySizeMau.getId()));
+		
+		if(giayMauSize == null) {
+			throw new NoSuchElementException();
+		}
+		
 		int oldSoLuong = giayMauSize.getSoluong();
 		int newSoLuong = soLuongGiaySizeMau.getSoluong();
 

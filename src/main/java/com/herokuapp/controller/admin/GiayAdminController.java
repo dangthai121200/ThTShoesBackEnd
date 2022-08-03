@@ -1,5 +1,7 @@
 package com.herokuapp.controller.admin;
 
+import java.util.NoSuchElementException;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,7 +105,8 @@ public class GiayAdminController {
 
 	@PutMapping(value = URL.LGIAY_HANG_DMUC + "/{magiay}")
 	public ResponseEntity<String> changeLGiayHangDanhMucOfGiay(@PathVariable(name = "magiay") String magiay,
-			@RequestBody @Valid LoaigiayHangDanhmucAdminDomain loaigiayHangDanhmucAdminDomain) throws ThtShoesException {
+			@RequestBody @Valid LoaigiayHangDanhmucAdminDomain loaigiayHangDanhmucAdminDomain)
+			throws ThtShoesException {
 		try {
 			giayService.changeLGiayHangDanhMucOfGiay(magiay, loaigiayHangDanhmucAdminDomain);
 			return ResponseEntity.ok(magiay);
@@ -116,12 +119,14 @@ public class GiayAdminController {
 	}
 
 	@PutMapping(value = URL.GIAY_SIZE_MAU)
-	public ResponseEntity<String> updateSoLuongGiaySizeMauOfGiay(@RequestBody @Valid SoLuongGiaySizeMau soLuongGiaySizeMau)
-			throws ThtShoesException {
+	public ResponseEntity<String> updateSoLuongGiaySizeMauOfGiay(
+			@RequestBody @Valid SoLuongGiaySizeMau soLuongGiaySizeMau) throws ThtShoesException {
 		try {
 			giayService.updateSoLuongGiaySizeMauOfGiay(soLuongGiaySizeMau);
 			return ResponseEntity.ok("Cập nhật thành công");
 		} catch (ThtShoesException ex) {
+			throw ex;
+		} catch (NoSuchElementException ex) {
 			throw ex;
 		} catch (Exception ex) {
 			ex.printStackTrace();
