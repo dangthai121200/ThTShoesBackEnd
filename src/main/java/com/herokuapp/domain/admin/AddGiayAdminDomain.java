@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -24,7 +25,8 @@ public class AddGiayAdminDomain extends AbstractsDomain<Giay> {
 	private String chatlieu;
 
 	@NotNull(message = ThtShoesMess.GIAY_GIA)
-	@Max(value = 99999999999L)
+	@Min(value = 0L, message = ThtShoesMess.MIN_NUMBER + "của gia là 0")
+	@Max(value = 99999999999L, message = ThtShoesMess.MAX_NUMBER + "của gia là 99999999999")
 	private int gia;
 
 	@NotEmpty(message = ThtShoesMess.GIAY_KIEU_DANG)
@@ -45,12 +47,15 @@ public class AddGiayAdminDomain extends AbstractsDomain<Giay> {
 	private String urlanh;
 
 	@NotEmpty(message = ThtShoesMess.MA_LOAI_GIAY)
+	@Length(max = 10, message = ThtShoesMess.MAX_LENGHT + "của maLoaiGiay là 10")
 	private String maLoaiGiay;
 
 	@NotEmpty(message = ThtShoesMess.MA_HANG)
+	@Length(max = 10, message = ThtShoesMess.MAX_LENGHT + "của maHang là 10")
 	private String maHang;
 
 	@NotEmpty(message = ThtShoesMess.MA_DANH_MUC)
+	@Length(max = 10, message = ThtShoesMess.MAX_LENGHT + "của maDanhMuc là 10")
 	private String maDanhMuc;
 
 	@Valid

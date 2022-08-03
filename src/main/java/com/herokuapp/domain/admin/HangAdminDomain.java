@@ -1,11 +1,19 @@
 package com.herokuapp.domain.admin;
 
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
 import com.herokuapp.abstracts.AbstractsDomain;
 import com.herokuapp.entity.Hang;
+import com.herokuapp.util.ThtShoesMess;
 
 public class HangAdminDomain extends AbstractsDomain<Hang> {
 
 	private String mahang;
+	
+	@NotEmpty(message = ThtShoesMess.TEN_DANH_MUC)
+	@Length(max = 50, message = ThtShoesMess.MAX_LENGHT + "của tenhang là 50")
 	private String tenhang;
 
 	public HangAdminDomain() {

@@ -1,5 +1,7 @@
 package com.herokuapp.controller.admin;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,7 +38,7 @@ public class KhuyenMaiAdminController {
 	}
 
 	@PostMapping
-	public ResponseEntity<String> addKhuyenMai(@RequestBody AddKhuyenMaiAdminDomain addKhuyenMaiAdminDomain) {
+	public ResponseEntity<String> addKhuyenMai(@RequestBody @Valid AddKhuyenMaiAdminDomain addKhuyenMaiAdminDomain) {
 		try {
 			String idKMNext = khuyenMaiAdminService.addKhuyenMai(addKhuyenMaiAdminDomain);
 			return ResponseEntity.ok(idKMNext);
@@ -47,7 +49,7 @@ public class KhuyenMaiAdminController {
 	}
 
 	@PutMapping
-	public String updateKhuyenMai(@RequestBody AddKhuyenMaiAdminDomain addKhuyenMaiAdminDomain)
+	public String updateKhuyenMai(@RequestBody @Valid AddKhuyenMaiAdminDomain addKhuyenMaiAdminDomain)
 			throws ThtShoesException {
 		return khuyenMaiAdminService.updateKhuyenMai(addKhuyenMaiAdminDomain);
 	}

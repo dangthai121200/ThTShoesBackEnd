@@ -3,12 +3,15 @@ package com.herokuapp.domain.common;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.validator.constraints.Length;
+
 import com.herokuapp.util.Regex;
 import com.herokuapp.util.ThtShoesMess;
 
 public class ChangePasswordDomain {
 
-	@NotEmpty(message = "Thiếu mã người không được để trống")
+	@NotEmpty(message = "manguoidung không được để trống")
+	@Length(max = 10, message = ThtShoesMess.MAX_LENGHT + "của manguoidung là 10")
 	private String manguoidung;
 
 	@Pattern(regexp = Regex.PASSWORD, message = ThtShoesMess.PASSWORD)

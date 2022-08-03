@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -23,7 +24,8 @@ public class GiayAdminDomain extends AbstractsDomain<Giay> {
 	private String chatlieu;
 	
 	@NotNull(message = ThtShoesMess.GIAY_GIA)
-	@Max(value = 99999999999L)
+	@Min(value = 0L, message = ThtShoesMess.MIN_NUMBER + "là 0")
+	@Max(value = 99999999999L, message = ThtShoesMess.MAX_NUMBER + "là 99999999999")
 	private int gia;
 	
 	@NotEmpty(message = ThtShoesMess.GIAY_KIEU_DANG)

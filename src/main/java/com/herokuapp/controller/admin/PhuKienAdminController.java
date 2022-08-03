@@ -1,5 +1,7 @@
 package com.herokuapp.controller.admin;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,7 +40,7 @@ public class PhuKienAdminController {
 	}
 
 	@PostMapping
-	public ResponseEntity<String> addPhuKien(@RequestBody AddPhuKienAdmin addPhuKienAdmin) {
+	public ResponseEntity<String> addPhuKien(@RequestBody @Valid AddPhuKienAdmin addPhuKienAdmin) {
 		try {
 			String maphukien = phuKienAdminService.addPhuKien(addPhuKienAdmin);
 			return ResponseEntity.ok(maphukien);
@@ -50,7 +52,8 @@ public class PhuKienAdminController {
 	}
 
 	@PutMapping
-	public ResponseEntity<String> updatePhuKien(@RequestBody AddPhuKienAdmin addPhuKienAdmin) throws ThtShoesException {
+	public ResponseEntity<String> updatePhuKien(@RequestBody @Valid AddPhuKienAdmin addPhuKienAdmin)
+			throws ThtShoesException {
 		try {
 			phuKienAdminService.updatePhuKien(addPhuKienAdmin);
 			return ResponseEntity.ok("Cập nhật thành công");

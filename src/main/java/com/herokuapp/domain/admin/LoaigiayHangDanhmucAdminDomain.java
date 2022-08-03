@@ -8,8 +8,14 @@ import com.herokuapp.entity.LoaigiayHangDanhmuc;
 public class LoaigiayHangDanhmucAdminDomain extends AbstractsDomain<LoaigiayHangDanhmuc> {
 
 	private int maLgiayHang;
+	
+	@Valid
 	private DanhmucAdminDomain danhmuc = new DanhmucAdminDomain();
+	
+	@Valid
 	private HangAdminDomain hang = new HangAdminDomain();
+	
+	@Valid
 	private LoaiGiayAdminDomain loaigiay = new LoaiGiayAdminDomain();
 
 	public LoaigiayHangDanhmucAdminDomain() {

@@ -1,5 +1,7 @@
 package com.herokuapp.controller.admin;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +29,7 @@ public class HangAdminController {
 	}
 
 	@PostMapping
-	public ResponseEntity<String> addHang(@RequestBody HangAdminDomain hangAdminDomain) throws ThtShoesException {
+	public ResponseEntity<String> addHang(@RequestBody @Valid HangAdminDomain hangAdminDomain) throws ThtShoesException {
 		try {
 			hangAdminService.addHang(hangAdminDomain);
 			return ResponseEntity.ok("Thêm hãng thành công");

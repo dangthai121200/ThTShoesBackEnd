@@ -1,5 +1,7 @@
 package com.herokuapp.domain.admin;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -22,6 +24,8 @@ public class AddGiayMauSizeAdmin {
 	private String mamau;
 
 	@NotNull
+	@Min(value = 0L, message = ThtShoesMess.MIN_NUMBER + "là 0")
+	@Max(value = 99999999999L, message = ThtShoesMess.MAX_NUMBER + "là 99999999999")
 	private int soluong;
 
 	public AddGiayMauSizeAdmin() {

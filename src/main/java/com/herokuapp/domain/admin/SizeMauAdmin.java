@@ -2,6 +2,8 @@ package com.herokuapp.domain.admin;
 
 import java.util.Objects;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -12,14 +14,16 @@ import com.herokuapp.util.ThtShoesMess;
 public class SizeMauAdmin {
 
 	@NotEmpty(message = ThtShoesMess.MA_SIZE)
-	@Length(max = 10)
+	@Length(max = 10, message = ThtShoesMess.MAX_LENGHT + "của masize là 10")
 	private String masize;
 
 	@NotEmpty(message = ThtShoesMess.MA_MAU)
-	@Length(max = 10)
+	@Length(max = 10, message = ThtShoesMess.MAX_LENGHT + "của mamau là 10")
 	private String mamau;
 
 	@NotNull
+	@Min(value = 0L, message = ThtShoesMess.MIN_NUMBER + "là 0")
+	@Max(value = 99999999999L, message = ThtShoesMess.MAX_NUMBER + "là 99999999999")
 	private int soluong;
 
 	public String getMasize() {

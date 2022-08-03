@@ -19,7 +19,7 @@ public class AddDonHangVangLai {
 	private String ho;
 
 	@NotEmpty(message = ThtShoesMess.TEN)
-	@Length(max = 10, message = ThtShoesMess.MAX_LENGHT + "của tên là 30")
+	@Length(max = 30, message = ThtShoesMess.MAX_LENGHT + "của tên là 30")
 	private String ten;
 
 	@NotEmpty(message = ThtShoesMess.SDT)
@@ -29,6 +29,7 @@ public class AddDonHangVangLai {
 	private String diachi;
 
 	@Email(message = ThtShoesMess.EMAIL_SAI)
+	@Length(max = 30, message = ThtShoesMess.MAX_LENGHT + "của email là 30")
 	private String email;
 
 	private String ghichu;
@@ -36,6 +37,7 @@ public class AddDonHangVangLai {
 	private String makhuyenmai;
 
 	@NotEmpty(message = ThtShoesMess.MA_LOAI_THANH_TOAN)
+	@Length(max = 10, message = ThtShoesMess.MAX_LENGHT + "của maloaithanhtoan là 10")
 	private String maloaithanhtoan;
 
 	private Set<InfoGiayDonHang> giays = new HashSet<InfoGiayDonHang>();

@@ -11,6 +11,9 @@ import com.herokuapp.util.ThtShoesMess;
 public class DanhmucAdminDomain extends AbstractsDomain<Danhmuc> {
 	
 	private String madm;
+	
+	@NotEmpty(message = ThtShoesMess.TEN_DANH_MUC)
+	@Length(max = 20, message = ThtShoesMess.MAX_LENGHT + "của tendanhmuc là 20")
 	private String tendanhmuc;
 
 	public String getMadm() {

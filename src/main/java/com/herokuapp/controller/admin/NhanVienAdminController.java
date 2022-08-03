@@ -1,5 +1,7 @@
 package com.herokuapp.controller.admin;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,7 +42,7 @@ public class NhanVienAdminController {
 	}
 
 	@PostMapping(value = URL.ADD_NHAN_VIEN)
-	public ResponseEntity<String> addNhanvien(@RequestBody InfoNhanvienDangKy infoNhanvienDangKy) {
+	public ResponseEntity<String> addNhanvien(@RequestBody @Valid InfoNhanvienDangKy infoNhanvienDangKy) {
 		try {
 			StringBuilder messError = new StringBuilder();
 			boolean checkUsername = taikhoanService.checkUsername(infoNhanvienDangKy.getTaikhoan().getUsername());

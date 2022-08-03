@@ -2,6 +2,8 @@ package com.herokuapp.controller.admin;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +27,7 @@ public class HinhAdminController {
 	public HinhAdminService hinhAdminService;
 
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public List<String> uploadImage(FormUploadImageProduct formUploadImage)
+	public List<String> uploadImage(@Valid FormUploadImageProduct formUploadImage)
 			throws JsonMappingException, JsonProcessingException {
 		return hinhAdminService.uploadImage(formUploadImage);
 	}

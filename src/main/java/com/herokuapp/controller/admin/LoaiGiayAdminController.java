@@ -1,5 +1,7 @@
 package com.herokuapp.controller.admin;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +28,7 @@ public class LoaiGiayAdminController {
 	}
 
 	@PostMapping
-	public ResponseEntity<String> addLoaiGiay(@RequestBody LoaiGiayAdminDomain loaiGiayAdminDomain)
+	public ResponseEntity<String> addLoaiGiay(@RequestBody @Valid LoaiGiayAdminDomain loaiGiayAdminDomain)
 			throws ThtShoesException {
 		try {
 			loaiGiayAdminService.addLoaiGiay(loaiGiayAdminDomain);

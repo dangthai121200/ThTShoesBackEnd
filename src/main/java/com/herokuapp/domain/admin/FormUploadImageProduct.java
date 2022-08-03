@@ -2,12 +2,21 @@ package com.herokuapp.domain.admin;
 
 import java.util.List;
 
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.herokuapp.util.ThtShoesMess;
 
 public class FormUploadImageProduct {
 
 	private List<MultipartFile> listImage;
+	
 	private MultipartFile avatar;
+	
+	@NotEmpty(message = ThtShoesMess.BINH_LUAN_MA)
+	@Length(max = 10, message = ThtShoesMess.MAX_LENGHT + "của masp là 10")
 	private String masp;
 
 	public FormUploadImageProduct() {

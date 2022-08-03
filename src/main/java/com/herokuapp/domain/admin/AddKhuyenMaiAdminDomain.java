@@ -2,19 +2,40 @@ package com.herokuapp.domain.admin;
 
 import java.util.Date;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
 import org.springframework.util.StringUtils;
 
 import com.herokuapp.abstracts.AbstractsDomain;
 import com.herokuapp.entity.Dskhuyenmai;
-import com.herokuapp.entity.Nhanvien;
+import com.herokuapp.util.ThtShoesMess;
 
 public class AddKhuyenMaiAdminDomain extends AbstractsDomain<Dskhuyenmai> {
+
+	@Length(max = 10, message = ThtShoesMess.MAX_LENGHT + "của makm là 10")
 	private String makm;
+
+	@NotNull(message = ThtShoesMess.GIAY_GIA)
+	@Min(value = 0L, message = ThtShoesMess.MIN_NUMBER + "của soluong là 0")
+	@Max(value = 99999999999L, message = ThtShoesMess.MAX_NUMBER + "của soluong là 99999999999")
 	private int soluong;
-	private Date ngaybd = new Date();
-	private Date ngaykt = new Date();
+
+	@NotEmpty(message = ThtShoesMess.KHUYEN_MAI_NGAY_BD)
+	private Date ngaybd;
+
+	private Date ngaykt;
+
 	private String mota;
+
+	@NotEmpty(message = ThtShoesMess.KHUYEN_MAI_GIA_TRI_GIAM)
 	private int giatrigiam;
+
+	@NotEmpty(message = ThtShoesMess.KHUYEN_MAI_TIEU_DE)
+	@Length(max = 100, message = ThtShoesMess.MAX_LENGHT + "của tieude là 100")
 	private String tieude;
 
 	public AddKhuyenMaiAdminDomain() {
@@ -91,7 +112,9 @@ public class AddKhuyenMaiAdminDomain extends AbstractsDomain<Dskhuyenmai> {
 		}
 		dskhuyenmai.setSoluong(this.soluong);
 		dskhuyenmai.setNgaybd(this.ngaybd);
-		dskhuyenmai.setNgaykt(this.ngaykt);
+		if (this.ngaykt != null) {
+			dskhuyenmai.setNgaykt(this.ngaykt);
+		}
 		dskhuyenmai.setMota(this.mota);
 		dskhuyenmai.setGiatrigiam(this.giatrigiam);
 		dskhuyenmai.setTieude(this.tieude);

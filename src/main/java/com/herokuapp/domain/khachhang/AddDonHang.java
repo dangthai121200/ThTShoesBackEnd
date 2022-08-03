@@ -7,11 +7,14 @@ import java.util.Set;
 
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.Length;
+
 import com.herokuapp.util.ThtShoesMess;
 
 public class AddDonHang {
 
 	@NotEmpty(message = ThtShoesMess.NGUOI_NHAN)
+	@Length(max = 50, message = ThtShoesMess.MAX_LENGHT + "của nguoinhan là 50")
 	private String nguoinhan;
 	
 	@NotEmpty(message = ThtShoesMess.DIACHI)
@@ -20,8 +23,10 @@ public class AddDonHang {
 	private String ghichu;
 	
 	@NotEmpty(message = ThtShoesMess.MA_LOAI_THANH_TOAN)
+	@Length(max = 10, message = ThtShoesMess.MAX_LENGHT + "của maloaithanhtoan là 10")
 	private String maloaithanhtoan;
 	
+	@Length(max = 10, message = ThtShoesMess.MAX_LENGHT + "của maKhuyenMai là 10")
 	private String maKhuyenMai;
 	
 	private Set<InfoGiayDonHang> giays = new HashSet<InfoGiayDonHang>();

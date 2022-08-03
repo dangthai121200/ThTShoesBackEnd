@@ -1,10 +1,15 @@
 package com.herokuapp.domain.admin;
 
+import javax.validation.Valid;
+
 import com.herokuapp.domain.common.TaiKhoanDomain;
 
 public class InfoNhanvienDangKy {
 	
+	@Valid
 	private NhanvienDomain nhanvien;
+	
+	@Valid
 	private TaiKhoanDomain taikhoan;
 
 	public InfoNhanvienDangKy() {
