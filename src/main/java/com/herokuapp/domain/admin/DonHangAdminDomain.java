@@ -10,6 +10,7 @@ import com.herokuapp.entity.Donhang;
 import com.herokuapp.enums.TinhTrang;
 
 public class DonHangAdminDomain extends AbstractsDomain<Donhang> {
+
 	private String madon;
 	private Date ngaytao;
 	private String nguoinhan;
@@ -17,8 +18,11 @@ public class DonHangAdminDomain extends AbstractsDomain<Donhang> {
 	private TinhTrang tinhtrang;
 	private BigDecimal tonggia;
 	private String makhuyenmai;
+
 	private List<GiayDonhangAdminDomain> giayDonhangs = new ArrayList<>();
 	private List<PhukienDonhangAdminDomain> phukienDonhangs = new ArrayList<>();
+	private List<NhanVienDonHangDomainAdmin> actions = new ArrayList<>();
+
 	private KhachVangLaiAdminDomain khachvanglai;
 	private KhachHangAdminDomain khachHang;
 
@@ -108,6 +112,14 @@ public class DonHangAdminDomain extends AbstractsDomain<Donhang> {
 
 	public void setKhachHang(KhachHangAdminDomain khachHang) {
 		this.khachHang = khachHang;
+	}
+
+	public List<NhanVienDonHangDomainAdmin> getActions() {
+		return actions;
+	}
+
+	public void setActions(List<NhanVienDonHangDomainAdmin> actions) {
+		this.actions = actions;
 	}
 
 	@Override

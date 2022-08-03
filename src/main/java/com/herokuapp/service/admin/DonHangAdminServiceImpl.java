@@ -12,6 +12,7 @@ import com.herokuapp.domain.admin.DonHangAdminDomain;
 import com.herokuapp.domain.admin.GiayAdminDomain;
 import com.herokuapp.domain.admin.GiayDonhangAdminDomain;
 import com.herokuapp.domain.admin.MauSacAdminDomain;
+import com.herokuapp.domain.admin.NhanVienDonHangDomainAdmin;
 import com.herokuapp.domain.admin.PhukienDonhangAdminDomain;
 import com.herokuapp.domain.admin.SizeAdminDomain;
 import com.herokuapp.domain.admin.list.ListDonHangAdmin;
@@ -195,11 +196,13 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 
 	@Override
 	public DonHangAdminDomain getDonHangById(String idDonhang) {
+
 		DonHangAdminDomain donHangAdminDomain = new DonHangAdminDomain();
-		List<GiayDonhangAdminDomain> giayDonhangs = new ArrayList<>();
-		List<PhukienDonhangAdminDomain> phukienDonhangs = new ArrayList<>();
+
 		Donhang donhang = donHangReponsitory.findById(idDonhang).get();
 		donHangAdminDomain.converToDomain(donhang);
+
+		List<GiayDonhangAdminDomain> giayDonhangs = new ArrayList<>();
 		for (GiayDonhang giayDonhang : donhang.getGiayDonhangs()) {
 			GiayDonhangAdminDomain giayDonhangAdminDomain = new GiayDonhangAdminDomain();
 			GiayAdminDomain giayAdminDomain = new GiayAdminDomain();
@@ -226,6 +229,8 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 			giayDonhangs.add(giayDonhangAdminDomain);
 		}
 		donHangAdminDomain.setGiayDonhangs(giayDonhangs);
+
+		List<PhukienDonhangAdminDomain> phukienDonhangs = new ArrayList<>();
 		if (donhang.getPhukienDonhangs() != null) {
 			donhang.getPhukienDonhangs().forEach(phukienDonhang -> {
 				PhukienDonhangAdminDomain phukienDonhangDomain = new PhukienDonhangAdminDomain();
@@ -234,6 +239,16 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 			});
 		}
 		donHangAdminDomain.setPhukienDonhangs(phukienDonhangs);
+
+		List<NhanVienDonHangDomainAdmin> actions = new ArrayList<>();
+		List<NhanvienDonhang> nhanvienDonhangs = nhanVienDonHangReponsitory.getAllNhanVienDonhangByMaDon(idDonhang);
+		for (NhanvienDonhang nhanvienDonhang : nhanvienDonhangs) {
+			NhanVienDonHangDomainAdmin nhanVienDonHangDomainAdmin = new NhanVienDonHangDomainAdmin();
+			nhanVienDonHangDomainAdmin.converToDomain(nhanvienDonhang);
+			actions.add(nhanVienDonHangDomainAdmin);
+		}
+		donHangAdminDomain.setActions(actions);
+
 		return donHangAdminDomain;
 	}
 
