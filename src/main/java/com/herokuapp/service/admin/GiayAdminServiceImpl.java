@@ -312,11 +312,11 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 	public void updateSoLuongGiaySizeMauOfGiay(SoLuongGiaySizeMau soLuongGiaySizeMau) throws ThtShoesException {
 
 		GiayMauSize giayMauSize = giaySizeMauReponsitory.getGiayMauSizeById(String.valueOf(soLuongGiaySizeMau.getId()));
-		
-		if(giayMauSize == null) {
+
+		if (giayMauSize == null) {
 			throw new NoSuchElementException();
 		}
-		
+
 		int oldSoLuong = giayMauSize.getSoluong();
 		int newSoLuong = soLuongGiaySizeMau.getSoluong();
 
@@ -325,7 +325,7 @@ public class GiayAdminServiceImpl implements GiayAdminService {
 			SoluongGiay soluongGiay = new SoluongGiay();
 			soluongGiay.setIdGiaySizeMau(giayMauSize.getId().getId());
 			soluongGiay.setSoluongthem(newSoLuong - oldSoLuong);
-			if (soluongGiay.getMota() != null) {
+			if (soLuongGiaySizeMau.getNote() != null) {
 				soluongGiay.setMota(soLuongGiaySizeMau.getNote());
 			} else {
 				soluongGiay.setMota("Nhập thêm hàng mới");
