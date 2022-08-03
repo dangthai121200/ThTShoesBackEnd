@@ -83,7 +83,7 @@ public class SoLuongGiayAdminDomain extends AbstractsDomain<SoluongGiay> {
 	@Override
 	public void converToDomain(SoluongGiay soluongGiay) {
 		this.id = soluongGiay.getId();
-		this.soluongthem = soluongGiay.getSoluongthem();
+		this.soluong = soluongGiay.getSoluongthem();
 		this.ngaythem = soluongGiay.getNgaythem();
 		this.mota = soluongGiay.getMota();
 		this.idGiaySizeMau = soluongGiay.getIdGiaySizeMau();
