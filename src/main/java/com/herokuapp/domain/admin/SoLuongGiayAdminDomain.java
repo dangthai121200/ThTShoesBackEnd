@@ -8,7 +8,7 @@ import com.herokuapp.entity.SoluongGiay;
 public class SoLuongGiayAdminDomain extends AbstractsDomain<SoluongGiay> {
 
 	private int id;
-	private int soluongthem;
+	private int soluong;
 	private Date ngaythem;
 	private String mota;
 	private int idGiaySizeMau;
@@ -25,11 +25,11 @@ public class SoLuongGiayAdminDomain extends AbstractsDomain<SoluongGiay> {
 	}
 
 	public int getSoluongthem() {
-		return soluongthem;
+		return soluong;
 	}
 
 	public void setSoluongthem(int soluongthem) {
-		this.soluongthem = soluongthem;
+		this.soluong = soluongthem;
 	}
 
 	public Date getNgaythem() {
@@ -71,8 +71,6 @@ public class SoLuongGiayAdminDomain extends AbstractsDomain<SoluongGiay> {
 	public void setMau(MauSacAdminDomain mau) {
 		this.mau = mau;
 	}
-	
-	
 
 	public int getIdGiaySizeMau() {
 		return idGiaySizeMau;
