@@ -12,7 +12,6 @@ public class HangAdminDomain extends AbstractsDomain<Hang> {
 
 	private String mahang;
 	
-	@NotEmpty(message = ThtShoesMess.TEN_DANH_MUC)
 	@Length(max = 50, message = ThtShoesMess.MAX_LENGHT + "của tenhang là 50")
 	private String tenhang;
 

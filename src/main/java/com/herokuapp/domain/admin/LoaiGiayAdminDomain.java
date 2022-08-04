@@ -12,7 +12,6 @@ public class LoaiGiayAdminDomain extends AbstractsDomain<Loaigiay> {
 
 	private String maloaigiay;
 	
-	@NotEmpty(message = ThtShoesMess.TEN_DANH_MUC)
 	@Length(max = 50, message = ThtShoesMess.MAX_LENGHT + "của tenloai là 50")
 	private String tenloai;
 
