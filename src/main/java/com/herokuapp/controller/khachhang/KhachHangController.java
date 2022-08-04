@@ -1,5 +1,7 @@
 package com.herokuapp.controller.khachhang;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +27,7 @@ public class KhachHangController {
 	}
 
 	@PutMapping()
-	public KhachHangDomain updateInfoKhachHang(@RequestBody KhachHangDomain khachHangDomain) {
+	public KhachHangDomain updateInfoKhachHang(@RequestBody @Valid KhachHangDomain khachHangDomain) {
 		return khachHangService.updateInfoKhachHang(khachHangDomain);
 	}
 
