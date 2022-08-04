@@ -1,18 +1,20 @@
 package com.herokuapp.domain.admin;
 
+import java.math.BigDecimal;
+
 public class DoanhThuAdmin {
 	
-	private int tongdoanhthu;
+	private BigDecimal tongdoanhthu;
 
 	public DoanhThuAdmin() {
 
 	}
 
-	public int getTongdoanhthu() {
+	public BigDecimal getTongdoanhthu() {
 		return tongdoanhthu;
 	}
 
-	public void setTongdoanhthu(int tongdoanhthu) {
+	public void setTongdoanhthu(BigDecimal tongdoanhthu) {
 		this.tongdoanhthu = tongdoanhthu;
 	}
 

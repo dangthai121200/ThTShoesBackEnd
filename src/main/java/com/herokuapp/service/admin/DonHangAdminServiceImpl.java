@@ -1,5 +1,6 @@
 package com.herokuapp.service.admin;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -268,10 +269,20 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 	}
 
 	@Override
-	public DoanhThuAdmin thongKeDoanhThu(ByDate byDate) {
+	public DoanhThuAdmin thongKeDoanhThuByDate(ByDate byDate) {
 		DoanhThuAdmin doanhThuAdmin = new DoanhThuAdmin();
-		int doanhthu = donHangReponsitory.thongKeDoanhThu(byDate.getNgayBd(), byDate.getNgayKt());
+		BigDecimal doanhthu = donHangReponsitory.thongKeDoanhThuByDate(byDate.getNgayBd(), byDate.getNgayKt());
 		doanhThuAdmin.setTongdoanhthu(doanhthu);
 		return doanhThuAdmin;
+	}
+
+	@Override
+	public BigDecimal thongKeDoanhThuAll() {
+		return donHangReponsitory.thongKeDoanhThuAll();
+	}
+
+	@Override
+	public int countDongHangByStatus(TinhTrang tinhTrang) {
+		return donHangReponsitory.countDongHangByStatus(tinhTrang.getValue());
 	}
 }

@@ -39,4 +39,9 @@ public class KhachHangAdminServiceImpl implements KhachHangAdminService {
 		return khachHangAdminDomain;
 	}
 
+	@Override
+	public int countAllKhachHang() {
+		return khachHangReponsitory.countAllKhachHang();
+	}
+
 }

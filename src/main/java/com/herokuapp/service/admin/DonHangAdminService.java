@@ -1,5 +1,7 @@
 package com.herokuapp.service.admin;
 
+import java.math.BigDecimal;
+
 import com.herokuapp.domain.admin.DoanhThuAdmin;
 import com.herokuapp.domain.admin.DonHangAdminDomain;
 import com.herokuapp.domain.admin.list.ListDonHangAdmin;
@@ -16,5 +18,9 @@ public interface DonHangAdminService {
 
 	ListDonHangAdmin getDonHangByDate(ByDate byDate);
 
-	DoanhThuAdmin thongKeDoanhThu(ByDate byDate);
+	DoanhThuAdmin thongKeDoanhThuByDate(ByDate byDate);
+	
+	BigDecimal thongKeDoanhThuAll();
+	
+	int countDongHangByStatus(TinhTrang tinhTrang);
 }

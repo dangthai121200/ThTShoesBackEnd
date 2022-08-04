@@ -1,5 +1,6 @@
 package com.herokuapp.reponsitory;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -30,5 +31,11 @@ public interface DonHangReponsitory extends JpaRepository<Donhang, String> {
 	List<Donhang> findByngaytaoBetween(Date ngaybd, Date ngaykt);
 
 	@Query(value = "SELECT sum(dh.tonggia) as doanhthu FROM donhang dh WHERE dh.ngaytao BETWEEN :ngaybd AND :ngaykt", nativeQuery = true)
-	int thongKeDoanhThu(@Param(value = "ngaybd") Date ngaybd, @Param(value = "ngaykt") Date ngaykt);
+	BigDecimal thongKeDoanhThuByDate(@Param(value = "ngaybd") Date ngaybd, @Param(value = "ngaykt") Date ngaykt);
+
+	@Query(value = "SELECT sum(dh.tonggia) as doanhthu FROM donhang dh", nativeQuery = true)
+	BigDecimal thongKeDoanhThuAll();
+
+	@Query(value = "SELECT count(*) as tong FROM donhang dh WHERE dh.tinhtrang = :tinhtrang ", nativeQuery = true)
+	int countDongHangByStatus(@Param(value = "tinhtrang") String tinhtrang);
 }
