@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.herokuapp.domain.admin.DoanhThuAdmin;
 import com.herokuapp.domain.admin.ThongKeTongAdminDomain;
+import com.herokuapp.domain.admin.list.ListCountDonHangAdmin;
 import com.herokuapp.domain.admin.list.ListDonHangAdmin;
 import com.herokuapp.domain.admin.list.ListGiayAdmin;
 import com.herokuapp.domain.admin.list.ListPhuKienAdmin;
@@ -64,7 +65,7 @@ public class ThongKeController {
 	}
 
 	@GetMapping(value = URL.DON_HANG)
-	public ListDonHangAdmin thongKeDonHangByThoiGian(@RequestBody @Valid ByDate byDate) {
+	public ListCountDonHangAdmin thongKeDonHangByThoiGian(@RequestBody @Valid ByDate byDate) {
 		return donHangAdminService.getDonHangByDate(byDate);
 	}
 

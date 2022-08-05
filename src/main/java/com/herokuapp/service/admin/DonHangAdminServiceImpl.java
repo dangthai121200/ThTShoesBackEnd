@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.herokuapp.domain.admin.CountDonHangDomainAdmin;
 import com.herokuapp.domain.admin.DoanhThuAdmin;
 import com.herokuapp.domain.admin.DonHangAdminDomain;
 import com.herokuapp.domain.admin.GiayAdminDomain;
@@ -16,6 +18,7 @@ import com.herokuapp.domain.admin.MauSacAdminDomain;
 import com.herokuapp.domain.admin.NhanVienDonHangDomainAdmin;
 import com.herokuapp.domain.admin.PhukienDonhangAdminDomain;
 import com.herokuapp.domain.admin.SizeAdminDomain;
+import com.herokuapp.domain.admin.list.ListCountDonHangAdmin;
 import com.herokuapp.domain.admin.list.ListDonHangAdmin;
 import com.herokuapp.domain.thongke.admin.ByDate;
 import com.herokuapp.entity.Donhang;
@@ -41,6 +44,7 @@ import com.herokuapp.reponsitory.MauSacReponsitory;
 import com.herokuapp.reponsitory.NhanVienDonHangReponsitory;
 import com.herokuapp.reponsitory.PhuKienReponsitory;
 import com.herokuapp.reponsitory.SizeReponsitory;
+import com.herokuapp.util.SqlReport;
 
 @Service
 public class DonHangAdminServiceImpl implements DonHangAdminService {
@@ -71,6 +75,9 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 
 	@Autowired
 	public GiayDonHangReponsitory giayDonHangReponsitory;
+
+	@Autowired
+	public JdbcTemplate jdbcTemplate;
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -254,18 +261,12 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 	}
 
 	@Override
-	public ListDonHangAdmin getDonHangByDate(ByDate byDate) {
-		ListDonHangAdmin listDonHangAdmin = new ListDonHangAdmin();
-		List<DonHangAdminDomain> donHangAdminDomains = new ArrayList<>();
-		List<Donhang> donhangs = donHangReponsitory.findByngaytaoBetween(byDate.getNgayBd(), byDate.getNgayKt());
-		donhangs.forEach(donhang -> {
-			DonHangAdminDomain donHangAdminDomain = new DonHangAdminDomain();
-			donHangAdminDomain.converToDomain(donhang);
-			donHangAdminDomains.add(donHangAdminDomain);
-		});
-
-		listDonHangAdmin.setDonHangs(donHangAdminDomains);
-		return listDonHangAdmin;
+	public ListCountDonHangAdmin getDonHangByDate(ByDate byDate) {
+		ListCountDonHangAdmin listCountDonHangAdmin = new ListCountDonHangAdmin();
+		List<CountDonHangDomainAdmin> list = jdbcTemplate.query(SqlReport.COUNT_DONHANG_BYDATE,
+				new Object[] { byDate.getNgayBd(), byDate.getNgayKt() }, new CountDonHangDomainAdmin());
+		listCountDonHangAdmin.setList(list);
+		return listCountDonHangAdmin;
 	}
 
 	@Override
