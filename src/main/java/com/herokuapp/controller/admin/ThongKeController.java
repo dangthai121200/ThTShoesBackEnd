@@ -7,14 +7,13 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.herokuapp.domain.admin.DoanhThuAdmin;
 import com.herokuapp.domain.admin.ThongKeTongAdminDomain;
-import com.herokuapp.domain.admin.list.ListCountDonHangAdmin;
-import com.herokuapp.domain.admin.list.ListDonHangAdmin;
 import com.herokuapp.domain.admin.list.ListGiayAdmin;
 import com.herokuapp.domain.admin.list.ListPhuKienAdmin;
 import com.herokuapp.domain.thongke.admin.ByDate;
@@ -55,28 +54,29 @@ public class ThongKeController {
 		return thongKeTongAdminDomain;
 	}
 
-	@GetMapping(value = URL.GIAY)
+	@PostMapping(value = URL.GIAY)
 	public ListGiayAdmin thongKeGiayByThoiGian(@RequestBody @Valid ByDate byDate) {
 		return giayAdminService.thongKeGiayByThoiGian(byDate);
 	}
 
-	@GetMapping(value = URL.PHU_KIEN)
+	@PostMapping(value = URL.PHU_KIEN)
 	public ListPhuKienAdmin thongKePhuKienByThoiGian(@RequestBody @Valid ByDate byDate) {
 		return phuKienAdminService.thongKePhuKienByThoiGian(byDate);
 	}
 
-	@GetMapping(value = URL.DON_HANG)
+	@PostMapping(value = URL.DON_HANG)
 	public ResponseEntity<Object> thongKeDonHangByThoiGian(@RequestBody @Valid ByDate byDate) {
-		try {;
+		try {
+			;
 			return ResponseEntity.ok(donHangAdminService.getDonHangByDate(byDate));
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return ResponseEntity.badRequest().body("Có lỗi xảy ra vui lòng thử lại");
 		}
-		
+
 	}
 
-	@GetMapping(value = URL.DOANH_THU)
+	@PostMapping(value = URL.DOANH_THU)
 	public DoanhThuAdmin thongKeDoanhThuByDate(@RequestBody @Valid ByDate byDate) {
 		return donHangAdminService.thongKeDoanhThuByDate(byDate);
 	}
