@@ -1,5 +1,8 @@
 package com.herokuapp.service.common;
 
+import javax.mail.MessagingException;
+import javax.validation.constraints.Email;
+
 import com.herokuapp.domain.common.ChangePasswordDomain;
 
 public interface TaiKhoanService {
@@ -8,4 +11,6 @@ public interface TaiKhoanService {
 	Boolean checkUsername(String username);
 
 	Boolean checkEmail(String email);
+
+	void resetPassword(@Email String email) throws MessagingException;
 }

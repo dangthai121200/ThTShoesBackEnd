@@ -1,8 +1,19 @@
 package com.herokuapp.service.common;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import javax.mail.MessagingException;
+import javax.validation.constraints.Email;
+
+import org.passay.CharacterData;
+import org.passay.CharacterRule;
+import org.passay.EnglishCharacterData;
+import org.passay.PasswordGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,6 +41,9 @@ public class TaiKhoanServiceImpl implements TaiKhoanService, UserDetailsService 
 
 	@Autowired
 	public PasswordEncoder passwordEncoder;
+
+	@Autowired
+	public EmailService emailService;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -83,5 +97,59 @@ public class TaiKhoanServiceImpl implements TaiKhoanService, UserDetailsService 
 		} catch (Exception ex) {
 			return false;
 		}
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void resetPassword(@Email String email) throws MessagingException {
+		Taikhoan taikhoan = taiKhoanReponsitory.getTaiKhoanByEmail(email);
+		String password = generatePassayPassword();
+		String passwordEncode = passwordEncoder.encode(password);
+		taikhoan.setPassword(passwordEncode);
+		taiKhoanReponsitory.save(taikhoan);
+
+		if (!StringUtils.isEmpty(taikhoan.getEmail())) {
+			Map<String, Object> props = new HashMap<String, Object>();
+			props.put("newPassword", password);
+			String html = emailService.convertToTemplateHtmlEmail(props, "resetpass-mail");
+			emailService.sendMessageWithAttachment(taikhoan.getEmail(), "Thông Báo Reset Mật Khẩu từ ThtShoes", html,
+					null);
+		}
+	}
+
+	private String generatePassayPassword() {
+		List<CharacterRule> rules = Arrays.asList(
+				// at least one upper-case character
+				new CharacterRule(EnglishCharacterData.UpperCase, 2),
+
+				// at least one lower-case character
+				new CharacterRule(EnglishCharacterData.LowerCase, 2),
+
+				// at least one digit character
+				new CharacterRule(EnglishCharacterData.Digit, 2),
+
+				// at least one Special character
+
+				new CharacterRule(new CharacterData() {
+
+					@Override
+					public String getErrorCode() {
+						// TODO Auto-generated method stub
+						return null;
+					}
+
+					@Override
+					public String getCharacters() {
+						// TODO Auto-generated method stub
+						return "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+					}
+				}, 2));
+
+		PasswordGenerator generator = new PasswordGenerator();
+
+		// Generated password is 12 characters long, which complies with policy
+		String password = generator.generatePassword(12, rules);
+
+		return password;
 	}
 }

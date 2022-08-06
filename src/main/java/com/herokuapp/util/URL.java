@@ -58,6 +58,7 @@ public class URL {
 
 	public static final String LOGIN = "/login";
 	public static final String CHANGE_PASSWORD = "/doimatkhau";
+	public static final String FORGET_PASS = "/quenmatkhau";
 	
 	public static final String SO_LUONG = "/soluong";
 	
