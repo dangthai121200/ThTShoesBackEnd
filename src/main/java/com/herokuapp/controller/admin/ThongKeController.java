@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,8 +66,14 @@ public class ThongKeController {
 	}
 
 	@GetMapping(value = URL.DON_HANG)
-	public ListCountDonHangAdmin thongKeDonHangByThoiGian(@RequestBody @Valid ByDate byDate) {
-		return donHangAdminService.getDonHangByDate(byDate);
+	public ResponseEntity<Object> thongKeDonHangByThoiGian(@RequestBody @Valid ByDate byDate) {
+		try {;
+			return ResponseEntity.ok(donHangAdminService.getDonHangByDate(byDate));
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ResponseEntity.badRequest().body("Có lỗi xảy ra vui lòng thử lại");
+		}
+		
 	}
 
 	@GetMapping(value = URL.DOANH_THU)
