@@ -14,7 +14,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
-		registry.addEndpoint(URL.THTSHOES_WS).setAllowedOrigins("*").withSockJS();
+		registry.addEndpoint(URL.THTSHOES_WS).setAllowedOriginPatterns("*").withSockJS();
 //		.setHandshakeHandler(new UserHandsShakehandle())
 	}
 
