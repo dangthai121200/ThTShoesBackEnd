@@ -1,11 +1,16 @@
 package com.herokuapp.domain.admin;
 
+import org.hibernate.validator.constraints.Length;
+
 import com.herokuapp.abstracts.AbstractsDomain;
 import com.herokuapp.entity.Loaiphukien;
+import com.herokuapp.util.ThtShoesMess;
 
 public class LoaiPhuKienAdminDomain extends AbstractsDomain<Loaiphukien> {
 
 	private String maLoaiPhuKien;
+
+	@Length(max = 30, message = ThtShoesMess.MAX_LENGHT + "của tenLoaiPhuKien là 30")
 	private String tenLoaiPhuKien;
 
 	public LoaiPhuKienAdminDomain() {

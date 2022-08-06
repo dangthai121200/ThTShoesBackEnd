@@ -3,8 +3,11 @@ package com.herokuapp.service.admin;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.herokuapp.domain.admin.LoaiPhuKienAdminDomain;
 import com.herokuapp.domain.admin.list.ListLoaiPhuKienAdmin;
@@ -29,6 +32,14 @@ public class LoaiPhuKienAdminServiceImpl implements LoaiPhuKienAdminService {
 		}
 		listLoaiPhuKien.setLoaiphukiens(loaiPhuKienDomains);
 		return listLoaiPhuKien;
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void addLoaiPhuKien(@Valid LoaiPhuKienAdminDomain loaiPhuKienAdminDomain) {
+		Loaiphukien loaiphukien = new Loaiphukien();
+		loaiphukien.setTenloai(loaiPhuKienAdminDomain.getTenLoaiPhuKien());
+		loaiPhuKienReponsitory.save(loaiphukien);
 	}
 
 }
