@@ -263,12 +263,13 @@ public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
 		return source;
 	}
 
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping(URL.THONGBAO + URL.DON_HANG + "/**").allowedOrigins("*");
-			}
-		}
+//	@Bean
+//	public WebMvcConfigurer corsConfigurer() {
+//		return new WebMvcConfigurer() {
+//			@Override
+//			public void addCorsMappings(CorsRegistry registry) {
+//				registry.addMapping("/**").allowedOrigins("*");
+//			}
+//		};
+//	}
 }
