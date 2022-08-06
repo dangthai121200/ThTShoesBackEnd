@@ -18,6 +18,7 @@ import com.herokuapp.domain.admin.MauSacAdminDomain;
 import com.herokuapp.domain.admin.NhanVienDonHangDomainAdmin;
 import com.herokuapp.domain.admin.PhukienDonhangAdminDomain;
 import com.herokuapp.domain.admin.SizeAdminDomain;
+import com.herokuapp.domain.admin.list.ListCountDoanhThuAdmin;
 import com.herokuapp.domain.admin.list.ListCountDonHangAdmin;
 import com.herokuapp.domain.admin.list.ListDonHangAdmin;
 import com.herokuapp.domain.thongke.admin.ByDate;
@@ -272,8 +273,8 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 	@Override
 	public DoanhThuAdmin thongKeDoanhThuByDate(ByDate byDate) {
 		DoanhThuAdmin doanhThuAdmin = new DoanhThuAdmin();
-		BigDecimal doanhthu = donHangReponsitory.thongKeDoanhThuByDate(byDate.getNgayBd(), byDate.getNgayKt());
-		doanhThuAdmin.setTongdoanhthu(doanhthu);
+//		BigDecimal doanhthu = donHangReponsitory.thongKeDoanhThuByDate(byDate.getNgayBd(), byDate.getNgayKt());
+//		doanhThuAdmin.setTongdoanhthu(doanhthu);
 		return doanhThuAdmin;
 	}
 
@@ -285,5 +286,14 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 	@Override
 	public int countDongHangByStatus(TinhTrang tinhTrang) {
 		return donHangReponsitory.countDongHangByStatus(tinhTrang.getValue());
+	}
+
+	@Override
+	public ListCountDoanhThuAdmin thongKeAllDoanhThuByDay(ByDate byDate) {
+		ListCountDoanhThuAdmin listCountDoanhThuAdmin = new ListCountDoanhThuAdmin();
+		List<DoanhThuAdmin> list = jdbcTemplate.query(SqlReport.COUNT_DOANHTHU_BYDATE,
+				new Object[] { byDate.getNgayBd(), byDate.getNgayKt() }, new DoanhThuAdmin());
+		listCountDoanhThuAdmin.setList(list);
+		return listCountDoanhThuAdmin;
 	}
 }

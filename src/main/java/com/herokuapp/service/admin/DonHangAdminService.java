@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import com.herokuapp.domain.admin.DoanhThuAdmin;
 import com.herokuapp.domain.admin.DonHangAdminDomain;
+import com.herokuapp.domain.admin.list.ListCountDoanhThuAdmin;
 import com.herokuapp.domain.admin.list.ListCountDonHangAdmin;
 import com.herokuapp.domain.admin.list.ListDonHangAdmin;
 import com.herokuapp.domain.thongke.admin.ByDate;
@@ -20,6 +21,8 @@ public interface DonHangAdminService {
 	ListCountDonHangAdmin getDonHangByDate(ByDate byDate);
 
 	DoanhThuAdmin thongKeDoanhThuByDate(ByDate byDate);
+	
+	ListCountDoanhThuAdmin thongKeAllDoanhThuByDay(ByDate byDate);
 	
 	BigDecimal thongKeDoanhThuAll();
 	

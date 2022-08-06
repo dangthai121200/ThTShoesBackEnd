@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.herokuapp.domain.admin.DoanhThuAdmin;
 import com.herokuapp.domain.admin.ThongKeTongAdminDomain;
 import com.herokuapp.domain.admin.list.ListGiayAdmin;
 import com.herokuapp.domain.admin.list.ListPhuKienAdmin;
@@ -67,7 +66,6 @@ public class ThongKeController {
 	@PostMapping(value = URL.DON_HANG)
 	public ResponseEntity<Object> thongKeDonHangByThoiGian(@RequestBody @Valid ByDate byDate) {
 		try {
-			;
 			return ResponseEntity.ok(donHangAdminService.getDonHangByDate(byDate));
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -77,8 +75,13 @@ public class ThongKeController {
 	}
 
 	@PostMapping(value = URL.DOANH_THU)
-	public DoanhThuAdmin thongKeDoanhThuByDate(@RequestBody @Valid ByDate byDate) {
-		return donHangAdminService.thongKeDoanhThuByDate(byDate);
+	public ResponseEntity<Object> thongKeDoanhThuByDate(@RequestBody @Valid ByDate byDate) {
+		try {
+			return ResponseEntity.ok(donHangAdminService.thongKeAllDoanhThuByDay(byDate));
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ResponseEntity.badRequest().body("Có lỗi xảy ra vui lòng thử lại");
+		}
 	}
 
 }
