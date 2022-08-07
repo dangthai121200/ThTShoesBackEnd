@@ -24,7 +24,7 @@ public class AddKhuyenMaiAdminDomain extends AbstractsDomain<Dskhuyenmai> {
 	@Max(value = 99999999999L, message = ThtShoesMess.MAX_NUMBER + "của soluong là 99999999999")
 	private int soluong;
 
-	@NotEmpty(message = ThtShoesMess.KHUYEN_MAI_NGAY_BD)
+	@NotNull(message = ThtShoesMess.KHUYEN_MAI_NGAY_BD)
 	private Date ngaybd;
 
 	private Date ngaykt;
