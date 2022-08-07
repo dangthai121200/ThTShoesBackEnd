@@ -31,7 +31,7 @@ public class AddKhuyenMaiAdminDomain extends AbstractsDomain<Dskhuyenmai> {
 
 	private String mota;
 
-	@NotEmpty(message = ThtShoesMess.KHUYEN_MAI_GIA_TRI_GIAM)
+	@NotNull(message = ThtShoesMess.KHUYEN_MAI_GIA_TRI_GIAM)
 	private int giatrigiam;
 
 	@NotEmpty(message = ThtShoesMess.KHUYEN_MAI_TIEU_DE)
