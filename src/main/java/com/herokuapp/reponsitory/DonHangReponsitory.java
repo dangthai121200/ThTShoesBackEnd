@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.herokuapp.entity.Donhang;
+import com.herokuapp.enums.TinhTrang;
 import com.herokuapp.util.SqlReport;
 
 @Repository
@@ -35,8 +36,8 @@ public interface DonHangReponsitory extends JpaRepository<Donhang, String> {
 	BigDecimal thongKeDoanhThuByDate(@Param(value = "tinhtrang") String tinhtrang, @Param(value = "ngaybd") Date ngaybd,
 			@Param(value = "ngaykt") Date ngaykt);
 
-	@Query(value = "SELECT sum(dh.tonggia) as doanhthu FROM donhang dh", nativeQuery = true)
-	BigDecimal thongKeDoanhThuAll();
+	@Query(value = "SELECT sum(dh.tonggia) as doanhthu FROM donhang dh where dh.tinhtrang = :tinhtrang", nativeQuery = true)
+	BigDecimal thongKeDoanhThuAll(@Param(value = "tinhtrang") String tinhtrang);
 
 	@Query(value = "SELECT count(*) as tong FROM donhang dh WHERE dh.tinhtrang = :tinhtrang ", nativeQuery = true)
 	int countDongHangByStatus(@Param(value = "tinhtrang") String tinhtrang);

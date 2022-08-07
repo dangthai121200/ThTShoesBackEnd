@@ -280,7 +280,7 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 
 	@Override
 	public BigDecimal thongKeDoanhThuAll() {
-		return donHangReponsitory.thongKeDoanhThuAll();
+		return donHangReponsitory.thongKeDoanhThuAll(TinhTrang.DAGIAO.getValue());
 	}
 
 	@Override
