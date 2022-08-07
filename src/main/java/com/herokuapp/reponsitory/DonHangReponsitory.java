@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.herokuapp.entity.Donhang;
+import com.herokuapp.util.SqlReport;
 
 @Repository
 @Transactional(rollbackFor = Exception.class)
@@ -30,8 +31,9 @@ public interface DonHangReponsitory extends JpaRepository<Donhang, String> {
 
 	List<Donhang> findByngaytaoBetween(Date ngaybd, Date ngaykt);
 
-	@Query(value = "SELECT sum(dh.tonggia) as doanhthu FROM donhang dh WHERE dh.ngaytao BETWEEN :ngaybd AND :ngaykt", nativeQuery = true)
-	BigDecimal thongKeDoanhThuByDate(@Param(value = "ngaybd") Date ngaybd, @Param(value = "ngaykt") Date ngaykt);
+	@Query(value = SqlReport.THONG_KE_DOANHTHU_BYDATE, nativeQuery = true)
+	BigDecimal thongKeDoanhThuByDate(@Param(value = "tinhtrang") String tinhtrang, @Param(value = "ngaybd") Date ngaybd,
+			@Param(value = "ngaykt") Date ngaykt);
 
 	@Query(value = "SELECT sum(dh.tonggia) as doanhthu FROM donhang dh", nativeQuery = true)
 	BigDecimal thongKeDoanhThuAll();

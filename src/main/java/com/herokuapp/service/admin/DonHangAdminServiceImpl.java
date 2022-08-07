@@ -292,7 +292,8 @@ public class DonHangAdminServiceImpl implements DonHangAdminService {
 	public ListCountDoanhThuAdmin thongKeAllDoanhThuByDay(ByDate byDate) {
 		ListCountDoanhThuAdmin listCountDoanhThuAdmin = new ListCountDoanhThuAdmin();
 		List<DoanhThuAdmin> list = jdbcTemplate.query(SqlReport.COUNT_DOANHTHU_BYDATE,
-				new Object[] { byDate.getNgayBd(), byDate.getNgayKt() }, new DoanhThuAdmin());
+				new Object[] { TinhTrang.DAGIAO.getValue(), byDate.getNgayBd(), byDate.getNgayKt() },
+				new DoanhThuAdmin());
 		listCountDoanhThuAdmin.setList(list);
 		return listCountDoanhThuAdmin;
 	}
