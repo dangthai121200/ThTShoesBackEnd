@@ -244,6 +244,7 @@ public class DonHangServiceImpl implements DonHangService {
 
 		if (!StringUtils.isEmpty(khachhang.getTaikhoan().getEmail())) {
 			Map<String, Object> props = new HashMap<String, Object>();
+			props.put("madonhang", idNextDonHang);
 			props.put("items", itemDonhangEmails);
 			props.put("soluong", soluong);
 			props.put("giabandau", tonggia);
@@ -397,6 +398,7 @@ public class DonHangServiceImpl implements DonHangService {
 
 		if (!StringUtils.isEmpty(addDonHangVangLai.getEmail())) {
 			Map<String, Object> props = new HashMap<String, Object>();
+			props.put("madonhang", idNextKhachVanglai);
 			props.put("items", itemDonhangEmails);
 			props.put("soluong", soluong);
 			props.put("giabandau", tonggia);
