@@ -271,7 +271,7 @@ public class DonHangServiceImpl implements DonHangService {
 		int soluong = 0;
 		int phanTramGiam = 0;
 		Donhang donhang = new Donhang();
-		//Dskhuyenmai dskhuyenmai = null;
+		// Dskhuyenmai dskhuyenmai = null;
 		List<GiayDonhang> giayDonhangs = new ArrayList<>();
 		List<PhukienDonhang> phukienDonhangs = new ArrayList<>();
 
@@ -311,7 +311,7 @@ public class DonHangServiceImpl implements DonHangService {
 //				dskhuyenmai.setSoluong(dskhuyenmai.getSoluong() - 1);
 //			}
 //		}
-		
+
 		donhang.getPhuongthucthanhtoan().setMaloaithanhtoan(addDonHangVangLai.getMaloaithanhtoan());
 		// End create new donhang
 
@@ -518,7 +518,12 @@ public class DonHangServiceImpl implements DonHangService {
 			throw new ThtShoesException("Đơn hàng không thể hủy");
 		}
 
-		donhang.setTinhtrang(TinhTrang.TUCHOI);
+		Dskhuyenmai dskhuyenmai = donhang.getDskhuyenmai();
+		if (dskhuyenmai != null) {
+			dskhuyenmai.setSoluong(dskhuyenmai.getSoluong() + 1);
+			khuyenMaiReponsitory.save(dskhuyenmai);
+		}
+
 		donHangReponsitory.updateStatusForDonhang(mdh, TinhTrang.HUY.getValue());
 
 	}
