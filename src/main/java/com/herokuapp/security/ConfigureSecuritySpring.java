@@ -202,7 +202,7 @@ public class ConfigureSecuritySpring extends WebSecurityConfigurerAdapter {
 
 		// thong ke
 		http.authorizeRequests().antMatchers(URL.NHAN_VIEN + URL.THONG_KE + "/**")
-				.hasAnyAuthority(Quyen.ADMIN.getName());
+				.hasAnyAuthority(Quyen.ADMIN.getName(), Quyen.NHANVIEN.getName());
 
 		// websocket
 
