@@ -3,6 +3,7 @@ package com.herokuapp.service.admin;
 import com.herokuapp.domain.admin.InfoNhanvienDangKy;
 import com.herokuapp.domain.admin.NhanVienAdminDomain;
 import com.herokuapp.domain.admin.list.ListNhanVienAdmin;
+import com.herokuapp.handleexception.ThtShoesException;
 
 public interface NhanVienService {
 	void addNhanVien(InfoNhanvienDangKy infoNhanvienDangKy);
@@ -15,6 +16,6 @@ public interface NhanVienService {
 	
 	boolean checkSdt(Long sdt);
 
-	void lockNhanVien(String manv);
+	void lockNhanVien(String manv) throws ThtShoesException;
 	void unLockNhanVien(String manv);
 }

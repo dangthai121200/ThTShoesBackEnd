@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.herokuapp.domain.admin.InfoNhanvienDangKy;
 import com.herokuapp.domain.admin.NhanVienAdminDomain;
 import com.herokuapp.domain.admin.list.ListNhanVienAdmin;
+import com.herokuapp.handleexception.ThtShoesException;
 import com.herokuapp.security.UserDetailsConfigure;
 import com.herokuapp.service.admin.NhanVienService;
 import com.herokuapp.service.common.TaiKhoanService;
@@ -78,10 +79,12 @@ public class NhanVienAdminController {
 	}
 
 	@PutMapping(value = URL.LOCK + "/{manv}")
-	public ResponseEntity<String> lockNhanVien(@PathVariable(name = "manv") String manv) {
+	public ResponseEntity<String> lockNhanVien(@PathVariable(name = "manv") String manv) throws ThtShoesException {
 		try {
 			nhanVienService.lockNhanVien(manv);
 			return ResponseEntity.ok("Lock nhân viên thành công");
+		} catch (ThtShoesException ex) {
+			throw ex;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return ResponseEntity.badRequest().body("Lock nhân viên thất bại");
