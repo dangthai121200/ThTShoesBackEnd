@@ -239,9 +239,6 @@ public class DonHangServiceImpl implements DonHangService {
 		giayDonHangReponsitory.saveAll(giayDonhangs);
 		phukienDonhangReponsitory.saveAll(phukienDonhangs);
 
-		thtShoesWSService.guiTongBaoCoDonHangMoi("ĐƠN HÀNG MỚI KHÁCH HÀNG",
-				"Có đơn hàng mới!, mã khách hàng là " + idNextDonHang);
-
 		if (!StringUtils.isEmpty(khachhang.getTaikhoan().getEmail())) {
 			Map<String, Object> props = new HashMap<String, Object>();
 			props.put("madonhang", idNextDonHang);
@@ -255,6 +252,9 @@ public class DonHangServiceImpl implements DonHangService {
 					"Thông Báo Tạo Đơn Hàng từ ThtShoes", html, null);
 		}
 
+		// send thông báo for admin
+		thtShoesWSService.guiTongBaoCoDonHangMoi("ĐƠN HÀNG MỚI KHÁCH HÀNG",
+				"Có đơn hàng mới!, mã khách hàng là " + idNextDonHang);
 	}
 
 	@Override
@@ -392,10 +392,6 @@ public class DonHangServiceImpl implements DonHangService {
 //			khuyenMaiReponsitory.save(dskhuyenmai);
 //		}
 
-		// send thông báo for admin
-		thtShoesWSService.guiTongBaoCoDonHangMoi("ĐƠN HÀNG MỚI KHÁCH VÃNG LAI",
-				"Có đơn hàng mới!, mã khách hàng là " + idNextKhachVanglai);
-
 		if (!StringUtils.isEmpty(addDonHangVangLai.getEmail())) {
 			Map<String, Object> props = new HashMap<String, Object>();
 			props.put("madonhang", idNextKhachVanglai);
@@ -408,6 +404,10 @@ public class DonHangServiceImpl implements DonHangService {
 			emailService.sendMessageWithAttachment(addDonHangVangLai.getEmail(), "Thông Báo Tạo Đơn Hàng từ ThtShoes",
 					html, null);
 		}
+
+		// send thông báo for admin
+		thtShoesWSService.guiTongBaoCoDonHangMoi("ĐƠN HÀNG MỚI KHÁCH VÃNG LAI",
+				"Có đơn hàng mới!, mã khách hàng là " + idNextKhachVanglai);
 
 		return idNextKhachVanglai;
 	}

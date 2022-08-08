@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -132,9 +131,10 @@ public class NhanVienServiceImpl implements NhanVienService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void lockNhanVien(String manv) throws ThtShoesException {
-		UserDetailsConfigure userDetailsConfigure = (UserDetailsConfigure) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
-		if(userDetailsConfigure.getAuthorities().contains(new SimpleGrantedAuthority(Quyen.ADMIN.getName()))) {
+		UserDetailsConfigure userDetailsConfigure = (UserDetailsConfigure) SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+
+		if (userDetailsConfigure.getManguoidung().equals(manv)) {
 			throw new ThtShoesException("Admin không thể tự khóa");
 		}
 		taiKhoanReponsitory.updateTinhTrang(manv, (byte) 0);
